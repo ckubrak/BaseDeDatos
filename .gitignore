@@ -1,7 +1,22 @@
+## General files
 *.o
+*.cbp
+
+## General folders
+**/CMakeFiles
+**/Makefile
+**/cmake_install.cmake
+
+## Specific folders
 build
 cmake-build-debug
 .idea
-CMakeLists.txt
 docs/html
 docs/latex
+docs/Doxyfile
+
+## Specific files
+CMakeCache.txt
+correrTests
+tests/google-test/libgtest.a
+tests/google-test/libgtest_main.a
