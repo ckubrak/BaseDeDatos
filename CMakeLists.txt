@@ -24,6 +24,7 @@ target_compile_definitions(correrTests_sol PRIVATE POST_SOLUCION)
 
 # Necesitamos asociar los archivos del framework de testing
 target_link_libraries(correrTests gtest gtest_main)
+target_link_libraries(correrTests_sol gtest gtest_main)
 
 add_test(correrTests correrTests)
 
