@@ -27,27 +27,140 @@ class string_map {
 private:
 
     struct Nodo{
-        Nodo(key_type id, mapped_type* sig, Nodo* pad,Nodo* prox) :  id(id), significado(sig), padre(pad),proximo(prox){};
-        key_type id;
+        Nodo(key_type& key,mapped_type* sig, Nodo* pad/*,Nodo* prox*/) : clave(key),significado(sig), padre(pad)/*,proximo(prox)*/{
+            for(int i = 0; i < 27; i++){
+                hijos[i] = nullptr;
+            }
+        };
+        key_type clave;
         mapped_type* significado;
         Nodo* padre;
-        Nodo* proximo;
+        //Nodo* proximo;
         Nodo* hijos[27];  // Pusimos 27 porque suponemos que las claves solo usan caracteres tradicionales (letras en espaniol).
     };
 
     size_type nroClaves;
-    Nodo* iniciosClaves[27] ;
+    //Nodo* iniciosClaves[27] ;
+    Nodo* raiz;
 
     //metodos privados
     Nodo* minimaClave(Nodo* nodo){
-        /*Nodo* actual = nodo;
+        Nodo* actual = nodo;
+        int i;
         while(actual->significado == nullptr){
-            actual = actual.hijos[0];
+            i = 0;
+            while(i<27){
+                if(actual->hijos[i] != nullptr){
+                    actual = actual->hijos[i];
+                    break;
+                }
+                i++;
+            }
         }
-        return actual;*/
-
-        //arreglarlo porque ahora hijos es un array!
+        return actual;
     }
+
+    int charToInt(char ch){
+        switch(ch){
+            case 'a':
+                return 0;
+                break;
+            case 'b':
+                return 1;
+                break;
+            case 'c':
+                return 2;
+                break;
+            case 'd':
+                return 3;
+                break;
+            case 'e':
+                return 4;
+                break;
+            case 'f':
+                return 5;
+                break;
+            case 'g':
+                return 6;
+                break;
+            case 'h':
+                return 7;
+                break;
+            case 'i':
+                return 8;
+                break;
+            case 'j':
+                return 9;
+                break;
+            case 'k':
+                return 10;
+                break;
+            case 'l':
+                return 11;
+                break;
+            case 'm':
+                return 12;
+                break;
+            case 'n':
+                return 13;
+                break;
+            case 'q':
+                return 14;
+                break;
+            case 'o':
+                return 15;
+                break;
+            case 'p':
+                return 16;
+                break;
+            case '@':
+                return 17;
+                break;
+            case 'r':
+                return 18;
+                break;
+            case 's':
+                return 19;
+                break;
+            case 't':
+                return 20;
+                break;
+            case 'u':
+                return 21;
+                break;
+            case 'v':
+                return 22;
+                break;
+            case 'w':
+                return 23;
+                break;
+            case 'x':
+                return 24;
+                break;
+            case 'y':
+                return 25;
+                break;
+            case 'z':
+                return 26;
+                break;
+        }
+    }
+
+    std::ostream& mostrarAux(Nodo* nodo, std::ostream &os){ //Le pasariamos raiz? (solo estoy volviendo a la version anterior de mostrar)
+        int i = 0;
+        if (nodo->significado != nullptr) {
+            os << nodo->significado;
+            os << " ";
+            os << std::endl;
+        }
+        while (i < 27){
+            if (nodo->hijos[i] != nullptr){
+                mostrarAux(nodo->hijos[i], os);
+            }
+            i++;
+        }
+    }
+
 
 
 public:
@@ -65,14 +178,15 @@ public:
         iterator& operator++();
         iterator operator++(int);
 
-        value_type& operator*() const;
+        //  value_type& operator*() const;
         value_type /* * */ operator->() const;
 
         friend class string_map;
 
     private:
-        iterator(string_map::Nodo* n): nodo(n){}
+        iterator(string_map::Nodo* n): valor(std::make_pair(n->clave,n->significado)), nodo(n){}
         Nodo* nodo;
+        string_map<T>::value_type valor;
 
     };
 
@@ -89,7 +203,7 @@ public:
         const_iterator operator++(int);
 
         value_type& operator*() const;
-        value_type* operator->() const;
+        //   value_type* operator->() const;
 
         friend class string_map;
 
@@ -103,7 +217,9 @@ public:
      *
      * \complexity{\O(1)}
      */
-    string_map(): nroClaves(0){}; //hace falta pasar el vector vacio o
+    string_map(): nroClaves(0){
+        raiz = new Nodo(nullptr,nullptr);
+    }; //hace falta pasar el vector vacio o
     //se inicializa solo?
 
     /** @brief Destruye mapa
@@ -186,16 +302,14 @@ public:
      *  \complexity{\O(S)}
      */
     iterator begin(){
-        if(nroClaves == 0){
-            return end();
-        }
-        else{
-            Nodo* actual = iniciosClaves[0];
-            while(actual->significado == nullptr){
-                actual = actual->hijos[0];
+        int i = 0;
+        while (i<27){
+            if (raiz->hijos[i] != nullptr){
+                return iterator(minimaClave(raiz->hijos[i]));
             }
-            return iterator(actual);
+            i++;
         }
+        return end();
     }
 
     /*  @brief iterador al fin de la coleccion
@@ -218,7 +332,23 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    iterator find(const key_type &key);
+    iterator find(const key_type &key){
+        int i = 0;
+        Nodo* actual = raiz;
+        while (i < key.length()){
+            if (actual->hijos[i] != nullptr){
+                actual = actual->hijos[i];
+            }else{
+                break;
+            }
+            i++;
+        }
+        if (i = key.length()){
+            return iterator(actual);
+        }else{
+            return end();
+        }
+    }
 
     /** @brief busca una clave
      *  @param key clave a buscar
@@ -234,8 +364,44 @@ public:
      *
      * \complexity{\O(S + copy(value_type))}
      */
-    pair<iterator,bool> insert(const value_type &value){
+    pair<iterator,bool> insert(/*const*/ value_type* /*&*/value){  //OJO!
 
+        //value_type = pair<string, T>
+        int i = 0;
+        int n = value->first.length(); //.
+        bool inserto = false;
+
+        Nodo* actual = raiz;
+        while(i<n){ // Vamos recorriendo el trie letra a letra, viendo los que ya estan.
+            if(actual->hijos[charToInt(value->first[i])] != nullptr){
+                actual = actual->hijos[charToInt(value->first[i])];
+                if (i == n-1){ //este caso es si recorrimos toda la palabra
+                    if (actual->significado == nullptr){ //si ya existia y no tenia significado, le doy uno.
+                        actual->significado = &value->second; //.
+                        inserto = true;
+                    } //Si tenia significado, este while termina, y no entro al proximo, devolviendo inserto = false y un iterador al nodo.
+                }
+                i++;
+            }else{
+                break;
+            }
+        }
+        while(i<n){ //Si no llegue al ultimo en el while anterior, falta agregar!
+            if (i != n-1){
+                actual->hijos[charToInt(value->first[i])] = new Nodo/* * */(nullptr, actual);
+            }else{ //Al llegar al ultimo, le doy el significado, y cambio inserto = true.
+                actual->hijos[charToInt(value->first[i])] = new Nodo/* * */(&value->second, actual);
+                inserto = true;
+            }
+            actual = actual->hijos[charToInt(value->first[i])];
+            i++;
+        }
+
+        if (inserto) {
+            nroClaves++;
+        }
+
+        return std::make_pair(iterator(actual), inserto); //ARREGLAR
     }
 
     /** @brief eliminar una clave
@@ -255,18 +421,30 @@ public:
     iterator erase(iterator pos);
 
 
+//DEBUGGING! //MOSTRAR TIENE QUE TOMAR UN puntero a nodo y un ostream para poder llamarse recursivamente!!!
+
+    std::ostream& mostrar(std::ostream &os){
+        mostrarAux(raiz, os);
+    }
+
 };
 
 template<class T>
 typename string_map<T>::iterator& string_map<T>::iterator::operator++(){
-    /*if (nodo.hijos.size() > 0) {
-        return iterator(minimaClave(nodo.hijos[0]));
-    }else if(nodo.proximo != nullptr){
-        return iterator(minimaClave(nodo.proximo));
+    int i = 0;
+    while(i < 27){
+        if (nodo->hijos[i] != nullptr){
+            return iterator(minimaClave(nodo->hijos[i]));
+        }
+        i++;
+    }
+
+    if(nodo->proximo != nullptr){
+        return iterator(minimaClave(nodo->proximo));
     }else{
         Nodo* actual = nodo;
         while(actual->proximo == nullptr){
-            if(nodo.padre != nullptr){
+            if(nodo->padre != nullptr){
                 actual = actual->padre;
             }else{
                 return end();
@@ -274,15 +452,13 @@ typename string_map<T>::iterator& string_map<T>::iterator::operator++(){
         }
         return iterator(minimaClave(actual->proximo));
     }
-
-     arreglarlo porque ahora hijos es un array!
-    */
 }
 
 template<class T>
 typename string_map<T>::iterator::value_type string_map<T>::iterator::operator->() const{
     return *nodo;
 }
+
 
 
 #endif //STRING_MAP_STRING_MAP_H
