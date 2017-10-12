@@ -19,3 +19,7 @@
 * Correcciones menores de enunciado
 * Corrección de restricción de combinarRegistros
 * Corrección de CMakeLists.txt
+
+## 1.2.1
+
+* Corrección en linear_set_test por mal uso de la función copy.
