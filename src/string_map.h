@@ -31,9 +31,9 @@ private:
         bool estaDef;
         mapped_type significado;
         Nodo* padre;
-        Nodo* hijos[27];  // Pusimos 27 porque suponemos que las claves solo usan caracteres tradicionales (letras en espaniol).
+        Nodo* hijos[96];  // Son 128 - 32 caracteres
         Nodo(const key_type& key, bool def,Nodo* pad) : clave(key),estaDef(def),padre(pad){
-            for(int i = 0; i < 27; i++){
+            for(int i = 0; i < 96; i++){
                 hijos[i] = nullptr;
             }
         };
@@ -48,7 +48,7 @@ private:
     };
 
     size_type nroClaves;
-    //Nodo* iniciosClaves[27] ;
+    //Nodo* iniciosClaves[96] ;
     Nodo* raiz;
 
     //metodos privados
@@ -57,7 +57,7 @@ private:
         int i;
         while(!actual->estaDef){
             i = 0;
-            while(i<27){
+            while(i<96){
                 if(actual->hijos[i] != nullptr){
                     actual = actual->hijos[i];
                     break;
@@ -69,96 +69,14 @@ private:
     }
 
     int charToInt(char ch) const{
-        switch(ch){
-            case 'a':
-                return 0;
-                break;
-            case 'b':
-                return 1;
-                break;
-            case 'c':
-                return 2;
-                break;
-            case 'd':
-                return 3;
-                break;
-            case 'e':
-                return 4;
-                break;
-            case 'f':
-                return 5;
-                break;
-            case 'g':
-                return 6;
-                break;
-            case 'h':
-                return 7;
-                break;
-            case 'i':
-                return 8;
-                break;
-            case 'j':
-                return 9;
-                break;
-            case 'k':
-                return 10;
-                break;
-            case 'l':
-                return 11;
-                break;
-            case 'm':
-                return 12;
-                break;
-            case 'n':
-                return 13;
-                break;
-            case '@':
-                return 14;
-                break;
-            case 'o':
-                return 15;
-                break;
-            case 'p':
-                return 16;
-                break;
-            case 'q':
-                return 17;
-                break;
-            case 'r':
-                return 18;
-                break;
-            case 's':
-                return 19;
-                break;
-            case 't':
-                return 20;
-                break;
-            case 'u':
-                return 21;
-                break;
-            case 'v':
-                return 22;
-                break;
-            case 'w':
-                return 23;
-                break;
-            case 'x':
-                return 24;
-                break;
-            case 'y':
-                return 25;
-                break;
-            case 'z':
-                return 26;
-                break;
-        }
+      return (int)ch - 32; 
     }
 
 
     int cantHijos(Nodo* nodo){
         int i = 0;
         int son = 0;
-        while (i<27){
+        while (i<96){
             if (nodo->hijos[i] != nullptr){
                 son++;
             }
@@ -198,7 +116,7 @@ private:
             os << " ";
             os << std::endl;
         }
-        while (i < 27){
+        while (i < 96){
             if (nodo->hijos[i] != nullptr){
                 mostrarAux(nodo->hijos[i], os);
             }
@@ -216,7 +134,7 @@ private:
         }
         os<<"[";
         int j = 0;
-        while (j < 27){
+        while (j < 96){
             if (nodo->hijos[j] != nullptr){
                 os<<nodo->hijos[j]->clave;
                 os<<",";
@@ -226,7 +144,7 @@ private:
         os<<"]";
         os<<std::endl;
         int i = 0;
-        while (i < 27){
+        while (i < 96){
             if (nodo->hijos[i] != nullptr){
                 mostrarAux(nodo->hijos[i], os);
             }
@@ -425,7 +343,7 @@ public:
      */
     iterator begin(){
         int i = 0;
-        while (i<27){
+        while (i<96){
             if (raiz->hijos[i] != nullptr){
                 return iterator(minimaClave(raiz->hijos[i]));
             }
@@ -579,7 +497,7 @@ public:
 template<class T>
 typename string_map<T>::iterator& string_map<T>::iterator::operator++(){
     int i = 0;
-    while(i < 27){
+    while(i < 96){
         if (nodo->hijos[i] != nullptr){
             return iterator(minimaClave(nodo->hijos[i]));
         }
@@ -590,7 +508,7 @@ typename string_map<T>::iterator& string_map<T>::iterator::operator++(){
     int j = charToInt(nodo->clave[nodo->clave.length()-1] +1);//Quiero ver los hijos del padre del nodo, desde la ultima letra
     // I.e. Si la ultima letra de la clave es B, empiezo a ver los hijos del padre desde la C.
     while (actual != nullptr){
-        while(j<27){
+        while(j<96){
             if(actual->hijos[j] != nullptr){
                 return iterator(minimaClave(actual->hijos[j]));
             }
