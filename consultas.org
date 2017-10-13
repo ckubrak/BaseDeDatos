@@ -39,3 +39,7 @@
 **** Int: AVL O(lg(m)) -> O(m.log(m))
 *** Si la tabla no tiene indice -> O(copy(registro))
 *** Si la tabla tiene indices -> O(l+log(m)*C + copy(registro)) (hereda de agregarRegistro)
+
+** join
+*** Requiere que alguna de las dos tablas tenga un indice para ese campo
+*** Si lo buscas en el indice cumple la complejidad
