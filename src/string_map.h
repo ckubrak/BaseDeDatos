@@ -326,11 +326,8 @@ public:
     void clear(){
         //suponiendo que el iterator++ anda bien
         iterator aBorrar = begin();
-        iterator proximo = begin();
         while(aBorrar != end()){
-            proximo++;
-            erase(*aBorrar);
-            aBorrar = proximo;
+            aBorrar = erase(aBorrar);
         }
     }
 
