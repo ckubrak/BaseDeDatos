@@ -14,13 +14,28 @@
 ***** Ver en StringMap
 ***** Ver en arreglo donde se guardan por posiciones
 *** Cada indice es un AVL (int) o StringMap (String)
+*** Tablas: vector de Tries con su nombre y su indice (todo eso guardado en el Nodo)
+
 ** agregarRegistro
 *** Estructura:
 **** Trie -> Se accede por nombre de campos
 **** Complejidad O(1) porque los nombres de los campos estan acotados
-** registroValido
-*** Verificar para cada campo tiene el mismo nombre y tipo que la tabla *_O(C)_*
-*** Verificar que no todos los campos claves sean iguales *_O(c.n.l)_*
+
+** registroValido 
+*** Verificar para cada campo tiene el mismo nombre y tipo que la tabla O(C)
+*** Verificar que no todos los campos claves sean iguales O(c.n.l)
 **** n: pasamos por todos las registros
 **** l: en el peor caso comparamos strings
 **** c: pasas por todos los campos claves
+
+** criterioValido
+*** Busco la tabla en O(1)
+*** \forall Restriccion r \in criterios Me fijo que tenga los mismos campos O(1)
+*** Hay que hacerlo con cada restriccion en el criterio O(cr)
+
+** crearIndice
+*** Pasamos por todos los registros O(m)
+**** String: trie O(l) -> O(m.l)
+**** Int: AVL O(lg(m)) -> O(m.log(m))
+*** Si la tabla no tiene indice -> O(copy(registro))
+*** Si la tabla tiene indices -> O(l+log(m)*C + copy(registro)) (hereda de agregarRegistro)
