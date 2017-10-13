@@ -4,3 +4,23 @@
   - [X] AVL para int y StringMap para string
 
 * TODO cada vez que hacemos desreferenciacion estamos creando un par nuevo  
+
+* Notas
+
+** BD -> Trie con los nombres de las tablas
+*** Guardar la tabla en el Nodo
+*** Guardar el conjunto de indices
+**** TODO ver como guardar los indices 
+***** Ver en StringMap
+***** Ver en arreglo donde se guardan por posiciones
+*** Cada indice es un AVL (int) o StringMap (String)
+** agregarRegistro
+*** Estructura:
+**** Trie -> Se accede por nombre de campos
+**** Complejidad O(1) porque los nombres de los campos estan acotados
+** registroValido
+*** Verificar para cada campo tiene el mismo nombre y tipo que la tabla *_O(C)_*
+*** Verificar que no todos los campos claves sean iguales *_O(c.n.l)_*
+**** n: pasamos por todos las registros
+**** l: en el peor caso comparamos strings
+**** c: pasas por todos los campos claves
