@@ -1,0 +1,8 @@
+* Consultas TP [0%]
+
+  - [ ] Actualizar indices cuando se agrega registro
+  - [ ] Repetidos en indices
+  - [ ] Es muy cabeza castear los ints a string (total en los datos guardan que son)
+  - [ ] AVL para int y StringMap para string
+
+* TODO cada vez que hacemos desreferenciacion estamos creando un par nuevo  
