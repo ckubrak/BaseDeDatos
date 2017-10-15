@@ -38,10 +38,10 @@ private:
             }
         };
 
-        value_type* cs;
+        value_type* cs = nullptr;
         value_type& claveSignificado(){
             assert(estaDef);
-            cs = new value_type(clave, significado);
+            if(cs == nullptr) cs = new value_type(clave, significado);
             return (*cs);
         }
 
