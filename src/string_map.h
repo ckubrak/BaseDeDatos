@@ -159,12 +159,11 @@ public:
     class iterator{
     public:
         typedef string_map<T>::value_type value_type;
-        iterator(const iterator otro&){
+        iterator(const iterator &otro){
 			nodo = otro.nodo;
-		};
+		}
         iterator& operator=(const iterator& otro){
             nodo = otro.nodo;
-            //valor = otro.valor;
         }
 
         bool operator==(const iterator& otro) const{
@@ -175,12 +174,18 @@ public:
 		}
 
         iterator& operator++();
-        iterator operator++(int);
+        iterator operator++(int){
+			iterator resultado(*this);
+			++(this);
+			return resultado;
+		}
 
         value_type& operator*() const{
             return nodo->claveSignificado();
         }
-        value_type /* * */ operator->() const;
+        value_type& operator->() const{
+			return &(operator*()); //segun cplusplus.com esto juega
+		}
 
         friend class string_map;
 
@@ -522,11 +527,11 @@ typename string_map<T>::iterator& string_map<T>::iterator::operator++(){
     }
     return end();
 }
-
+/*
 template<class T>
 typename string_map<T>::iterator::value_type string_map<T>::iterator::operator->() const{
     return *nodo;
-}
+}*/
 
 
 
