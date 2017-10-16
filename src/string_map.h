@@ -159,14 +159,20 @@ public:
     class iterator{
     public:
         typedef string_map<T>::value_type value_type;
-        iterator(const iterator&){};
+        iterator(const iterator otro&){
+			nodo = otro.nodo;
+		};
         iterator& operator=(const iterator& otro){
             nodo = otro.nodo;
             //valor = otro.valor;
         }
 
-        bool operator==(const iterator&) const;
-        bool operator!=(const iterator&) const;
+        bool operator==(const iterator& otro) const{
+			return (nodo == otro.nodo);
+		}
+        bool operator!=(const iterator& a) const{
+			return (nodo != otro.nodo);
+		}
 
         iterator& operator++();
         iterator operator++(int);
