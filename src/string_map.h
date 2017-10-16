@@ -21,13 +21,13 @@ class string_map {
 
     typedef string key_type;
     typedef T mapped_type;
-    typedef std::pair<const key_type, mapped_type> value_type;  //para que usamos value_type?
+    typedef std::pair<const key_type, mapped_type> value_type;
     typedef size_t size_type;
 
 private:
 
     struct Nodo{
-        key_type clave; //lo cambie por puntero para poder poner nullptr
+        key_type clave;
         bool estaDef;
         mapped_type significado;
         Nodo* padre;
@@ -48,7 +48,6 @@ private:
     };
 
     size_type nroClaves;
-    //Nodo* iniciosClaves[96] ;
     Nodo* raiz;
 
     //metodos privados
@@ -158,10 +157,10 @@ private:
 public:
     class iterator{
     public:
-        typedef string_map<T>::value_type value_type;
-        iterator(const iterator otro&){
-			nodo = otro.nodo;
-		};
+      typedef string_map<T>::value_type value_type;
+        iterator(const iterator& otro){
+          nodo = otro.nodo;
+		}
         iterator& operator=(const iterator& otro){
             nodo = otro.nodo;
             //valor = otro.valor;
@@ -170,7 +169,7 @@ public:
         bool operator==(const iterator& otro) const{
 			return (nodo == otro.nodo);
 		}
-        bool operator!=(const iterator& a) const{
+        bool operator!=(const iterator& otro) const{
 			return (nodo != otro.nodo);
 		}
 
@@ -234,7 +233,11 @@ public:
      *
      * \complexity{\O(sn * S)}
      */
-    string_map(const string_map &);
+    string_map(const string_map &aCopiar){
+      for (auto e : aCopiar){
+        insert(e);
+      }
+    }
 
     /** @brief Operador de asignacion
      *
