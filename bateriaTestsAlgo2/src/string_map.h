@@ -18,8 +18,10 @@ using std::pair;
  */
 
 
-template < typename T >
+template<typename T>
 class string_map {
+
+    // Redeficinión de tipos usados por la clase
 
     typedef string key_type;
     typedef T mapped_type;
@@ -28,38 +30,39 @@ class string_map {
 
 private:
 
-    struct Nodo{
+    struct Nodo {
         key_type clave;
         bool estaDef;
         mapped_type significado;
-        Nodo* padre;
-        Nodo* hijos[96];  // Son 128 - 32 caracteres
-        Nodo(const key_type& key, bool def,Nodo* pad) : clave(key),estaDef(def),padre(pad){
-            for(int i = 0; i < 96; i++){
+        Nodo *padre;
+        Nodo *hijos[96];  // Son 128 - 32 caracteres
+        Nodo(const key_type &key, bool def, Nodo *pad) : clave(key), estaDef(def), padre(pad) {
+            for (int i = 0; i < 96; i++) {
                 hijos[i] = nullptr;
             }
         };
 
-        value_type* cs = nullptr;
-        value_type& claveSignificado(){
+        value_type *cs = nullptr;
+
+        value_type &claveSignificado() {
             assert(estaDef);
-            if(cs == nullptr) cs = new value_type(clave, significado);
+            if (cs == nullptr) cs = new value_type(clave, significado);
             return (*cs);
         }
 
     };
 
     size_type nroClaves;
-    Nodo* raiz;
+    Nodo *raiz;
 
     //metodos privados
-	Nodo* minimaClave(Nodo* nodo){ 
-        Nodo* actual = nodo;
+    Nodo *minimaClave(Nodo *nodo) {
+        Nodo *actual = nodo;
         int i;
-        while(!actual->estaDef){
+        while (!actual->estaDef) {
             i = 0;
-            while(i<96){
-                if(actual->hijos[i] != nullptr){
+            while (i < 96) {
+                if (actual->hijos[i] != nullptr) {
                     actual = actual->hijos[i];
                     break;
                 }
@@ -69,16 +72,16 @@ private:
         return actual;
     }
 
-    int charToInt(char ch) const{
-      return (int)ch - 32; 
+    int charToInt(char ch) const {
+        return (int) ch - 32;
     }
 
 
-    int cantHijos(Nodo* nodo){
+    int cantHijos(Nodo *nodo) {
         int i = 0;
         int son = 0;
-        while (i<96){
-            if (nodo->hijos[i] != nullptr){
+        while (i < 96) {
+            if (nodo->hijos[i] != nullptr) {
                 son++;
             }
             i++;
@@ -87,16 +90,17 @@ private:
     }
 
 
-    size_type borrarRecursivo(/*size_type k,*/ Nodo* aBorrar){
+    size_type borrarRecursivo(/*size_type k,*/ Nodo *aBorrar) {
         size_type i = 1;
-        Nodo* hastaDondeBorro = aBorrar->padre;
+        Nodo *hastaDondeBorro = aBorrar->padre;
         //Busco hastaDondeBorro (voy subiendo y borrando hasta llegar a ese, es medio negro.)
-        while (cantHijos(hastaDondeBorro) < 2 && !(hastaDondeBorro->estaDef) && !(hastaDondeBorro == raiz)){ // < 2 o == 1?
+        while (cantHijos(hastaDondeBorro) < 2 && !(hastaDondeBorro->estaDef) &&
+               !(hastaDondeBorro == raiz)) { // < 2 o == 1?
             delete hastaDondeBorro;
             hastaDondeBorro = hastaDondeBorro->padre;
             i++; //Sumo porque es otro mas que voy a tener que borrar.
         }
-        hastaDondeBorro->hijos[charToInt(aBorrar->clave[aBorrar->clave.length()-i])] = nullptr;
+        hastaDondeBorro->hijos[charToInt(aBorrar->clave[aBorrar->clave.length() - i])] = nullptr;
         //es -i porque resta uno por cada nodo que borre hasta llegar a hastaDondeBorro.
         //aBorrar->clave.length()-i me dice qué numero de letra tengo que ver en la palabra
         //aBorrar->clave[aBorrar->clave.length()-i] me dice qué letra es.
@@ -107,7 +111,8 @@ private:
         return i;
     }
 
-    std::ostream& mostrarAux(Nodo* nodo, std::ostream &os){ //Le pasariamos raiz? (solo estoy volviendo a la version anterior de mostrar)
+    std::ostream &mostrarAux(Nodo *nodo,
+                             std::ostream &os) { //Le pasariamos raiz? (solo estoy volviendo a la version anterior de mostrar)
         /*int i = 0;
             os << nodo->clave;
             os << std::endl;
@@ -128,24 +133,24 @@ private:
         if (nodo->estaDef) {
             os << ", ";
             os << nodo->significado;
-        }else{
-            os<<",";
-            os<<"@";
+        } else {
+            os << ",";
+            os << "@";
         }
-        os<<"[";
+        os << "[";
         int j = 0;
-        while (j < 96){
-            if (nodo->hijos[j] != nullptr){
-                os<<nodo->hijos[j]->clave;
-                os<<",";
+        while (j < 96) {
+            if (nodo->hijos[j] != nullptr) {
+                os << nodo->hijos[j]->clave;
+                os << ",";
             }
             j++;
         }
-        os<<"]";
-        os<<std::endl;
+        os << "]";
+        os << std::endl;
         int i = 0;
-        while (i < 96){
-            if (nodo->hijos[i] != nullptr){
+        while (i < 96) {
+            if (nodo->hijos[i] != nullptr) {
                 mostrarAux(nodo->hijos[i], os);
             }
             i++;
@@ -153,182 +158,187 @@ private:
     }
 
 
-
-
 public:
-    class iterator{
+    class iterator {
     public:
-      typedef string_map<T>::value_type value_type;
+        typedef string_map<T>::value_type value_type;
 
-		iterator(): nodo(nullptr){};	
-		
-        iterator(const iterator& otro){
-          nodo = otro.nodo;
-		}
+        iterator() : nodo(nullptr) {};
 
-        iterator& operator=(const iterator& otro){
+        iterator(const iterator &otro) {
             nodo = otro.nodo;
         }
 
-        bool operator==(const iterator& otro) const{
-			return (nodo == otro.nodo);
-		}
-        bool operator!=(const iterator& otro) const{
-			return (nodo != otro.nodo);
-		}
+        iterator &operator=(const iterator &otro) {
+            nodo = otro.nodo;
+        }
 
-        iterator& operator++(){
-			int i = 0;
-			while(i < 96){
-				if (nodo->hijos[i] != nullptr){
-					Nodo* actual = nodo->hijos[i];
-					int k;
-        			while(!actual->estaDef){
-            			k = 0;
-            			while(k<96){
-                			if(actual->hijos[k] != nullptr){
-                    			actual = actual->hijos[k];
-                    			break;
-                			}
-                			k++;
-            			}
-        			}
-				nodo = actual;
-				return *this;
-				//return iterator(minimaClave(nodo->hijos[i]));
-				}
-				i++;
-			}
+        bool operator==(const iterator &otro) const {
+            return (nodo == otro.nodo);
+        }
 
-			Nodo* actual = nodo->padre;
-			int k;
-			int j = ((int)(nodo->clave[nodo->clave.length()-1])) -31;//Quiero ver los hijos del padre del nodo, desde la ultima letra
-			// I.e. Si la ultima letra de la clave es B, empiezo a ver los hijos del padre desde la C.
-			while (actual != nullptr){
-				while(j<96){
-				    if (actual->hijos[j] != nullptr){
-						actual = actual->hijos[j]; 
-        				while(!(actual->estaDef)){
-            				k = 0;
-            				while(k<96){
-                				if(actual->hijos[k] != nullptr){
-                    				actual = actual->hijos[k];
-                    				break;
-                				}
-                				k++;
-            				}
-        				}
-						nodo = actual;
-						return *this;
-						//return iterator(minimaClave(nodo->hijos[i]));
-					}
-				    j++;
-				}
-				j = ((int)(actual->clave[actual->clave.length()-1])) - 31;
-				actual = actual->padre;
-    		}
-			nodo = nullptr;
-			return *this;
-		}
+        bool operator!=(const iterator &otro) const {
+            return (nodo != otro.nodo);
+        }
 
-        iterator operator++(int){
-			iterator resultado(*this);
-			++(*this);
-			return resultado;
-		}
+        iterator &operator++() {
+            int i = 0;
+            while (i < 96) {
+                if (nodo->hijos[i] != nullptr) {
+                    Nodo *actual = nodo->hijos[i];
+                    int k;
+                    while (!actual->estaDef) {
+                        k = 0;
+                        while (k < 96) {
+                            if (actual->hijos[k] != nullptr) {
+                                actual = actual->hijos[k];
+                                break;
+                            }
+                            k++;
+                        }
+                    }
+                    nodo = actual;
+                    return *this;
+                    //return iterator(minimaClave(nodo->hijos[i]));
+                }
+                i++;
+            }
 
-        value_type& operator*() const{
+            Nodo *actual = nodo->padre;
+            int k;
+            int j = ((int) (nodo->clave[nodo->clave.length() - 1])) -
+                    31;//Quiero ver los hijos del padre del nodo, desde la ultima letra
+            // I.e. Si la ultima letra de la clave es B, empiezo a ver los hijos del padre desde la C.
+            while (actual != nullptr) {
+                while (j < 96) {
+                    if (actual->hijos[j] != nullptr) {
+                        actual = actual->hijos[j];
+                        while (!(actual->estaDef)) {
+                            k = 0;
+                            while (k < 96) {
+                                if (actual->hijos[k] != nullptr) {
+                                    actual = actual->hijos[k];
+                                    break;
+                                }
+                                k++;
+                            }
+                        }
+                        nodo = actual;
+                        return *this;
+                        //return iterator(minimaClave(nodo->hijos[i]));
+                    }
+                    j++;
+                }
+                j = ((int) (actual->clave[actual->clave.length() - 1])) - 31;
+                actual = actual->padre;
+            }
+            nodo = nullptr;
+            return *this;
+        }
+
+        iterator operator++(int) {
+            iterator resultado(*this);
+            ++(*this);
+            return resultado;
+        }
+
+        value_type &operator*() const {
             return nodo->claveSignificado();
         }
-        value_type* operator->() const{
-			return (&operator*()); 
-		}
+
+        value_type *operator->() const {
+            return (&operator*());
+        }
 
         friend class string_map;
 
     private:
-        iterator(string_map::Nodo* n):nodo(n){};  
-        Nodo* nodo;
+        iterator(string_map::Nodo *n) : nodo(n) {};
+        Nodo *nodo;
     };
 
-    class const_iterator{
+    class const_iterator {
     public:
         typedef string_map<T>::value_type value_type;
 
-		const_iterator(): nodo(nullptr){};		
+        const_iterator() : nodo(nullptr) {};
 
-        const_iterator(const const_iterator &otro){
-			nodo = otro.nodo;
-		}
-        const_iterator& operator=(const const_iterator &otro){
-			nodo = otro.nodo;
-		}
+        const_iterator(const const_iterator &otro) {
+            nodo = otro.nodo;
+        }
 
-        bool operator==(const const_iterator &otro) const{
-			return (nodo == otro.nodo);
-		}
-        bool operator!=(const const_iterator &otro) const{
-			return (nodo != otro.nodo);
-		}
+        const_iterator &operator=(const const_iterator &otro) {
+            nodo = otro.nodo;
+        }
 
-        const_iterator& operator++(){
-			int i = 0;
-			while(i < 96){
-				if (nodo->hijos[i] != nullptr){
-					Nodo* actual = nodo->hijos[i];
-					int k;
-        			while(!actual->estaDef){
-            			k = 0;
-            			while(k<96){
-                			if(actual->hijos[k] != nullptr){
-                    			actual = actual->hijos[k];
-                    			break;
-                			}
-                			k++;
-            			}
-        			}
-				nodo = actual;
-				return *this;
-				//return iterator(minimaClave(nodo->hijos[i]));
-				}
-				i++;
-			}
+        bool operator==(const const_iterator &otro) const {
+            return (nodo == otro.nodo);
+        }
 
-			Nodo* actual = nodo->padre;
-			int k;
-			int j = ((int)(nodo->clave[nodo->clave.length()-1])) -31;//Quiero ver los hijos del padre del nodo, desde la ultima letra
-			// I.e. Si la ultima letra de la clave es B, empiezo a ver los hijos del padre desde la C.
-			while (actual != nullptr){
-				while(j<96){
-				    if (actual->hijos[j] != nullptr){
-						actual = actual->hijos[j]; 
-        				while(!(actual->estaDef)){
-            				k = 0;
-            				while(k<96){
-                				if(actual->hijos[k] != nullptr){
-                    				actual = actual->hijos[k];
-                    				break;
-                				}
-                				k++;
-            				}
-        				}
-						nodo = actual;
-						return *this;
-						//return iterator(minimaClave(nodo->hijos[i]));
-					}
-				    j++;
-				}
-				j = ((int)(actual->clave[actual->clave.length()-1])) - 31;
-				actual = actual->padre;
-    		}
-			nodo = nullptr;
-			return *this;
-		}
-        const_iterator operator++(int){
-			iterator resultado(*this);
-			++(*this);
-			return resultado;
-		}
+        bool operator!=(const const_iterator &otro) const {
+            return (nodo != otro.nodo);
+        }
+
+        const_iterator &operator++() {
+            int i = 0;
+            while (i < 96) {
+                if (nodo->hijos[i] != nullptr) {
+                    Nodo *actual = nodo->hijos[i];
+                    int k;
+                    while (!actual->estaDef) {
+                        k = 0;
+                        while (k < 96) {
+                            if (actual->hijos[k] != nullptr) {
+                                actual = actual->hijos[k];
+                                break;
+                            }
+                            k++;
+                        }
+                    }
+                    nodo = actual;
+                    return *this;
+                    //return iterator(minimaClave(nodo->hijos[i]));
+                }
+                i++;
+            }
+
+            Nodo *actual = nodo->padre;
+            int k;
+            int j = ((int) (nodo->clave[nodo->clave.length() - 1])) -
+                    31;//Quiero ver los hijos del padre del nodo, desde la ultima letra
+            // I.e. Si la ultima letra de la clave es B, empiezo a ver los hijos del padre desde la C.
+            while (actual != nullptr) {
+                while (j < 96) {
+                    if (actual->hijos[j] != nullptr) {
+                        actual = actual->hijos[j];
+                        while (!(actual->estaDef)) {
+                            k = 0;
+                            while (k < 96) {
+                                if (actual->hijos[k] != nullptr) {
+                                    actual = actual->hijos[k];
+                                    break;
+                                }
+                                k++;
+                            }
+                        }
+                        nodo = actual;
+                        return *this;
+                        //return iterator(minimaClave(nodo->hijos[i]));
+                    }
+                    j++;
+                }
+                j = ((int) (actual->clave[actual->clave.length() - 1])) - 31;
+                actual = actual->padre;
+            }
+            nodo = nullptr;
+            return *this;
+        }
+
+        const_iterator operator++(int) {
+            iterator resultado(*this);
+            ++(*this);
+            return resultado;
+        }
 
         /*value_type& operator*() const{
 			return nodo->claveSignificado();
@@ -340,8 +350,9 @@ public:
         friend class string_map;
 
     private:
-        const_iterator(string_map::Nodo* n): nodo(n){}
-        const Nodo* nodo;
+        const_iterator(string_map::Nodo *n) : nodo(n) {}
+
+        const Nodo *nodo;
     };
 
 
@@ -349,15 +360,15 @@ public:
      *
      * \complexity{\O(1)}
      */
-    string_map(): nroClaves(0){
-        raiz = new Nodo("",false,nullptr);
-    }; 
+    string_map() : nroClaves(0) {
+        raiz = new Nodo("", false, nullptr);
+    };
 
     /** @brief Destruye mapa
      *
      * \complexity{\O(sn * S)}
      */
-    ~string_map(){ //TODO
+    ~string_map() { //TODO
         return;
     }
 
@@ -365,53 +376,53 @@ public:
      *
      * \complexity{\O(sn * S)}
      */
-    string_map(const string_map &aCopiar){
-      for (auto e : aCopiar){
-        insert(e);
-      }
+    string_map(const string_map &aCopiar) {
+        for (auto e : aCopiar) {
+            insert(e);
+        }
     }
 
     /** @brief Operador de asignacion
      *
      * \complexity{\O(sn * S)}
      */
-    string_map& operator=(const string_map &); //TODO
+    string_map &operator=(const string_map &); //TODO
 
     /** @brief Operadores de comparacion
      *
      * \complexity{\O(sn * S)}
      */
-    bool operator==(const string_map& otro) const; //TODO
-    bool operator!=(const string_map& otro) const {return !(*this == otro);}
+    bool operator==(const string_map &otro) const; //TODO
+    bool operator!=(const string_map &otro) const { return !(*this == otro); }
 
     /** @brief Cantidad de apariciones de la clave (0 o 1)
      *  @param key clave a buscar
      *
      *  \complexity{\O(S)}
      */
-    size_type count(const key_type &key) const{
-	if (key == ""){
-		return raiz->estaDef;
-	}	
-        Nodo* actual = raiz;
+    size_type count(const key_type &key) const {
+        if (key == "") {
+            return raiz->estaDef;
+        }
+        Nodo *actual = raiz;
         int i = 0;
-        while(i<key.length()-1){
-            if(actual->hijos[charToInt(key[i])] == nullptr){
-				return 0;
+        while (i < key.length() - 1) {
+            if (actual->hijos[charToInt(key[i])] == nullptr) {
+                return 0;
             }
             actual = actual->hijos[charToInt(key[i])];
             i++;
         }
-		return (actual->estaDef? 1 : 0);
+        return (actual->estaDef ? 1 : 0);
     }
 
     /** @brief Devuelve cantidad de claves definidas */
-    size_t size() const{
+    size_t size() const {
         return nroClaves;
     }
 
     /** @brief devuelve true si size() == 0 */
-    bool empty() const{
+    bool empty() const {
         return nroClaves == 0;
     }
 
@@ -422,25 +433,25 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    mapped_type &operator[](const key_type &key){
-	if (key == ""){
-		raiz->estaDef = true;
-	}	
-		//Si no está
-		if (count(key) == 0) {
-			mapped_type sig;
-			value_type claSig(key,sig);
-			insert(claSig);
-		}
-		
-		int i = 0; 
-    	Nodo* actual = raiz; 
-		while(i<key.length()-1){
-			actual = actual->hijos[charToInt(key[i])];
-        	i++;
-    	}
-		return actual->significado;
-	}
+    mapped_type &operator[](const key_type &key) {
+        if (key == "") {
+            raiz->estaDef = true;
+        }
+        //Si no está
+        if (count(key) == 0) {
+            mapped_type sig;
+            value_type claSig(key, sig);
+            insert(claSig);
+        }
+
+        int i = 0;
+        Nodo *actual = raiz;
+        while (i < key.length() - 1) {
+            actual = actual->hijos[charToInt(key[i])];
+            i++;
+        }
+        return actual->significado;
+    }
 
     /** @brief Acceso a una clave sin modificar mapa
      *  @param key clave a acceder que debe existir previamente
@@ -448,11 +459,11 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    mapped_type& at(const key_type& key){
-        Nodo* actual = raiz;
+    mapped_type &at(const key_type &key) {
+        Nodo *actual = raiz;
         int i = 0;
         //Busco la clave.
-        while(i< key.length()){
+        while (i < key.length()) {
             actual = actual->hijos[charToInt(key[i])];
             i++;
         }
@@ -465,10 +476,10 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    const mapped_type& at(const key_type& key) const{
-        Nodo* actual = raiz;
+    const mapped_type &at(const key_type &key) const {
+        Nodo *actual = raiz;
         int i = 0;
-        while(i<key.length()){
+        while (i < key.length()) {
             actual = actual->hijos[charToInt(key[i])];
             i++;
         }
@@ -476,10 +487,10 @@ public:
     }
 
     /** @brief Vacia el mapa */
-    void clear(){
+    void clear() {
         //suponiendo que el iterator++ anda bien
         iterator aBorrar = begin();
-        while(aBorrar != end()){
+        while (aBorrar != end()) {
             aBorrar = erase(aBorrar);
         }
     }
@@ -506,28 +517,29 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    iterator end(){
+    iterator end() {
         return iterator(raiz);
     }
 
     /// Versiones const de begin/end
-	
-    const_iterator begin() const{
-		int i = 0;
-        while (i<96){
-            if (raiz->hijos[i] != nullptr){
+
+    const_iterator begin() const {
+        int i = 0;
+        while (i < 96) {
+            if (raiz->hijos[i] != nullptr) {
                 return const_iterator(minimaClave(raiz->hijos[i]));
             }
             i++;
         }
         return end();
-	}
+    }
 
-    const_iterator end() const{
-		return const_iterator(raiz);
-	}
+    const_iterator end() const {
+        return const_iterator(raiz);
+    }
 
     const_iterator cbegin() const;
+
     const_iterator cend() const;
 
     /** @brief busca una clave
@@ -536,20 +548,20 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    iterator find(const key_type &key){
+    iterator find(const key_type &key) {
         int i = 0;
-        Nodo* actual = raiz;
-        while (i < key.length()){
-            if (actual->hijos[i] != nullptr){
+        Nodo *actual = raiz;
+        while (i < key.length()) {
+            if (actual->hijos[i] != nullptr) {
                 actual = actual->hijos[i];
-            }else{
+            } else {
                 break;
             }
             i++;
         }
-        if (i = key.length()){
+        if (i = key.length()) {
             return iterator(actual);
-        }else{
+        } else {
             return end();
         }
     }
@@ -569,42 +581,42 @@ public:
      * \complexity{\O(S + copy(value_type))}
      */
 
-    pair<iterator,bool> insert(const value_type& value){  //OJO!
-	
-	if (value.first == ""){
-		raiz->significado = value.second;
-		raiz->estaDef = true;
-	}
+    pair<iterator, bool> insert(const value_type &value) {  //OJO!
+
+        if (value.first == "") {
+            raiz->significado = value.second;
+            raiz->estaDef = true;
+        }
         //value_type = pair<string, T>
         int i = 0; //Iterador del while
-        int n = value.first.length() -1; //n es el largo de la clave. //.
+        int n = value.first.length() - 1; //n es el largo de la clave. //.
         bool inserto = false;
 
-        Nodo* actual = raiz;
+        Nodo *actual = raiz;
         string s = ""; //vamos a ir armando el string clave para cada nodo
-        while(i<n){ // Vamos recorriendo el trie letra a letra, viendo los que ya estan.
-            if(actual->hijos[charToInt(value.first[i])] != nullptr){
+        while (i < n) { // Vamos recorriendo el trie letra a letra, viendo los que ya estan.
+            if (actual->hijos[charToInt(value.first[i])] != nullptr) {
                 s += value.first[i];
                 actual = actual->hijos[charToInt(value.first[i])];
-                if (i == n-1){ //este caso es si recorrimos toda la palabra
-                    if (!actual->estaDef){ //si no esta definida, le doy un significado.
+                if (i == n - 1) { //este caso es si recorrimos toda la palabra
+                    if (!actual->estaDef) { //si no esta definida, le doy un significado.
                         actual->significado = value.second; //.
                         actual->estaDef = true;
                         inserto = true;
                     } //Si tenia significado, este while termina, y no entro al proximo, devolviendo inserto = false y un iterador al nodo.
                 }
                 i++;
-            }else{
+            } else {
                 break;
             }
         }
 
-        while(i<n){ //Si no llegue al ultimo en el while anterior, falta agregar!
+        while (i < n) { //Si no llegue al ultimo en el while anterior, falta agregar!
             s += value.first[i]; //Esto me va a armando la clave de los nodos.
-            if (i != n-1){
-                actual->hijos[charToInt(value.first[i])] = new Nodo(s,false, actual);
-            }else{ //Al llegar al ultimo, le doy el significado, y cambio inserto = true.
-                actual->hijos[charToInt(value.first[i])] = new Nodo(value.first,true, actual);
+            if (i != n - 1) {
+                actual->hijos[charToInt(value.first[i])] = new Nodo(s, false, actual);
+            } else { //Al llegar al ultimo, le doy el significado, y cambio inserto = true.
+                actual->hijos[charToInt(value.first[i])] = new Nodo(value.first, true, actual);
                 actual->hijos[charToInt(value.first[i])]->significado = value.second;
                 inserto = true;
             }
@@ -625,21 +637,21 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    size_type erase(const key_type& key){
+    size_type erase(const key_type &key) {
         //Caso 1: No es hoja: estaDef -> !estaDef.
         //Caso 2: Es hoja: BorrarAux(padres hasta un nodo que tenga hijos u otra clave). Recursivamente?
         nroClaves--;
         int i = 0;
-        Nodo* actual = raiz;
-        while(i<key.length()){ //Busco letra por letra hasta llegar a la clave a borrar.
+        Nodo *actual = raiz;
+        while (i < key.length()) { //Busco letra por letra hasta llegar a la clave a borrar.
             actual = actual->hijos[charToInt(key[i])];
             i++;
         }
 
-        if (cantHijos(actual)>0){ //Caso 1
+        if (cantHijos(actual) > 0) { //Caso 1
             actual->estaDef = false;
             return 0;
-        }else{ //Caso 2
+        } else { //Caso 2
             size_type k = 1;
             return borrarRecursivo(actual);
         }
@@ -651,14 +663,14 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    iterator erase(iterator pos){ //TODO
-		
-	}
+    iterator erase(iterator pos) { //TODO
+
+    }
 
 
 //DEBUGGING! //MOSTRAR TIENE QUE TOMAR UN puntero a nodo y un ostream para poder llamarse recursivamente!!!
 
-    std::ostream& mostrar(std::ostream &os){
+    std::ostream &mostrar(std::ostream &os) {
         mostrarAux(raiz, os);
     }
 
