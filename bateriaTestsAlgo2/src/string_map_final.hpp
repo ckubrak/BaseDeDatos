@@ -1,5 +1,7 @@
 #include "string_map_final.h"
 
+// ========= Clase contenedorSignificado de String_Map =========
+// Esta clase almacena los valores de los nodos, cosa de no tener que usar el constructor default de los tipos.
 template<typename T>
 class string_map<T>::contenedorSignificado{
 public:
@@ -10,7 +12,6 @@ public:
     }
 
     contenedorSignificado(){}
-
     contenedorSignificado(T &a):valor(a){}
 };
 
@@ -18,42 +19,47 @@ public:
 template<typename T>
 struct string_map<T>::Nodo {
     //Variables internas
-    bool estaDef = false;
     key_type clave;
     //mapped_type significado;
     contenedorSignificado* significado = nullptr;
     Nodo *padre;
     Nodo *hijos[96];  // Son 128 - 32 caracteres
-    value_type *cs = nullptr;
+    value_type* claveSignificado = nullptr;
 
     //Constructor del Nodo indefinido
-    Nodo(const key_type &key, bool def, Nodo *pad) : clave(key), estaDef(def), padre(pad) {
+    Nodo(const key_type &key, Nodo *pad) : clave(key), padre(pad) {
         for (int i = 0; i < 96; i++) {
             hijos[i] = nullptr;
         }
     };
 
+    //Destructor de nodo
+    ~Nodo(){
+        if(significado != nullptr) delete significado;
+    }
+
     //Operación de asignado de significado al nodo
     bool definir(mapped_type _sig) {
-        bool acabaDeDefinirlo = !estaDef;
-        estaDef = true;
+        bool acabaDeDefinirlo = !estaDef();
         if(significado == nullptr){
             significado = new contenedorSignificado(_sig);
         }else{
             significado->valor = _sig;
         }
-        if (cs != nullptr) delete cs;
-        cs = new value_type(clave, significado->valor);
         return acabaDeDefinirlo;
     }
 
-    //TODO el problema de nova es que se cagan los punteros D:
-    //TODO NO PORQUE NO TENGO PUNTEROS A COSAS QUE ESTUVIERAN SIN DEFINIR :D
+    bool estaDef() const{
+        return !(significado==nullptr);
+    }
 
-    //Operación de retorno del par <clave, significado>. Requiere que esté definido el nodo.
-    value_type &claveSignificado() {
-        assert(estaDef);
-        return (*cs);
+    void refrescarClaveSignificado(){
+        assert(estaDef());
+        if(claveSignificado==nullptr){
+            claveSignificado = new value_type(clave, significado->valor);
+        }else{
+            claveSignificado->second = significado -> valor;
+        }
     }
 };
 
@@ -89,72 +95,12 @@ public:
 
     //Operador ++
     iterator &operator++() {
-        //TODO
-    }
-
-    //Operador ++int
-    iterator operator++(int) {
-        iterator resultado(*this);
-        ++(*this);
-        return resultado;
-    }
-
-    //Operador *
-    value_type &operator*() const {
-        //TODO
-    }
-
-    //Operador ->
-    value_type *operator->() const {
-        //TODO
-    }
-
-private:
-    //Variables privadas
-    Nodo *nodo;
-
-    //Constructor por parámetro
-    iterator(Nodo *n) : nodo(n) {};
-};
-
-// ========= Clase Const_Iterator de String_Map =========
-template<typename T>
-class string_map<T>::const_iterator {
-public:
-    //Amigos de la clase
-    friend class string_map;
-
-    //Constructor vacío
-    const_iterator() : nodo(nullptr) {};
-
-    //Constructor por copia
-    const_iterator(const const_iterator &otro) {
-        nodo = otro.nodo;
-    }
-
-    //Operador =
-    const_iterator &operator=(const const_iterator &otro) {
-        nodo = otro.nodo;
-    }
-
-    //Operador ==
-    bool operator==(const const_iterator &otro) const {
-        return (nodo == otro.nodo);
-    }
-
-    //Operador !=
-    bool operator!=(const const_iterator &otro) const {
-        return (nodo != otro.nodo);
-    }
-
-    //Operador ++
-    const_iterator &operator++() {
         int i = 0;
         while (i < 96) {
             if (nodo->hijos[i] != nullptr) {
                 Nodo *actual = nodo->hijos[i];
                 int k;
-                while (!actual->estaDef) {
+                while (!actual->estaDef()) {
                     k = 0;
                     while (k < 96) {
                         if (actual->hijos[k] != nullptr) {
@@ -180,7 +126,7 @@ public:
             while (j < 96) {
                 if (actual->hijos[j] != nullptr) {
                     actual = actual->hijos[j];
-                    while (!(actual->estaDef)) {
+                    while (!(actual->estaDef())) {
                         k = 0;
                         while (k < 96) {
                             if (actual->hijos[k] != nullptr) {
@@ -203,18 +149,134 @@ public:
     }
 
     //Operador ++int
-    const_iterator operator++(int) {
-        //TODO esto debería dejar de marcar error al hacer el operator ++
+    iterator operator++(int) {
+        iterator resultado(*this);
+        ++(*this);
+        return resultado;
     }
 
     //Operador *
     value_type &operator*() const {
-        //TODO
+        nodo->refrescarClaveSignificado();
+        return *nodo->claveSignificado;
     }
 
     //Operador ->
     value_type *operator->() const {
-        //TODO
+        nodo->refrescarClaveSignificado();
+        return this->nodo->claveSignificado;
+    }
+
+private:
+    //Variables privadas
+    Nodo *nodo;
+
+    //Constructor por parámetro
+    iterator(Nodo *n) : nodo(n) {};
+};
+
+// ========= Clase Const_Iterator de String_Map =========
+template<typename T>
+class string_map<T>::const_iterator {
+public:
+    //Amigos de la clase
+    friend class string_map;
+
+    //Constructor vacío
+    const_iterator() : nodo(nullptr) {};
+
+    //Constructor por copia
+    const_iterator(const const_iterator &otro) {
+        nodo = otro.nodo;
+        //TODO que actualice acá el pair claveSignificado
+    }
+
+    //Operador =
+    const_iterator &operator=(const const_iterator &otro) {
+        nodo = otro.nodo;
+    }
+
+    //Operador ==
+    bool operator==(const const_iterator &otro) const {
+        return (nodo == otro.nodo);
+    }
+
+    //Operador !=
+    bool operator!=(const const_iterator &otro) const {
+        return (nodo != otro.nodo);
+    }
+
+    //Operador ++
+    const_iterator &operator++() {
+        int i = 0;
+        while (i < 96) {
+            if (nodo->hijos[i] != nullptr) {
+                Nodo *actual = nodo->hijos[i];
+                int k;
+                while (!actual->estaDef()) {
+                    k = 0;
+                    while (k < 96) {
+                        if (actual->hijos[k] != nullptr) {
+                            actual = actual->hijos[k];
+                            break;
+                        }
+                        k++;
+                    }
+                }
+                nodo = actual;
+                return *this;
+                //return iterator(minimaClave(nodo->hijos[i]));
+            }
+            i++;
+        }
+
+        Nodo *actual = nodo->padre;
+        int k;
+        int j = ((int) (nodo->clave[nodo->clave.length() - 1])) - 31;
+        //Quiero ver los hijos del padre del nodo, desde la ultima letra
+        // I.e. Si la ultima letra de la clave es B, empiezo a ver los hijos del padre desde la C.
+        while (actual != nullptr) {
+            while (j < 96) {
+                if (actual->hijos[j] != nullptr) {
+                    actual = actual->hijos[j];
+                    while (!(actual->estaDef())) {
+                        k = 0;
+                        while (k < 96) {
+                            if (actual->hijos[k] != nullptr) {
+                                actual = actual->hijos[k];
+                                break;
+                            }
+                            k++;
+                        }
+                    }
+                    nodo = actual;
+                    return *this;
+                }
+                j++;
+            }
+            j = ((int) (actual->clave[actual->clave.length() - 1])) - 31;
+            actual = actual->padre;
+        }
+        nodo = nullptr;
+        return *this;
+    }
+
+    //Operador ++int
+    const_iterator operator++(int n) {
+        for(int a=0; a<n; a++){
+            ++this;
+        }
+        //TODO que actualice acá el pair claveSignificado
+    }
+
+    //Operador *
+    value_type &operator*() const {
+        return *nodo->claveSignificado;
+    }
+
+    //Operador ->
+    value_type *operator->() const {
+        return nodo->claveSignificado;
     }
 
 private:
@@ -227,19 +289,13 @@ private:
 
 // ========= Métodos públicos de String_Map =========
 template<typename T>
-string_map<T>::string_map() {
-    //El string_map se crea con un nodo de string vacío, sin padre e indefinido.
-    raiz = new Nodo("", false, nullptr);
-}
-
-template<typename T>
 string_map<T>::~string_map() {
-    //TODO debería ser una función recursiva que itere por los hijos borrando todo
+    clear();
 }
 
 template<typename T>
 string_map<T>::string_map(const string_map &aCopiar) {
-    //TODO debería ir avanzando con un iterador copiando todo
+    copiar(aCopiar);
 }
 
 template<typename T>
@@ -270,7 +326,7 @@ typename string_map<T>::size_type string_map<T>::count(const typename string_map
         actual = actual->hijos[posHijo];
         posicionClave++;
     }
-    return (actual->estaDef ? 1 : 0);
+    return (actual->estaDef() ? 1 : 0);
 }
 
 template<typename T>
@@ -284,7 +340,7 @@ bool string_map<T>::empty() const {
 }
 
 template<typename T>
-typename string_map<T>::Nodo *string_map<T>::buscarNodo(const key_type &key) {
+typename string_map<T>::Nodo *string_map<T>::buscarNodo(const key_type &key) const{
     //Busca el nodo que contenga la key. Si no está, lo crea.
     Nodo *actual = raiz;
     //Voy viajando a donde hay que ubicarlo sino
@@ -297,7 +353,7 @@ typename string_map<T>::Nodo *string_map<T>::buscarNodo(const key_type &key) {
         //Próximo hijo a recorrer
         int posHijo = charToInt(clave[posicionClave]);
         //Si este hijo está indefinido, lo defino
-        if (actual->hijos[posHijo] == nullptr) actual->hijos[posHijo] = new Nodo(claveNueva, false, actual);
+        if (actual->hijos[posHijo] == nullptr) actual->hijos[posHijo] = new Nodo(claveNueva, actual);
         //Me muevo a actual, completo claveNueva y aumento posicionClave
         posicionClave++;
         actual = actual->hijos[posHijo];
@@ -309,7 +365,7 @@ template<typename T>
 typename string_map<T>::Nodo *string_map<T>::minimaClave(Nodo *nodo) const {
     Nodo *actual = nodo;
     int i;
-    while (!actual->estaDef) {
+    while (!actual->estaDef()) {
         i = 0;
         while (i < 96) {
             if (actual->hijos[i] != nullptr) {
@@ -336,7 +392,7 @@ typename string_map<T>::const_iterator string_map<T>::begin() const {
 
 template<typename T>
 typename string_map<T>::const_iterator string_map<T>::end() const {
-    return nullptr;
+    return const_iterator(nullptr);
 }
 
 template<typename T>
@@ -353,9 +409,9 @@ bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const{
     while (c1.nodo != nullptr && c2.nodo != nullptr) {
         if (c1.nodo->clave != c2.nodo->clave) {
             return false;
-        }else if (c1.nodo->estaDef != c2.nodo->estaDef) {
+        }else if (c1.nodo->estaDef() != c2.nodo->estaDef()) {
             return false;
-        }else if (c1.nodo->estaDef){
+        }else if (c1.nodo->estaDef()){
             if(c1.nodo->significado->valor != c2.nodo->significado->valor) return false;
         }
         ++c1;
@@ -367,11 +423,83 @@ bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const{
 template<typename T>
 typename string_map<T>::size_type string_map<T>::erase(const key_type &key){
     Nodo *nodo = buscarNodo(key);
-    tamano--;
-    return nodo->estaDef = false;
+    int borrados = 0;
+    if(nodo->estaDef()) {
+        delete nodo->significado;
+        nodo->significado = nullptr;
+        tamano--;
+        borrados++;
+        //TODO si el nodo no tiene hijos debería borrar todos los nodos no definidos de la rama que llega hasta él.
+        //Eso va a pesar O(S) y la búsqueda es O(S) así que es 2(O(S)) que es O(S) en definitiva.
+    }
+    return borrados;
 }
 
 template<typename T>
 typename string_map<T>::iterator string_map<T>::end(){
-    return nullptr;
+    return iterator(nullptr);
+}
+
+template<typename T>
+const typename string_map<T>::mapped_type &string_map<T>::at(const key_type &key) const{
+    Nodo *nodo = buscarNodo(key);
+    assert(nodo->estaDef());
+    return nodo->significado->valor;
+}
+
+template<typename T>
+void string_map<T>::borrarTodo(Nodo *desde){
+    for(int a = 0; a < 96; a++){
+        if(desde->hijos[a]!= nullptr) borrarTodo(desde->hijos[a]);
+    }
+    delete desde;
+}
+
+template<typename T>
+void string_map<T>::clear() {
+    tamano = 0;
+    borrarTodo(raiz);
+    raiz = new Nodo("", nullptr);
+}
+
+template<typename T>
+void string_map<T>::copiar(const string_map<T> &aCopiar){
+    clear();
+    const_iterator it = aCopiar.begin();
+    while(it != aCopiar.end()){
+        key_type clave = it.nodo->clave;
+        mapped_type significado = it.nodo->significado->valor;
+        insert(make_pair(clave, significado));
+        ++it;
+    }
+}
+
+template<typename T>
+typename string_map<T>::iterator string_map<T>::find(const key_type &key){
+    return iterator(buscarNodo(key));
+}
+
+template<typename T>
+typename string_map<T>::const_iterator string_map<T>::find(const key_type &key) const{
+    return const_iterator(buscarNodo(key));
+}
+
+template<typename T>
+typename string_map<T>::iterator string_map<T>::begin(){
+    int i = 0;
+    while (i < 96) {
+        if (raiz->hijos[i] != nullptr) {
+            return iterator(minimaClave(raiz->hijos[i]));
+        }
+        i++;
+    }
+    return end();
+}
+
+template<typename T>
+typename string_map<T>::iterator string_map<T>::erase(iterator pos){
+    Nodo *nodo = pos.nodo;
+    pos++;
+    erase(nodo->clave);
+    return pos;
 }

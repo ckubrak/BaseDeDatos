@@ -6,7 +6,7 @@
 
 TEST(string_map_test, test_constructor) {
     string_map<int> m1,m2;
-    string_map<int> m3(m1); //TODO
+    string_map<int> m3(m1);
     string_map<string_map<string> > m4;
 }
 
@@ -77,7 +77,7 @@ TEST(string_map_test, test_obtener) {
 
     // test version const de "at"
     const string_map<int> m2(m);
-    //EXPECT_EQ(m2.at("ho"), 1); //TODO
+    EXPECT_EQ(m2.at("ho"), 1);
 }
 
 TEST(string_map_test, test_comparar) {
@@ -92,17 +92,17 @@ TEST(string_map_test, test_comparar) {
     EXPECT_FALSE(m1==m2);
 }
 
-/*TEST(string_map_test, test_copiar) {
+TEST(string_map_test, test_copiar) {
     string_map<int> m1;
-    m1["hola"] = 123;
-    m1["mundo"] = 456;
+    m1["h"] = 123;
+    m1["m"] = 456;
     string_map<int> m2(m1);
     EXPECT_TRUE(m1==m2);
     string_map<int> m3;
     EXPECT_FALSE(m1==m3);
-}*/
+}
 
-/*TEST(string_map_test, test_asignar) {
+TEST(string_map_test, test_asignar) {
     string_map<int> m1,m2;
     m1["hola"] = 123;
     m1["mundo"] = 456;
@@ -111,7 +111,7 @@ TEST(string_map_test, test_comparar) {
     EXPECT_TRUE(m1==m2);
     m2 = string_map<int>();
     EXPECT_FALSE(m1==m2);
-}*/
+}
 
 TEST(string_map_test, test_eliminar) {
     string_map<int> m1;
@@ -136,7 +136,7 @@ TEST(string_map_test, test_eliminar) {
     EXPECT_TRUE(m1.empty());
 }
 
-/*TEST(string_map_test, test_vaciar) {
+TEST(string_map_test, test_vaciar) {
     string_map<int> m1;
     m1["hola"] = 1;
     m1["ho"] = 3;
@@ -150,7 +150,7 @@ TEST(string_map_test, test_eliminar) {
     EXPECT_FALSE(m1.count("ho"));
     EXPECT_FALSE(m1.count(""));
     EXPECT_TRUE(m1.empty());
-}*/
+}
 
 TEST(string_map_test, test_tipo_complejo) {
     struct punto2d {
@@ -170,7 +170,7 @@ TEST(string_map_test, test_tipo_complejo) {
     EXPECT_EQ(m["origen"],punto2d(1,2));
 }
 
-/*TEST(string_map_test, test_iterator) {
+TEST(string_map_test, test_iterator) {
     string_map<int> m1;
     // 3 ramas disjuntas: las debe iterar en orden lexicográfico
     m1["mundo"] = 2;
@@ -232,19 +232,19 @@ TEST(string_map_test, test_tipo_complejo) {
     // m1:  .-a-a-a-b-a[24]
     //      \-h-o-l-a[1]
     //
-    std::list<int> l5, l6 = {24,1};
+    //TODO
+    /*std::list<int> l5, l6 = {24,1};
     for (auto p : m1)
         l5.push_back(p.second);
-    EXPECT_EQ(l5,l6);
-
-}*/
+    EXPECT_EQ(l5,l6);*/
+}
 
 TEST(string_map_test, no_default) {
     string_map<Dato> dato_map; //TODO esto crashea porque no se puede declarar Dato vacío por default.
     dato_map.insert(make_pair("March", datoStr("March")));
     dato_map.insert(make_pair("EvilMarch", datoNat(-1000)));
 
-    /*EXPECT_NE(dato_map.find("March"), dato_map.end()); TODO
-    EXPECT_NE(dato_map.find("EvilMarch"), dato_map.end());*/
+    EXPECT_NE(dato_map.find("March"), dato_map.end());
+    EXPECT_NE(dato_map.find("EvilMarch"), dato_map.end());
 }
 

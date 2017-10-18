@@ -36,22 +36,24 @@ public:
      *
      * \complexity{\O(1)}
      */
-    string_map();
+    string_map(){};
     /** @brief Destruye mapa
      *
      * \complexity{\O(sn * S)}
      */
-    ~string_map(); //TODO
+    ~string_map();
     /** @brief Constructor por copia
      *
      * \complexity{\O(sn * S)}
      */
-    string_map(const string_map &aCopiar); //TODO
+    string_map(const string_map &aCopiar);
     /** @brief Operador de asignacion
      *
      * \complexity{\O(sn * S)}
      */
-    string_map &operator=(const string_map &); //TODO
+    string_map &operator=(const string_map &otro){
+        copiar(otro);
+    }
     /** @brief Operadores de comparacion
      *
      * \complexity{\O(sn * S)}
@@ -80,9 +82,8 @@ public:
      */
     mapped_type &operator[](const key_type &key) {
         Nodo *nodo = buscarNodo(key);
-        if (!nodo->estaDef) {
+        if (nodo->significado==nullptr) {
             tamano++;
-            nodo->estaDef = true;
             nodo->significado = new contenedorSignificado();
         }
         return nodo->significado->valor;
@@ -100,7 +101,7 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    const string_map<T>::mapped_type &at(const key_type &key) const; //TODO
+    const string_map<T>::mapped_type &at(const key_type &key) const;
     /** @brief Vacia el mapa */
     void clear();
     /** @brief iterador al primer par <clave,significado> en orden lexicografico
@@ -108,14 +109,14 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    iterator begin(); //TODO
+    string_map<T>::iterator begin();
     /*  @brief iterador al fin de la coleccion
      *
      *  \complexity{\O(S)}
      */
-    iterator end(); //TODO
+    iterator end();
     string_map<T>::const_iterator begin() const;
-    string_map<T>::const_iterator end() const; //TODO
+    string_map<T>::const_iterator end() const;
     const_iterator cbegin() const; //TODO
     const_iterator cend() const; //TODO
     /** @brief busca una clave
@@ -124,14 +125,14 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    iterator find(const key_type &key); //TODO
+    string_map<T>::iterator find(const key_type &key);
     /** @brief busca una clave
      *  @param key clave a buscar
      *  @returns un iterador const al par <clave, significado>
      *
      *  \complexity{\O(S)}
      */
-    const_iterator find(const key_type &key) const; //TODO
+    string_map<T>::const_iterator find(const key_type &key) const;
     /** @brief insercion
     * @param value par <clave,significado> a insertar, no debia existir la clave
     * @returns un par con el iterador resultante y
@@ -152,7 +153,7 @@ public:
     *
     *  \complexity{\O(S)}
     */
-    iterator erase(iterator pos); //TODO
+    string_map<T>::iterator erase(iterator pos);
 
 private:
     //Subclases y estructuras privadas
@@ -160,15 +161,17 @@ private:
     class contenedorSignificado;
 
     //Variables privadas de la clase
-    Nodo *raiz;
+    Nodo *raiz = new Nodo("", nullptr);
     size_t tamano = 0;
 
     //Métodos privados de la clase
     int charToInt(char ch) const;
-    string_map<T>::Nodo *buscarNodo(const key_type &key);
+    string_map<T>::Nodo *buscarNodo(const key_type &key) const; //O(S)
     int medirRama(Nodo *parent) const;
     string_map<T>::Nodo *minimaClave(Nodo *nodo) const;
     bool revisarIgualdad(const string_map<T> &b) const;
+    void borrarTodo(Nodo *desde);
+    void copiar(const string_map<T> &aCopiar);
 };
 
 #include "../src/string_map_final.hpp"
