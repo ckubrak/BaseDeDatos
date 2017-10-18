@@ -458,7 +458,7 @@ void string_map<T>::borrarRecursivo(Nodo *aBorrar) {
         i++;
     }
     hastaDondeBorro->hijos[charToInt(aBorrar->clave[aBorrar->clave.length()- i])] = nullptr;
-    delete  aBorrar;
+    delete aBorrar;
 }
 
 template<typename T>
