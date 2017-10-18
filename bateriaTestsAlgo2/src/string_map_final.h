@@ -68,7 +68,7 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    size_type count(const key_type &key) const; //TODO
+    size_type count(const key_type &key) const;
     /** @brief Devuelve cantidad de claves definidas */
     size_t size() const;
     /** @brief devuelve true si size() == 0 */
@@ -113,9 +113,9 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    iterator end(); //TODO
+    string_map<T>::iterator end();
     string_map<T>::const_iterator begin() const;
-    string_map<T>::const_iterator end() const; //TODO
+    string_map<T>::const_iterator end() const;
     const_iterator cbegin() const; //TODO
     const_iterator cend() const; //TODO
     /** @brief busca una clave
@@ -138,14 +138,14 @@ public:
     *
     * \complexity{\O(S + copy(value_type))}
     */
-    pair<string_map<T>::iterator, bool> insert(const value_type &value); //TODO (Ojo?)
+    pair<string_map<T>::iterator, bool> insert(const value_type &value);
     /** @brief eliminar una clave
      *  @param key clave a eliminar
      *  @returns cantidad de elementos eliminados
      *
      *  \complexity{\O(S)}
      */
-    string_map<T>::size_type erase(const key_type &key); //TODO
+    string_map<T>::size_type erase(const key_type &key);
     /** @brief eliminar una clave mediante irerador
     *  @param pos iterador apuntando a clave a eliminar
     *  @returns iterador apuntando el proximo de la clave eliminada (o end() si era la ultima)

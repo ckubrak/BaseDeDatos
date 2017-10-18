@@ -8,6 +8,7 @@ struct string_map<T>::Nodo {
     bool estaDef;
     key_type clave;
     mapped_type significado;
+    /*TODO hay que redefinir esto como un struct propio, que tenga operador = pero no declare usando el constructor default*/
     Nodo *padre;
     Nodo *hijos[96];  // Son 128 - 32 caracteres
     value_type *cs = nullptr;
@@ -328,18 +329,14 @@ template<typename T>
 bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const{
     const_iterator c1 = begin();
     const_iterator c2 = otro.begin();
-    if (size() != otro.size()) {
-        return false;
-    }
+    if (size() != otro.size()) return false;
     while (c1.nodo != nullptr && c2.nodo != nullptr) {
         if (c1.nodo->clave != c2.nodo->clave) {
             return false;
         }else if (c1.nodo->estaDef != c2.nodo->estaDef) {
             return false;
         }else if (c1.nodo->estaDef){
-            if(c1.nodo->significado != c2.nodo->significado){
-                return false;
-            }
+            if(c1.nodo->significado != c2.nodo->significado) return false;
         }
         ++c1;
         ++c2;
@@ -352,4 +349,9 @@ typename string_map<T>::size_type string_map<T>::erase(const key_type &key){
     Nodo *nodo = buscarNodo(key);
     tamano--;
     return nodo->estaDef = false;
+}
+
+template<typename T>
+typename string_map<T>::iterator string_map<T>::end(){
+    return nullptr;
 }
