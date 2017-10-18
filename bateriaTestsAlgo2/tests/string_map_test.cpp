@@ -18,6 +18,9 @@ TEST(string_map_test, test_insert){
 	m.insert(make_pair("Checosloberto", 3));
 	m.insert(make_pair("Juliberto", 0));
 	m.insert(make_pair("", 45));
+    EXPECT_EQ(m["Bob"], 416419);
+    m["Bob"] = 2;
+    EXPECT_EQ(m["Bob"], 2);
 	EXPECT_TRUE(m.count("Juliberto"));
 	EXPECT_TRUE(m.count("Roberto"));
 	EXPECT_TRUE(m.count("Checosloberto"));
@@ -236,12 +239,12 @@ TEST(string_map_test, test_tipo_complejo) {
 
 }*/
 
-/*TEST(string_map_test, no_default) {
-  string_map<Dato> dato_map; //TODO esto crashea porque no se puede declarar Dato vacío por default.
-  dato_map.insert(make_pair("March", datoStr("March")));
-  dato_map.insert(make_pair("EvilMarch", datoNat(-1000)));
+TEST(string_map_test, no_default) {
+    string_map<Dato> dato_map; //TODO esto crashea porque no se puede declarar Dato vacío por default.
+    dato_map.insert(make_pair("March", datoStr("March")));
+    dato_map.insert(make_pair("EvilMarch", datoNat(-1000)));
 
-  EXPECT_NE(dato_map.find("March"), dato_map.end());
-  EXPECT_NE(dato_map.find("EvilMarch"), dato_map.end());
-}*/
+    /*EXPECT_NE(dato_map.find("March"), dato_map.end()); TODO
+    EXPECT_NE(dato_map.find("EvilMarch"), dato_map.end());*/
+}
 

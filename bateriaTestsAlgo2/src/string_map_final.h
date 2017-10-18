@@ -4,7 +4,6 @@
 #include <cassert>
 #include <string>
 #include <vector>
-#include "string_map.h"
 
 using std::string;
 using std::vector;
@@ -84,8 +83,9 @@ public:
         if (!nodo->estaDef) {
             tamano++;
             nodo->estaDef = true;
+            nodo->significado = new contenedorSignificado();
         }
-        return nodo->significado;
+        return nodo->significado->valor;
     }
     /** @brief Acceso a una clave sin modificar mapa
      *  @param key clave a acceder que debe existir previamente
@@ -113,9 +113,9 @@ public:
      *
      *  \complexity{\O(S)}
      */
-    string_map<T>::iterator end();
+    iterator end(); //TODO
     string_map<T>::const_iterator begin() const;
-    string_map<T>::const_iterator end() const;
+    string_map<T>::const_iterator end() const; //TODO
     const_iterator cbegin() const; //TODO
     const_iterator cend() const; //TODO
     /** @brief busca una clave
@@ -157,6 +157,7 @@ public:
 private:
     //Subclases y estructuras privadas
     struct Nodo;
+    class contenedorSignificado;
 
     //Variables privadas de la clase
     Nodo *raiz;

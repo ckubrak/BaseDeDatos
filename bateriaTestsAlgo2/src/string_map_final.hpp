@@ -1,19 +1,32 @@
 #include "string_map_final.h"
-#include "string_map.h"
+
+template<typename T>
+class string_map<T>::contenedorSignificado{
+public:
+    T valor;
+
+    T &operator=(const T &a){
+        valor = a;
+    }
+
+    contenedorSignificado(){}
+
+    contenedorSignificado(T &a):valor(a){}
+};
 
 // ========= Struct Nodo de String_Map =========
 template<typename T>
 struct string_map<T>::Nodo {
     //Variables internas
-    bool estaDef;
+    bool estaDef = false;
     key_type clave;
-    mapped_type significado;
-    /*TODO hay que redefinir esto como un struct propio, que tenga operador = pero no declare usando el constructor default*/
+    //mapped_type significado;
+    contenedorSignificado* significado = nullptr;
     Nodo *padre;
     Nodo *hijos[96];  // Son 128 - 32 caracteres
     value_type *cs = nullptr;
 
-    //Constructor del Nodo
+    //Constructor del Nodo indefinido
     Nodo(const key_type &key, bool def, Nodo *pad) : clave(key), estaDef(def), padre(pad) {
         for (int i = 0; i < 96; i++) {
             hijos[i] = nullptr;
@@ -24,11 +37,18 @@ struct string_map<T>::Nodo {
     bool definir(mapped_type _sig) {
         bool acabaDeDefinirlo = !estaDef;
         estaDef = true;
-        significado = _sig;
+        if(significado == nullptr){
+            significado = new contenedorSignificado(_sig);
+        }else{
+            significado->valor = _sig;
+        }
         if (cs != nullptr) delete cs;
-        cs = new value_type(clave, significado);
+        cs = new value_type(clave, significado->valor);
         return acabaDeDefinirlo;
     }
+
+    //TODO el problema de nova es que se cagan los punteros D:
+    //TODO NO PORQUE NO TENGO PUNTEROS A COSAS QUE ESTUVIERAN SIN DEFINIR :D
 
     //Operación de retorno del par <clave, significado>. Requiere que esté definido el nodo.
     value_type &claveSignificado() {
@@ -322,7 +342,7 @@ typename string_map<T>::const_iterator string_map<T>::end() const {
 template<typename T>
 typename string_map<T>::mapped_type &string_map<T>::at(const key_type &key) {
     Nodo *nodo = buscarNodo(key);
-    return nodo->significado;
+    return nodo->significado->valor;
 }
 
 template<typename T>
@@ -336,7 +356,7 @@ bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const{
         }else if (c1.nodo->estaDef != c2.nodo->estaDef) {
             return false;
         }else if (c1.nodo->estaDef){
-            if(c1.nodo->significado != c2.nodo->significado) return false;
+            if(c1.nodo->significado->valor != c2.nodo->significado->valor) return false;
         }
         ++c1;
         ++c2;
