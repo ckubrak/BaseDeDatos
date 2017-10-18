@@ -117,8 +117,8 @@ public:
     iterator end();
     string_map<T>::const_iterator begin() const;
     string_map<T>::const_iterator end() const;
-    const_iterator cbegin() const; //TODO
-    const_iterator cend() const; //TODO
+    string_map<T>::const_iterator cbegin() const;
+    string_map<T>::const_iterator cend() const;
     /** @brief busca una clave
      *  @param key clave a buscar
      *  @returns un iterador al par <clave, significado>
@@ -159,6 +159,7 @@ private:
     //Subclases y estructuras privadas
     struct Nodo;
     class contenedorSignificado;
+    class claveSignificado;
 
     //Variables privadas de la clase
     Nodo *raiz = new Nodo("", nullptr);
@@ -172,6 +173,8 @@ private:
     bool revisarIgualdad(const string_map<T> &b) const;
     void borrarTodo(Nodo *desde);
     void copiar(const string_map<T> &aCopiar);
+    void borrarRecursivo(Nodo *aBorrar);
+    int cantHijos(Nodo *nodo);
 };
 
 #include "../src/string_map_final.hpp"

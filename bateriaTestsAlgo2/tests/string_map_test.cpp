@@ -232,15 +232,14 @@ TEST(string_map_test, test_iterator) {
     // m1:  .-a-a-a-b-a[24]
     //      \-h-o-l-a[1]
     //
-    //TODO
-    /*std::list<int> l5, l6 = {24,1};
+    std::list<int> l5, l6 = {24,1};
     for (auto p : m1)
         l5.push_back(p.second);
-    EXPECT_EQ(l5,l6);*/
+    EXPECT_EQ(l5,l6);
 }
 
 TEST(string_map_test, no_default) {
-    string_map<Dato> dato_map; //TODO esto crashea porque no se puede declarar Dato vacío por default.
+    string_map<Dato> dato_map;
     dato_map.insert(make_pair("March", datoStr("March")));
     dato_map.insert(make_pair("EvilMarch", datoNat(-1000)));
 

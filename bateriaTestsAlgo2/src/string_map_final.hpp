@@ -3,16 +3,40 @@
 // ========= Clase contenedorSignificado de String_Map =========
 // Esta clase almacena los valores de los nodos, cosa de no tener que usar el constructor default de los tipos.
 template<typename T>
-class string_map<T>::contenedorSignificado{
+class string_map<T>::contenedorSignificado {
 public:
     T valor;
 
-    T &operator=(const T &a){
+    T &operator=(const T &a) {
         valor = a;
     }
 
-    contenedorSignificado(){}
-    contenedorSignificado(T &a):valor(a){}
+    contenedorSignificado() {}
+
+    contenedorSignificado(T &a) : valor(a) {}
+};
+
+// ========= Clase claveSignificado de String_Map =========
+// Esta clase almacena los pair clave - significado para los operatores * y -> de iterador
+template<typename T>
+class string_map<T>::claveSignificado {
+public:
+    Nodo *miNodo;
+    value_type *cs = nullptr;
+
+    claveSignificado(Nodo *n) : miNodo(n) {}
+
+    ~claveSignificado() {
+        if (cs != nullptr) delete cs;
+    }
+
+    void refrescarClaveSignificado() {
+        if (cs == nullptr) {
+            cs = new value_type(miNodo->clave, miNodo->significado->valor);
+        } else {
+            cs->second = miNodo->significado->valor;
+        }
+    }
 };
 
 // ========= Struct Nodo de String_Map =========
@@ -21,45 +45,38 @@ struct string_map<T>::Nodo {
     //Variables internas
     key_type clave;
     //mapped_type significado;
-    contenedorSignificado* significado = nullptr;
+    contenedorSignificado *significado = nullptr;
     Nodo *padre;
     Nodo *hijos[96];  // Son 128 - 32 caracteres
-    value_type* claveSignificado = nullptr;
+    claveSignificado *cs = nullptr;
 
     //Constructor del Nodo indefinido
     Nodo(const key_type &key, Nodo *pad) : clave(key), padre(pad) {
         for (int i = 0; i < 96; i++) {
             hijos[i] = nullptr;
         }
+        cs = new claveSignificado(this); //TODO ver si no combiene mover esto al definir()
     };
 
     //Destructor de nodo
-    ~Nodo(){
-        if(significado != nullptr) delete significado;
+    ~Nodo() {
+        if (significado != nullptr) delete significado;
+        if (cs != nullptr) delete cs;
     }
 
     //Operación de asignado de significado al nodo
     bool definir(mapped_type _sig) {
         bool acabaDeDefinirlo = !estaDef();
-        if(significado == nullptr){
+        if (significado == nullptr) {
             significado = new contenedorSignificado(_sig);
-        }else{
+        } else {
             significado->valor = _sig;
         }
         return acabaDeDefinirlo;
     }
 
-    bool estaDef() const{
-        return !(significado==nullptr);
-    }
-
-    void refrescarClaveSignificado(){
-        assert(estaDef());
-        if(claveSignificado==nullptr){
-            claveSignificado = new value_type(clave, significado->valor);
-        }else{
-            claveSignificado->second = significado -> valor;
-        }
+    bool estaDef() const {
+        return !(significado == nullptr);
     }
 };
 
@@ -157,14 +174,14 @@ public:
 
     //Operador *
     value_type &operator*() const {
-        nodo->refrescarClaveSignificado();
-        return *nodo->claveSignificado;
+        nodo->cs->refrescarClaveSignificado();
+        return *nodo->cs->cs;
     }
 
     //Operador ->
     value_type *operator->() const {
-        nodo->refrescarClaveSignificado();
-        return this->nodo->claveSignificado;
+        nodo->cs->refrescarClaveSignificado();
+        return nodo->cs->cs;
     }
 
 private:
@@ -188,7 +205,6 @@ public:
     //Constructor por copia
     const_iterator(const const_iterator &otro) {
         nodo = otro.nodo;
-        //TODO que actualice acá el pair claveSignificado
     }
 
     //Operador =
@@ -263,20 +279,21 @@ public:
 
     //Operador ++int
     const_iterator operator++(int n) {
-        for(int a=0; a<n; a++){
+        for (int a = 0; a < n; a++) {
             ++this;
         }
-        //TODO que actualice acá el pair claveSignificado
     }
 
     //Operador *
     value_type &operator*() const {
-        return *nodo->claveSignificado;
+        nodo->cs->refrescarClaveSignificado();
+        return *nodo->cs->cs;
     }
 
     //Operador ->
     value_type *operator->() const {
-        return nodo->claveSignificado;
+        nodo->cs->refrescarClaveSignificado();
+        return *nodo->cs->cs;
     }
 
 private:
@@ -290,7 +307,7 @@ private:
 // ========= Métodos públicos de String_Map =========
 template<typename T>
 string_map<T>::~string_map() {
-    clear();
+    borrarTodo(raiz);
 }
 
 template<typename T>
@@ -340,7 +357,7 @@ bool string_map<T>::empty() const {
 }
 
 template<typename T>
-typename string_map<T>::Nodo *string_map<T>::buscarNodo(const key_type &key) const{
+typename string_map<T>::Nodo *string_map<T>::buscarNodo(const key_type &key) const {
     //Busca el nodo que contenga la key. Si no está, lo crea.
     Nodo *actual = raiz;
     //Voy viajando a donde hay que ubicarlo sino
@@ -402,17 +419,17 @@ typename string_map<T>::mapped_type &string_map<T>::at(const key_type &key) {
 }
 
 template<typename T>
-bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const{
+bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const {
     const_iterator c1 = begin();
     const_iterator c2 = otro.begin();
     if (size() != otro.size()) return false;
     while (c1.nodo != nullptr && c2.nodo != nullptr) {
         if (c1.nodo->clave != c2.nodo->clave) {
             return false;
-        }else if (c1.nodo->estaDef() != c2.nodo->estaDef()) {
+        } else if (c1.nodo->estaDef() != c2.nodo->estaDef()) {
             return false;
-        }else if (c1.nodo->estaDef()){
-            if(c1.nodo->significado->valor != c2.nodo->significado->valor) return false;
+        } else if (c1.nodo->estaDef()) {
+            if (c1.nodo->significado->valor != c2.nodo->significado->valor) return false;
         }
         ++c1;
         ++c2;
@@ -421,36 +438,64 @@ bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const{
 }
 
 template<typename T>
-typename string_map<T>::size_type string_map<T>::erase(const key_type &key){
+int string_map<T>::cantHijos(Nodo *nodo){
+    int cantidad = 0;
+    for (int a = 0; a < 96; a++) {
+        if (nodo->hijos[a] != nullptr) {
+            cantidad++;
+        }
+    }
+    return cantidad;
+}
+
+template<typename T>
+void string_map<T>::borrarRecursivo(Nodo *aBorrar) {
+    size_type i = 1;
+    Nodo *hastaDondeBorro = aBorrar->padre;
+    while (cantHijos(hastaDondeBorro)< 2 && !(hastaDondeBorro->estaDef()) && !(hastaDondeBorro == raiz)) { // < 2 o == 1?
+        delete hastaDondeBorro;
+        hastaDondeBorro = hastaDondeBorro->padre;
+        i++;
+    }
+    hastaDondeBorro->hijos[charToInt(aBorrar->clave[aBorrar->clave.length()- i])] = nullptr;
+    delete  aBorrar;
+}
+
+template<typename T>
+typename string_map<T>::size_type string_map<T>::erase(const key_type &key) {
     Nodo *nodo = buscarNodo(key);
     int borrados = 0;
-    if(nodo->estaDef()) {
-        delete nodo->significado;
-        nodo->significado = nullptr;
+    if (nodo->estaDef()) {
+        //Si tiene hijos, borro solo su significado
+        if (cantHijos(nodo)>0) {
+            delete nodo->significado;
+            nodo->significado = nullptr;
+        } else {
+            borrarRecursivo(nodo);
+        }
+
         tamano--;
         borrados++;
-        //TODO si el nodo no tiene hijos debería borrar todos los nodos no definidos de la rama que llega hasta él.
-        //Eso va a pesar O(S) y la búsqueda es O(S) así que es 2(O(S)) que es O(S) en definitiva.
     }
     return borrados;
 }
 
 template<typename T>
-typename string_map<T>::iterator string_map<T>::end(){
+typename string_map<T>::iterator string_map<T>::end() {
     return iterator(nullptr);
 }
 
 template<typename T>
-const typename string_map<T>::mapped_type &string_map<T>::at(const key_type &key) const{
+const typename string_map<T>::mapped_type &string_map<T>::at(const key_type &key) const {
     Nodo *nodo = buscarNodo(key);
     assert(nodo->estaDef());
     return nodo->significado->valor;
 }
 
 template<typename T>
-void string_map<T>::borrarTodo(Nodo *desde){
-    for(int a = 0; a < 96; a++){
-        if(desde->hijos[a]!= nullptr) borrarTodo(desde->hijos[a]);
+void string_map<T>::borrarTodo(Nodo *desde) {
+    for (int a = 0; a < 96; a++) {
+        if (desde->hijos[a] != nullptr) borrarTodo(desde->hijos[a]);
     }
     delete desde;
 }
@@ -463,10 +508,10 @@ void string_map<T>::clear() {
 }
 
 template<typename T>
-void string_map<T>::copiar(const string_map<T> &aCopiar){
+void string_map<T>::copiar(const string_map<T> &aCopiar) {
     clear();
     const_iterator it = aCopiar.begin();
-    while(it != aCopiar.end()){
+    while (it != aCopiar.end()) {
         key_type clave = it.nodo->clave;
         mapped_type significado = it.nodo->significado->valor;
         insert(make_pair(clave, significado));
@@ -475,17 +520,17 @@ void string_map<T>::copiar(const string_map<T> &aCopiar){
 }
 
 template<typename T>
-typename string_map<T>::iterator string_map<T>::find(const key_type &key){
+typename string_map<T>::iterator string_map<T>::find(const key_type &key) {
     return iterator(buscarNodo(key));
 }
 
 template<typename T>
-typename string_map<T>::const_iterator string_map<T>::find(const key_type &key) const{
+typename string_map<T>::const_iterator string_map<T>::find(const key_type &key) const {
     return const_iterator(buscarNodo(key));
 }
 
 template<typename T>
-typename string_map<T>::iterator string_map<T>::begin(){
+typename string_map<T>::iterator string_map<T>::begin() {
     int i = 0;
     while (i < 96) {
         if (raiz->hijos[i] != nullptr) {
@@ -497,9 +542,19 @@ typename string_map<T>::iterator string_map<T>::begin(){
 }
 
 template<typename T>
-typename string_map<T>::iterator string_map<T>::erase(iterator pos){
+typename string_map<T>::iterator string_map<T>::erase(iterator pos) {
     Nodo *nodo = pos.nodo;
     pos++;
     erase(nodo->clave);
     return pos;
+}
+
+template<typename T>
+typename string_map<T>::const_iterator string_map<T>::cbegin() const {
+    const_iterator(begin());
+}
+
+template<typename T>
+typename string_map<T>::const_iterator string_map<T>::cend() const {
+    const_iterator(end());
 }
