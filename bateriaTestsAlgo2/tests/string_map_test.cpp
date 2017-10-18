@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <list>
+#include <iostream>
 #include "../src/string_map_final.h"
 #include "../src/Dato.h"
 
@@ -41,25 +42,25 @@ TEST(string_map_test, test_definir) {
     EXPECT_TRUE(m.count("hola"));
     EXPECT_FALSE(m.count("hol"));
     EXPECT_FALSE(m.count("holas"));
-    /*m["ho"] = 1; //TODO esto no asigna 1
+    m["ho"] = 1;
     EXPECT_FALSE(m.count(""));
     EXPECT_EQ(m.size(), 2);
     EXPECT_TRUE(m.count("hola"));
     EXPECT_TRUE(m.count("ho"));
     EXPECT_FALSE(m.count("hol"));
     EXPECT_FALSE(m.count("h"));
-    m[""] = 0; //TODO esto tira segfault
+    m[""] = 0;
     EXPECT_EQ(m.size(), 3);
     EXPECT_TRUE(m.count("hola"));
     EXPECT_TRUE(m.count("ho"));
     EXPECT_TRUE(m.count(""));
 
     string_map<string> m2;
-    m2["mundo"] = "feliz";
+    m2["B"] = "feliz";
     string_map<string_map<string> > m3;
-    EXPECT_NE(m2,m3["hola"]);
-    m3["hola"]["mundo"] = "feliz";
-    EXPECT_EQ(m2,m3["hola"]);*/
+    EXPECT_NE(m2,m3["A"]);
+    m3["A"]["B"] = "feliz";
+    EXPECT_EQ(m2,m3["A"]);
 }
 
 /*TEST(string_map_test, test_obtener) {

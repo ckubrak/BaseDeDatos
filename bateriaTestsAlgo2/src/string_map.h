@@ -206,8 +206,8 @@ public:
 
             Nodo *actual = nodo->padre;
             int k;
-            int j = ((int) (nodo->clave[nodo->clave.length() - 1])) -
-                    31;//Quiero ver los hijos del padre del nodo, desde la ultima letra
+            int j = ((int) (nodo->clave[nodo->clave.length() - 1])) - 31;
+            //Quiero ver los hijos del padre del nodo, desde la ultima letra
             // I.e. Si la ultima letra de la clave es B, empiezo a ver los hijos del padre desde la C.
             while (actual != nullptr) {
                 while (j < 96) {

@@ -4,6 +4,7 @@
 #include <cassert>
 #include <string>
 #include <vector>
+#include "string_map.h"
 
 using std::string;
 using std::vector;
@@ -56,8 +57,37 @@ class string_map {
          *
          * \complexity{\O(sn * S)}
          */
-        bool operator==(const string_map &otro) const; //TODO
-        bool operator!=(const string_map &otro) const; //TODO
+        bool operator==(const string_map &otro) const{
+            const_iterator c1 = begin();
+            const_iterator c2 = otro.begin();
+            if(size() != otro.size()) {
+                return false;
+            }
+            while(c1.nodo!=nullptr && c2.nodo!=nullptr){
+                if(c1.nodo->clave != c2.nodo->clave){
+                    return false;
+                }
+                ++c1;
+                ++c2;
+            }
+            return true;
+        }
+        bool operator!=(const string_map &otro) const{
+            //TODO ver cómo hacer para reusar el operador == sin segfaults
+            const_iterator c1 = begin();
+            const_iterator c2 = otro.begin();
+            if(size() != otro.size()) {
+                return true;
+            }
+            while(c1.nodo!=nullptr && c2.nodo!=nullptr){
+                if(c1.nodo->clave != c2.nodo->clave){
+                    return true;
+                }
+                ++c1;
+                ++c2;
+            }
+            return false;
+        }
         /** @brief Cantidad de apariciones de la clave (0 o 1)
          *  @param key clave a buscar
          *
@@ -75,7 +105,12 @@ class string_map {
          *  \complexity{\O(S)}
          */
         mapped_type &operator[](const key_type &key){
-            return buscarNodo(key)->significado;
+            Nodo* nodo = buscarNodo(key);
+            if(!nodo->estaDef){
+                tamano++;
+                nodo->estaDef=true;
+            }
+            return nodo->significado;
         }
         /** @brief Acceso a una clave sin modificar mapa
          *  @param key clave a acceder que debe existir previamente
@@ -104,8 +139,8 @@ class string_map {
          *  \complexity{\O(S)}
          */
         iterator end(); //TODO
-        const_iterator begin() const; //TODO
-        const_iterator end() const; //TODO
+        string_map<T>::const_iterator begin() const;
+        string_map<T>::const_iterator end() const; //TODO
         const_iterator cbegin() const; //TODO
         const_iterator cend() const; //TODO
         /** @brief busca una clave
@@ -150,11 +185,13 @@ class string_map {
 
         //Variables privadas de la clase
         Nodo *raiz;
+        size_t tamano = 0;
 
         //Métodos privados de la clase
         int charToInt(char ch) const;
         string_map<T>::Nodo* buscarNodo(const key_type &key);
         int medirRama(Nodo* parent) const;
+        string_map<T>::Nodo* minimaClave(Nodo *nodo) const;
 };
 
 #include "../src/string_map_final.hpp"
