@@ -452,9 +452,10 @@ template<typename T>
 void string_map<T>::borrarRecursivo(Nodo *aBorrar) {
     size_type i = 1;
     Nodo *hastaDondeBorro = aBorrar->padre;
-    while (cantHijos(hastaDondeBorro)< 2 && !(hastaDondeBorro->estaDef()) && !(hastaDondeBorro == raiz)) { // < 2 o == 1?
+    while (cantHijos(hastaDondeBorro)< 2 && !(hastaDondeBorro->estaDef()) && !(hastaDondeBorro == raiz)) { // < 2 o == 1
+        Nodo* temp = hastaDondeBorro->padre;
         delete hastaDondeBorro;
-        hastaDondeBorro = hastaDondeBorro->padre;
+        hastaDondeBorro = temp;
         i++;
     }
     hastaDondeBorro->hijos[charToInt(aBorrar->clave[aBorrar->clave.length()- i])] = nullptr;
