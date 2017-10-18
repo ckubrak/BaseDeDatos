@@ -1,4 +1,5 @@
 #include "string_map_final.h"
+#include "string_map.h"
 
 // ========= Struct Nodo de String_Map =========
 template<typename T>
@@ -229,7 +230,7 @@ template<typename T>
 pair<typename string_map<T>::iterator, bool> string_map<T>::insert(const value_type &value) {
     Nodo *actual = buscarNodo(value.first);
     bool loAcabaDeDefinir = actual->definir(value.second);
-    if(loAcabaDeDefinir) tamano++;
+    if (loAcabaDeDefinir) tamano++;
     return std::make_pair(iterator(actual), loAcabaDeDefinir);
 };
 
@@ -255,18 +256,6 @@ template<typename T>
 size_t string_map<T>::size() const {
     return tamano;
 }
-
-/*template<typename T>
-int string_map<T>::medirRama(Nodo *parent) const {
-    int resultado = 0;
-    if (parent->estaDef) resultado++;
-    for (int a = 0; a < 96; a++) {
-        if (parent->hijos[a] != nullptr) {
-            resultado += medirRama(parent->hijos[a]);
-        }
-    }
-    return resultado;
-}*/
 
 template<typename T>
 bool string_map<T>::empty() const {
@@ -296,7 +285,7 @@ typename string_map<T>::Nodo *string_map<T>::buscarNodo(const key_type &key) {
 }
 
 template<typename T>
-typename string_map<T>::Nodo* string_map<T>::minimaClave(Nodo *nodo) const {
+typename string_map<T>::Nodo *string_map<T>::minimaClave(Nodo *nodo) const {
     Nodo *actual = nodo;
     int i;
     while (!actual->estaDef) {
@@ -327,4 +316,40 @@ typename string_map<T>::const_iterator string_map<T>::begin() const {
 template<typename T>
 typename string_map<T>::const_iterator string_map<T>::end() const {
     return nullptr;
+}
+
+template<typename T>
+typename string_map<T>::mapped_type &string_map<T>::at(const key_type &key) {
+    Nodo *nodo = buscarNodo(key);
+    return nodo->significado;
+}
+
+template<typename T>
+bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const{
+    const_iterator c1 = begin();
+    const_iterator c2 = otro.begin();
+    if (size() != otro.size()) {
+        return false;
+    }
+    while (c1.nodo != nullptr && c2.nodo != nullptr) {
+        if (c1.nodo->clave != c2.nodo->clave) {
+            return false;
+        }else if (c1.nodo->estaDef != c2.nodo->estaDef) {
+            return false;
+        }else if (c1.nodo->estaDef){
+            if(c1.nodo->significado != c2.nodo->significado){
+                return false;
+            }
+        }
+        ++c1;
+        ++c2;
+    }
+    return true;
+}
+
+template<typename T>
+typename string_map<T>::size_type string_map<T>::erase(const key_type &key){
+    Nodo *nodo = buscarNodo(key);
+    tamano--;
+    return nodo->estaDef = false;
 }
