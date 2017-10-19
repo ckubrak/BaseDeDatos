@@ -11,7 +11,7 @@ public:
         valor = a;
     }
 
-    contenedorSignificado() {}
+    contenedorSignificado() {} //Existe por si se usa el operador [] con una clave que no existe
 
     contenedorSignificado(T &a) : valor(a) {}
 };
