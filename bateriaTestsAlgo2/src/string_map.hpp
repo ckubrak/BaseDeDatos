@@ -1,4 +1,4 @@
-#include "string_map_final.h"
+#include "string_map.h"
 
 // ========= Clase contenedorSignificado de String_Map =========
 // Esta clase almacena los valores de los nodos, cosa de no tener que usar el constructor default de los tipos.
