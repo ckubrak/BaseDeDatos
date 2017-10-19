@@ -3,8 +3,6 @@
 #include <iostream>
 #include "../src/string_map.h"
 #include "../src/Dato.h"
-#include "../src/Tabla.h"
-#include "../src/linear_set.h"
 
 TEST(string_map_test, test_constructor) {
     string_map<int> m1,m2;
@@ -248,11 +246,4 @@ TEST(string_map_test, no_default) {
     EXPECT_NE(dato_map.find("March"), dato_map.end());
     EXPECT_NE(dato_map.find("EvilMarch"), dato_map.end());
 }
-
-TEST(string_map_test, test_tabla) {
-    vector<string> campos_alumnos({"LU", "Ano", "Nombre", "DNI"});
-    //vector<Dato> tipos_alumnos = {tipoNat, tipoNat, tipoStr, tipoStr};
-    //linear_set<string> claves_alumnos = {"LU", "Ano"};
-}
-
 
