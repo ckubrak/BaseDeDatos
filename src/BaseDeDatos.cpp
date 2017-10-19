@@ -9,16 +9,32 @@ void BaseDeDatos::crearTabla(const string &nombre,
                              const linear_set<string> &claves,
                              const vector<string> &campos,
                              const vector<Dato> &tipos) {
-  _nombres_tablas.fast_insert(nombre);
-  _tablas.fast_insert(make_pair(nombre, Tabla(claves, campos, tipos)));
+  _tablas[nombre] = Tabla(claves, campos, tipos);
 }
 
 void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
-  Tabla &t = _tablas.at(nombre);
-  t.agregarRegistro(r);
+  Tabla &t = _tablas[nombre];
+ if (_indices.count(nombre)){
+   //Modificar indices
+   // bool esNat = _indices[nombre].tipo();
+   // set<Registro> registros;
+   // if (esNat){
+   //   registros = _dicc_int[]
+   // }
+   // for (auto ri : registros){
+   // }
+   t.agregarRegistro(r);
+  } else {
+    t.agregarRegistro(r);
+  }
 }
 
-const linear_set<string> &BaseDeDatos::tablas() const { return _nombres_tablas; }
+const linear_set<string> &BaseDeDatos::tablas() const {
+  linear_set<Tabla> result;
+  for (auto t : _tablas){
+    result.fast_insert(t.second);
+  }
+}
 
 const Tabla &BaseDeDatos::dameTabla(const string &nombre) const {
   return _tablas.at(nombre);
@@ -34,14 +50,15 @@ int BaseDeDatos::uso_criterio(const BaseDeDatos::Criterio &criterio) const {
 
 bool BaseDeDatos::registroValido(const Registro &r,
                                  const string &nombre) const {
-  const Tabla &t = _tablas.at(nombre);
-
+  const Tabla &t = _tablas.at(nombre); // O(1)
+  // campos() es O(1)
   return (t.campos() == r.campos() and _mismos_tipos(r, t) and
           _no_repite(r, t));
 }
 
 bool BaseDeDatos::_mismos_tipos(const Registro &r, const Tabla &t) const {
-  for (auto c : t.campos()) {
+  for (auto c : t.campos()) { // O(C)
+    // el if es O(1)
     if (r.dato(c).esNat() != t.tipoCampo(c).esNat()) {
       return false;
     }
@@ -139,4 +156,30 @@ linear_set<BaseDeDatos::Criterio> BaseDeDatos::top_criterios() const {
     }
   }
   return ret;
+}
+
+void BaseDeDatos::crearIndice(const string &nombre, const string &campo){
+  Tabla &t = _tablas[nombre]; // O(1)
+  bool esNat = t.tipoCampo(campo).esNat(); // O(1)
+  Indice indiceNuevo;
+  for (auto r : t.registros()){ //O(m)
+    set<Registro> registro = {r};
+    Dato d = r.dato(campo);
+    bool esNat = d.esNat();
+    if (esNat){
+      if (indiceNuevo._dicc_int.count(d.valorNat())){
+        indiceNuevo._dicc_int[d.valorNat()] = registro;
+      } else {
+        indiceNuevo._dicc_int[d.valorNat()].insert(r);
+      }
+    } else {
+      if (indiceNuevo._dicc_string.count(d.valorStr())){
+        indiceNuevo._dicc_string[d.valorStr()] = registro;
+      }
+      else
+        indiceNuevo._dicc_string[d.valorStr()].insert(r);
+    }
+  }
+  indiceNuevo._esNat = esNat;
+  _indices[nombre].insert(indiceNuevo); // O(1)
 }

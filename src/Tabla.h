@@ -3,6 +3,7 @@
 
 #include <string>
 
+#include "string_map.h"
 #include "linear_map.h"
 #include "linear_set.h"
 #include "Dato.h"
@@ -84,7 +85,7 @@ public:
    * \pre campo \IN campos(\P{this})
    * \post tipoCampo(campo, \P{this})
    *
-   * \complexity{\O(#(campos(\P{this})) * cmp(campo)}
+   * \complexity{\O(1)}
    */
   const Dato &tipoCampo(const string &campo) const;
 
@@ -131,37 +132,37 @@ public:
    */
   const_iterador_registros registros_end() const;
 
-private:
-	  ///////////////////////////////////////////////////////////////////////////////////////////////////
-    /** \name Representación
-     * rep: tabla \TO bool\n
-     * rep(t) \EQUIV 
-     *  * \LNOT \EMPTYSET?(_claves) \LAND
-     *  * _claves \SUBSETEQ _campos \LAND
-     *  * _campos = claves(_tipos) \LAND
-     *  * \FORALL (r : registro) r \IN _registros \IMPLIES (
-     *    * campos(r) = _campos
-     *    * \FORALL (c : campo) c \IN _campos \IMPLIES 
-     *        Nat?(valor(c, r)) = Nat?(obtener(c, _tipos))
-     *    * no se repiten claves \EQUIV 
-     *      \FORALL (r' : registro) r \IN (_registros - {r}) \IMPLIES 
-     *      \LNOT hayCoincidencia(r, _claves, _registros)
-     *  * ) 
-     *
-     * abs: tabla \TO Tabla\n
-     * abs(t) \EQUIV t' \|
-     *  * campos(t') = _campos \LAND
-     *  * claves(t') = _claves \LAND
-     *  * \FORALL (c : string) c \in _campos \IMPLIES tipoCampo(c, r') =
-     *    Nat?(obtener(c, _tipos)) \LAND
-     *  * registros(t') = _registros
-     */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
+ private:
+  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  /** \name Representación
+   * rep: tabla \TO bool\n
+   * rep(t) \EQUIV 
+   *  * \LNOT \EMPTYSET?(_claves) \LAND
+   *  * _claves \SUBSETEQ _campos \LAND
+   *  * _campos = claves(_tipos) \LAND
+   *  * \FORALL (r : registro) r \IN _registros \IMPLIES (
+   *    * campos(r) = _campos
+   *    * \FORALL (c : campo) c \IN _campos \IMPLIES 
+   *        Nat?(valor(c, r)) = Nat?(obtener(c, _tipos))
+   *    * no se repiten claves \EQUIV 
+   *      \FORALL (r' : registro) r \IN (_registros - {r}) \IMPLIES 
+   *      \LNOT hayCoincidencia(r, _claves, _registros)
+   *  * ) 
+   *
+   * abs: tabla \TO Tabla\n
+   * abs(t) \EQUIV t' \|
+   *  * campos(t') = _campos \LAND
+   *  * claves(t') = _claves \LAND
+   *  * \FORALL (c : string) c \in _campos \IMPLIES tipoCampo(c, r') =
+   *    Nat?(obtener(c, _tipos)) \LAND
+   *  * registros(t') = _registros
+   */
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
 
-    /** @{ */
-    linear_set<string> _claves;
+  /** @{ */
+  linear_set<string> _claves;
     linear_set<string> _campos;
-    linear_map<string, Dato> _tipos;
+    string_map<Dato> _tipos;
     linear_set<Registro> _registros;
     /** }@ */
 

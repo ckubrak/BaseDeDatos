@@ -1,12 +1,14 @@
 #ifndef _BASEDEDATOS_H
 #define _BASEDEDATOS_H
 
+#include "Indice.h"
 #include "Registro.h"
 #include "Restriccion.h"
 #include "Tabla.h"
 #include <utility>
 #include <list>
 #include <string>
+#include <map>
 #include "linear_map.h"
 #include "linear_set.h"
 #include "utils.h"
@@ -162,6 +164,8 @@ public:
    */
   linear_set<Criterio> top_criterios() const;
 
+  void crearIndice(const string &nombre, const string &campo);
+
 private:
 	  ///////////////////////////////////////////////////////////////////////////////////////////////////
     /** \name Representación
@@ -187,8 +191,10 @@ private:
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @{ */
-    linear_set<string> _nombres_tablas;
-    linear_map<string, Tabla> _tablas;
+    /* linear_set<string> _nombres_tablas; */
+  string_map<Tabla> _tablas;
+  string_map<set<Indice> > _indices;
+    /* linear_map<string, Tabla> _tablas; */
     linear_map<Criterio, int> _uso_criterios;
     /** @} */
 
@@ -200,7 +206,7 @@ private:
      * \post \P{res} == \FORALL (c : campo) c \IN campos(r) \IMPLIES
      * Nat?(valor(c, r)) == tipoCampo(c, t)
      *
-     * \complexity{O(C^2)}
+     * \complexity{O(C)}
      */
     bool _mismos_tipos(const Registro &r, const Tabla &t) const;
 
