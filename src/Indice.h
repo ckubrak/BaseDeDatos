@@ -2,6 +2,7 @@
 #define INDICES_H
 #include "Tabla.h"
 #include "string_map.h"
+#include "linear_set.h"
 #include <map>
 #include <set>
 
@@ -11,28 +12,38 @@ class Indice{
   /* Indice(const string &campo, const bool tipo){ */
   /*   return; */
   /* } */
-  bool esNat(){
+  bool esNat() const{
     return _esNat;
   }
 
-  string campo(){
+  string campo() const{
     return _campo;
   }
 
-  map<int,set<Registro> > diccInt(){
-    return _dicc_int;
+  map<int,linear_set<Registro> > diccInt() const{
+    return _diccInt;
   }
 
-  string_map< set<Registro> > diccString() {
-    return _dicc_string; 
+  string_map< linear_set<Registro> > diccString() const{
+    return _diccString; 
+  }
+  bool operator==(const Indice& otro) const{
+    bool mismoTipo = this->esNat() == otro.esNat();
+    bool mismoCampo = this->campo() == otro.campo();
+    bool mismoDiccInt = this->diccInt() == otro.diccInt();
+    bool mismoDiccStr = this->diccString() == otro.diccString();
+    return (mismoTipo && mismoCampo && mismoDiccInt && mismoDiccStr);
+  }
+  bool operator!=(const Indice& otro) const{
+    return not (*this == otro);
   }
 
  private:
   friend class BaseDeDatos;
   string _campo;
   bool _esNat;
-  map<int,set<Registro> >  _dicc_int;
-  string_map< set<Registro> > _dicc_string;
+  map<int,linear_set<Registro> >  _diccInt;
+  string_map< linear_set<Registro> > _diccString;
 };
 
 #endif

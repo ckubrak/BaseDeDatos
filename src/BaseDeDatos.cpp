@@ -9,11 +9,12 @@ void BaseDeDatos::crearTabla(const string &nombre,
                              const linear_set<string> &claves,
                              const vector<string> &campos,
                              const vector<Dato> &tipos) {
-  _tablas[nombre] = Tabla(claves, campos, tipos);
+  string_map<Tabla>::value_type nuevaTabla= make_pair(nombre,Tabla(claves, campos, tipos));
+  _tablas.insert(nuevaTabla);
 }
 
 void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
-  Tabla &t = _tablas[nombre];
+  Tabla &t = _tablas.at(nombre);
  if (_indices.count(nombre)){
    //Modificar indices
    // bool esNat = _indices[nombre].tipo();
@@ -159,27 +160,32 @@ linear_set<BaseDeDatos::Criterio> BaseDeDatos::top_criterios() const {
 }
 
 void BaseDeDatos::crearIndice(const string &nombre, const string &campo){
-  Tabla &t = _tablas[nombre]; // O(1)
+  Tabla &t = _tablas.at(nombre); // O(1)
   bool esNat = t.tipoCampo(campo).esNat(); // O(1)
-  Indice indiceNuevo;
+  linear_set<Indice> indices = {};
   for (auto r : t.registros()){ //O(m)
-    set<Registro> registro = {r};
+    Indice indiceNuevo;
+    linear_set<Registro> registro = {r};
     Dato d = r.dato(campo);
     bool esNat = d.esNat();
     if (esNat){
-      if (indiceNuevo._dicc_int.count(d.valorNat())){
-        indiceNuevo._dicc_int[d.valorNat()] = registro;
+      if (indiceNuevo._diccInt.count(d.valorNat())){
+        indiceNuevo._diccInt[d.valorNat()].fast_insert(r);
       } else {
-        indiceNuevo._dicc_int[d.valorNat()].insert(r);
+        map<int,linear_set<Registro> >::value_type nReg = make_pair(d.valorNat(),registro);
+        indiceNuevo._diccInt.insert(nReg);
       }
     } else {
-      if (indiceNuevo._dicc_string.count(d.valorStr())){
-        indiceNuevo._dicc_string[d.valorStr()] = registro;
+      if (indiceNuevo._diccString.count(d.valorStr())){
+        indiceNuevo._diccString.at(d.valorStr()).fast_insert(r);
+      } else {
+        string_map<linear_set <Registro> >::value_type nReg = make_pair(d.valorStr(),registro);
+        indiceNuevo._diccString.insert(nReg);
       }
-      else
-        indiceNuevo._dicc_string[d.valorStr()].insert(r);
     }
+    indiceNuevo._esNat = esNat;
+    indices.insert(indiceNuevo);
   }
-  indiceNuevo._esNat = esNat;
-  _indices[nombre].insert(indiceNuevo); // O(1)
+  string_map<linear_set<Indice> >::value_type parNuevo= make_pair(nombre,indices);
+  _indices.insert(parNuevo); // O(1)
 }

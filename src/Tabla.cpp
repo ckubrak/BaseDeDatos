@@ -8,7 +8,8 @@ Tabla::Tabla(const linear_set<string> &claves,
              const vector<Dato> &tipos) 
     : _claves(claves) {
         for (int i = 0; i < campos.size(); i++) {
-            _tipos.insert(tipos[i]);
+          string_map<Dato>::value_type nuevoTipo = make_pair(campos[i],tipos[i]);
+            _tipos.insert(nuevoTipo);
             _campos.fast_insert(campos[i]);
         }
 }
@@ -27,7 +28,7 @@ const linear_set<string>& Tabla::claves() const {
 }
 
 const Dato& Tabla::tipoCampo(const string& campo) const {
-    return _tipos[campo];
+    return _tipos.at(campo);
 }
 
 const linear_set<Registro> &Tabla::registros() const {

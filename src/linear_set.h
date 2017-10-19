@@ -162,7 +162,7 @@ class linear_set {
    * \complexity{\O(#(\P{this}) * #(other))}
    */
   bool operator==(const linear_set<T> &other) const;
-
+  bool operator!=(const linear_set<T> &other) const {return not (*this == other);}
   /**
    * @brief Devuelve un iterador al inicio del conjunto.
    *
