@@ -177,6 +177,6 @@ private:
     int cantHijos(Nodo *nodo);
 };
 
-#include "../src/string_map_final.hpp"
+#include "string_map.hpp"
 
 #endif //STRING_MAP_STRING_MAP_H

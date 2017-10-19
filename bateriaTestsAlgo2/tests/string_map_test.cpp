@@ -1,7 +1,7 @@
 #include <gtest/gtest.h>
 #include <list>
 #include <iostream>
-#include "../src/string_map_final.h"
+#include "../src/string_map.h"
 #include "../src/Dato.h"
 
 TEST(string_map_test, test_constructor) {
