@@ -9,6 +9,7 @@
 #include <list>
 #include <string>
 #include <map>
+#include "const_iterador_registros.h"
 #include "linear_map.h"
 #include "linear_set.h"
 #include "utils.h"
@@ -32,6 +33,7 @@ public:
   friend class join_iterator;
   /** @brief Criterio de búsqueda para una base de datos */
   typedef linear_set<Restriccion> Criterio;
+  typedef Tabla::const_iterador_registros const_iterador_registros; 
 
   // Forward declarations
   /* class join_iterator; */

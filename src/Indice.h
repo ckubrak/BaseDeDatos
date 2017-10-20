@@ -3,15 +3,16 @@
 #include "Tabla.h"
 #include "string_map.h"
 #include "linear_set.h"
+#include "const_iterador_registros.h"
 #include <map>
 #include <set>
+
 
 using namespace std;
 class Indice{
  public:
-  /* Indice(const string &campo, const bool tipo){ */
-  /*   return; */
-  /* } */
+  typedef string_map< linear_set<Tabla::const_iterador_registros> > diccStr;
+  typedef map<int,linear_set<Tabla::const_iterador_registros> > diccInt;
   bool esNat() const{
     return _esNat;
   }
@@ -20,18 +21,18 @@ class Indice{
     return _campo;
   }
 
-  map<int,linear_set<Registro> > diccInt() const{
+  diccInt diccionarioInt() const{
     return _diccInt;
   }
 
-  string_map< linear_set<Registro> > diccString() const{
-    return _diccString; 
+  diccStr diccionarioString() const{
+    return _diccString;
   }
   bool operator==(const Indice& otro) const{
     bool mismoTipo = this->esNat() == otro.esNat();
     bool mismoCampo = this->campo() == otro.campo();
-    bool mismoDiccInt = this->diccInt() == otro.diccInt();
-    bool mismoDiccStr = this->diccString() == otro.diccString();
+    bool mismoDiccInt = this->diccionarioInt() == otro.diccionarioInt();
+    bool mismoDiccStr = this->diccionarioString() == otro.diccionarioString();
     return (mismoTipo && mismoCampo && mismoDiccInt && mismoDiccStr);
   }
   bool operator!=(const Indice& otro) const{
@@ -42,8 +43,8 @@ class Indice{
   friend class BaseDeDatos;
   string _campo;
   bool _esNat;
-  map<int,linear_set<Registro> >  _diccInt;
-  string_map< linear_set<Registro> > _diccString;
+  diccInt _diccInt;
+  diccStr _diccString;
 };
 
 #endif

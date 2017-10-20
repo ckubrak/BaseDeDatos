@@ -16,12 +16,12 @@ void BaseDeDatos::crearTabla(const string &nombre,
 void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
   Tabla &t = _tablas.at(nombre);
  if (_indices.count(nombre)){
-   for (auto i : _indices.at(nombre)){
-     if (i.esNat()){
-       int nuevo = r.dato(i.campo()).valorNat();
-       // i._diccInt.(make_pair(nuevo, r));
-     }
-   }
+   // for (auto i : _indices.at(nombre)){
+   //   if (i.esNat()){
+   //     int nuevo = r.dato(i.campo()).valorNat();
+   //     i._diccInt.(make_pair(nuevo, r));
+   //   }
+   // }
    //i._diccInt.insert()
    //}
      //}
@@ -172,23 +172,23 @@ void BaseDeDatos::crearIndice(const string &nombre, const string &campo){
   Tabla &t = _tablas.at(nombre); // O(1)
   bool esNat = t.tipoCampo(campo).esNat(); // O(1)
   linear_set<Indice> indices = {};
-  for (auto r : t.registros()){ //O(m)
+  for (auto r = t.registros_begin(); r != t.registros_end(); ++r ) {
     Indice indiceNuevo;
-    linear_set<Registro> registro = {r};
-    Dato d = r.dato(campo);
+    linear_set<const_iterador_registros> registro = {r};
+    Dato d = r->dato(campo);
     bool esNat = d.esNat();
     if (esNat){
       if (indiceNuevo._diccInt.count(d.valorNat())){
         indiceNuevo._diccInt[d.valorNat()].fast_insert(r);
       } else {
-        map<int,linear_set<Registro> >::value_type nReg = make_pair(d.valorNat(),registro);
+        map<int,linear_set<const_iterador_registros> >::value_type nReg = make_pair(d.valorNat(),registro);
         indiceNuevo._diccInt.insert(nReg);
       }
     } else {
       if (indiceNuevo._diccString.count(d.valorStr())){
         indiceNuevo._diccString.at(d.valorStr()).fast_insert(r);
       } else {
-        string_map<linear_set <Registro> >::value_type nReg = make_pair(d.valorStr(),registro);
+        string_map<linear_set <const_iterador_registros> >::value_type nReg = make_pair(d.valorStr(),registro);
         indiceNuevo._diccString.insert(nReg);
       }
     }
