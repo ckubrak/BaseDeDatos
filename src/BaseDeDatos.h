@@ -272,6 +272,6 @@ private:
     pair<vector<string>, vector<Dato> > _tipos_tabla(const Tabla &t);
     /** @} */
 };
-#include "join_iterator.h"
+/* #include "join_iterator.h" */
 
 #endif
