@@ -29,8 +29,12 @@ using namespace std;
 class BaseDeDatos {
 
 public:
+  friend class join_iterator;
   /** @brief Criterio de búsqueda para una base de datos */
   typedef linear_set<Restriccion> Criterio;
+
+  // Forward declarations
+  /* class join_iterator; */
 
   /**
    * @brief Inicializa una base de datos sin tablas.
@@ -166,6 +170,14 @@ public:
 
   void crearIndice(const string &nombre, const string &campo);
 
+  /* join_iterator join(const string& tabla1, const string& tabla2, */
+  /*                    const string& campo); */
+  /* join_iterator join_end(); */
+
+  /* join_iterator join_iterator::operator++(); */
+
+  /* Registro join_iterator::operator*(); */
+
 private:
 	  ///////////////////////////////////////////////////////////////////////////////////////////////////
     /** \name Representación
@@ -260,5 +272,6 @@ private:
     pair<vector<string>, vector<Dato> > _tipos_tabla(const Tabla &t);
     /** @} */
 };
+#include "join_iterator.h"
 
 #endif

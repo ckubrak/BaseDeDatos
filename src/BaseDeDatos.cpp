@@ -15,14 +15,16 @@ void BaseDeDatos::crearTabla(const string &nombre,
 
 void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
   Tabla &t = _tablas.at(nombre);
-  if (_indices.count(nombre)){
-  //for (auto i : _indices.at(nombre)){
-  // if (i.esNat()){
-  //   for (auto )
-  //   string_map<linear_set <Registro> >::value_type nReg = make_pair(r.valorStr(),registro);
-  //   i._diccInt.insert()
-  // }
-  //}
+ if (_indices.count(nombre)){
+   for (auto i : _indices.at(nombre)){
+     if (i.esNat()){
+       int nuevo = r.dato(i.campo()).valorNat();
+       // i._diccInt.(make_pair(nuevo, r));
+     }
+   }
+   //i._diccInt.insert()
+   //}
+     //}
    //Modificar indices
    // bool esNat = _indices[nombre].tipo();
    // set<Registro> registros;
@@ -186,7 +188,7 @@ void BaseDeDatos::crearIndice(const string &nombre, const string &campo){
       if (indiceNuevo._diccString.count(d.valorStr())){
         indiceNuevo._diccString.at(d.valorStr()).fast_insert(r);
       } else {
-        i.
+        string_map<linear_set <Registro> >::value_type nReg = make_pair(d.valorStr(),registro);
         indiceNuevo._diccString.insert(nReg);
       }
     }
