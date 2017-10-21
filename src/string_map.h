@@ -13,7 +13,7 @@ using std::pair;
 
 //falta una descripcion de la clase y el "se explica con". mirar Tabla.h//TODO
 
-//pasar todas las descripciones de funciones publicas y privadas a lenguaje formal //TODO
+
 
 /**
  * Implementacion de map<string,T> sobre Trie
@@ -263,9 +263,30 @@ public:
 
 private:
 
-	/*
-	aca va rep y abs
-	*/
+	
+   /** \name Representación
+   * rep: string_map \TO bool\n
+   * rep(e) \EQUIV 
+   *  * La cantidad de nodos cuyo significado no es NULL es igual a tamaño
+   *  * raiz != NULL
+   *  * raiz->clave \IGOBS <>
+   *  * (\FORALL Nodo n que pertenece al arbol) (n.clave \IGOBS <> \IMPLIES n.padre \IGOBS NULL) \LAND (\FORALL 0<=i<=95) n.hijos[i] != NULL \IMPLIES (n.hijos[i]->clave \IGOBS n.clave O intToChar(i))
+   *  * (\FORALL Nodo n que pertenece al arbol) (\FORALL 0<=i<=95) n[i] \IGOBS NULL \IMPLIES n.sig != NULL
+     
+
+   Aclaracion: suponemos que existe el TAD Char. La funcion intToChar recibe un int y devuelve un char correspondiente (con i= 0 retorna el carácter numero 32 de ASCII, hasta el 95 que retorna el carácter 127).
+
+Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD Nodo. Consideramos que esto escapaba a la consigna del trabajo Práctico.
+
+Nota: Puede pasar que significado y cs no esten sincronizados.
+
+Abs: string_map \TO Dicc(string,alfa)        {Rep(e)}\n 
+   * (\FORALL e:estr(alfa)) Abs(e)\IGOBS d: Dicc(string,alfa) |\n (\FORALL s: string) def?(s,d) \EQUIV ((Existe un unico Nodo n) n pertenece al string map \LAND n.clave \IGOBS s \LAND n->significado != NULL \LAND ((n->significado).valor) \IGOBS obtener(s,d)
+   *
+   
+   
+
+   **/
 
 
 
