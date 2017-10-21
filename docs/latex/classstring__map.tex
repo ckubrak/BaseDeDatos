@@ -95,7 +95,7 @@ pair$<$ \hyperlink{classstring__map}{string\+\_\+map}$<$ T $>$\\*
 \begin{DoxyCompactList}\small\item\em Busca y borra la clave desde el iterador pasado por parámetro devolviendo un iterador al siguiente. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{Métodos privados}
 \begin{Indent}{\bf Metodos privados}\par
-{\em \}@ }\begin{DoxyCompactItemize}
+\begin{DoxyCompactItemize}
 \item 
 int \hyperlink{classstring__map_a8e12bfe4444321c6147f3b7b20c68c05}{char\+To\+Int} (char ch) const 
 \begin{DoxyCompactList}\small\item\em Dado una letra, devuelve el int que le corresponde. \end{DoxyCompactList}\item 
@@ -129,7 +129,7 @@ int \hyperlink{classstring__map_ac6a88a22faefe94a12ad9f78c047203d}{cant\+Hijos} 
 
 Aclaracion\+: suponemos que existe el T\+A\+D Char. La funcion int\+To\+Char recibe un int y devuelve un char correspondiente (con i= 0 retorna el carácter numero 32 de A\+S\+C\+I\+I, hasta el 95 que retorna el carácter 127).
 
-Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro T\+A\+D Nodo.\+Consideramos que esto escapaba a la consigna del Trabajo Práctico.~\newline
+Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro T\+A\+D \hyperlink{structstring__map_1_1Nodo}{Nodo}. Consideramos que esto escapaba a la consigna del Trabajo Práctico.~\newline
 
 
 Nota\+: Puede pasar que significado y cs no esten sincronizados.~\newline
@@ -139,12 +139,12 @@ Abs\+: \hyperlink{classstring__map}{string\+\_\+map} $\to$ Dicc(string,alfa) \{R
  ( $\forall$ e\+:estr(alfa)) Abs(e) $=_{\rm obs}$ d\+: Dicc(string,alfa) $\vert$~\newline
  ( $\forall$ s\+: string) def?(s,d) $\equiv$ ((Existe un unico \hyperlink{structstring__map_1_1Nodo}{Nodo} n) n pertenece al string map $\land$ n.\+clave $=_{\rm obs}$ s $\land$ n-\/$>$significado != N\+U\+L\+L $\land$ ((n-\/$>$significado).valor) $=_{\rm obs}$ obtener(s,d) }\begin{DoxyCompactItemize}
 \item 
-\hypertarget{classstring__map_a26da8481a5a55413d82244e98ba3b923}{\hyperlink{structstring__map_1_1Nodo}{Nodo} $\ast$ {\bfseries raiz} = new \hyperlink{structstring__map_1_1Nodo}{Nodo}(\char`\"{}\char`\"{}, nullptr)}\label{classstring__map_a26da8481a5a55413d82244e98ba3b923}
+\hypertarget{classstring__map_a26da8481a5a55413d82244e98ba3b923}{\hyperlink{structstring__map_1_1Nodo}{Nodo} $\ast$ \hyperlink{classstring__map_a26da8481a5a55413d82244e98ba3b923}{raiz} = new \hyperlink{structstring__map_1_1Nodo}{Nodo}(\char`\"{}\char`\"{}, nullptr)}\label{classstring__map_a26da8481a5a55413d82244e98ba3b923}
 
-\item 
-\hypertarget{classstring__map_aa6d1368586c5ab95f1ad0fc39723bf72}{size\+\_\+t {\bfseries tamano} = 0}\label{classstring__map_aa6d1368586c5ab95f1ad0fc39723bf72}
+\begin{DoxyCompactList}\small\item\em Variables privadas Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla. \end{DoxyCompactList}\item 
+\hypertarget{classstring__map_aa6d1368586c5ab95f1ad0fc39723bf72}{size\+\_\+t \hyperlink{classstring__map_aa6d1368586c5ab95f1ad0fc39723bf72}{tamano} = 0}\label{classstring__map_aa6d1368586c5ab95f1ad0fc39723bf72}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em Variables privadas Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \end{Indent}
 
 
@@ -488,10 +488,7 @@ this $=_{\rm obs}$ a\+Copiar
 \end{DoxyPostcond}
 
 \begin{DoxyDescription}
-\item[Complejidad Temporal]$O$(
-\begin{DoxyDescription}
-\item[Complejidad Temporal]$O$( $\sum_{i=0}^{S}96^{i}$)
-\end{DoxyDescription})
+\item[Complejidad Temporal]$O$( $\sum_{i=0}^{S}96^{i}*copy(significado)$)
 \end{DoxyDescription}\hypertarget{classstring__map_a7eb4798cb06e5fb6eecc51a7de9d9a16}{\index{string\+\_\+map@{string\+\_\+map}!count@{count}}
 \index{count@{count}!string\+\_\+map@{string\+\_\+map}}
 \subsubsection[{count}]{\setlength{\rightskip}{0pt plus 5cm}template$<$typename T$>$ {\bf string\+\_\+map}$<$ T $>$\+::size\+\_\+type {\bf string\+\_\+map}$<$ T $>$\+::count (

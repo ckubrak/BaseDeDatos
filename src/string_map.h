@@ -150,7 +150,7 @@ public:
      *\pre  true
      *\post this \IGOBS vacio
      *
-     *  \complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)}
+     *\complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)}
      */
     void clear();
     /** @brief Iterador al primer par <clave,significado> en orden lexicografico
@@ -260,7 +260,7 @@ private:
     *
     Aclaracion: suponemos que existe el TAD Char. La funcion intToChar recibe un int y devuelve un char correspondiente (con i= 0 retorna el carácter numero 32 de ASCII, hasta el 95 que retorna el carácter 127).
     *
-    Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD Nodo.Consideramos que esto escapaba a la consigna del Trabajo Práctico.\n
+    Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD Nodo. Consideramos que esto escapaba a la consigna del Trabajo Práctico.\n
     *
     *
     Nota: Puede pasar que significado y cs no esten sincronizados.\n
@@ -274,11 +274,16 @@ private:
     struct Nodo;
     class contenedorSignificado;
     class claveSignificado;
- /** @{ */
+
+	/** @brief Variables privadas
+		Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla.
+	*/
     //Variables privadas de la clase
     Nodo *raiz = new Nodo("", nullptr);
+	/** @brief Variables privadas
+		Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla.
+	*/
     size_t tamano = 0;
-/** }@ */
 
 /** \name Metodos privados
 */
@@ -340,7 +345,7 @@ private:
    * \pre true 
    * \post this \IGOBS aCopiar
    *
-   * \complexity{\O(\complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)})}
+   *\complexity{\O(\f$\sum_{i=0}^{S}96^{i}*copy(significado)\f$)}
    */
 
     void copiar(const string_map<T> &aCopiar);

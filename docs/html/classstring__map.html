@@ -205,8 +205,6 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
 Métodos privados</h2></td></tr>
 <tr><td colspan="2"><div class="groupHeader">Metodos privados</div></td></tr>
-<tr><td colspan="2"><div class="groupText"><p>}@ </p>
-</div></td></tr>
 <tr class="memitem:a8e12bfe4444321c6147f3b7b20c68c05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#a8e12bfe4444321c6147f3b7b20c68c05">charToInt</a> (char ch) const </td></tr>
 <tr class="memdesc:a8e12bfe4444321c6147f3b7b20c68c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dado una letra, devuelve el int que le corresponde.  <a href="#a8e12bfe4444321c6147f3b7b20c68c05">Más...</a><br /></td></tr>
 <tr class="separator:a8e12bfe4444321c6147f3b7b20c68c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -245,7 +243,7 @@ Atributos privados</h2></td></tr>
 </li>
 </ul>
 <p>Aclaracion: suponemos que existe el TAD Char. La funcion intToChar recibe un int y devuelve un char correspondiente (con i= 0 retorna el carácter numero 32 de ASCII, hasta el 95 que retorna el carácter 127).</p>
-<p>Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD Nodo.Consideramos que esto escapaba a la consigna del Trabajo Práctico.<br />
+<p>Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a>. Consideramos que esto escapaba a la consigna del Trabajo Práctico.<br />
 </p>
 <p>Nota: Puede pasar que significado y cs no esten sincronizados.<br />
 </p>
@@ -254,10 +252,12 @@ Atributos privados</h2></td></tr>
  ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> s: string) def?(s,d) <img class="formulaInl" alt="$\equiv$" src="form_8.png"/> ((Existe un unico <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> n) n pertenece al string map <img class="formulaInl" alt="$\land$" src="form_1.png"/> n.clave <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> s <img class="formulaInl" alt="$\land$" src="form_1.png"/> n-&gt;significado != NULL <img class="formulaInl" alt="$\land$" src="form_1.png"/> ((n-&gt;significado).valor) <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> obtener(s,d) </p>
 </div></td></tr>
 <tr class="memitem:a26da8481a5a55413d82244e98ba3b923"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26da8481a5a55413d82244e98ba3b923"></a>
-<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>raiz</b> = new <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a>(&quot;&quot;, nullptr)</td></tr>
+<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#a26da8481a5a55413d82244e98ba3b923">raiz</a> = new <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a>(&quot;&quot;, nullptr)</td></tr>
+<tr class="memdesc:a26da8481a5a55413d82244e98ba3b923"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variables privadas Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla. <br /></td></tr>
 <tr class="separator:a26da8481a5a55413d82244e98ba3b923"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6d1368586c5ab95f1ad0fc39723bf72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6d1368586c5ab95f1ad0fc39723bf72"></a>
-size_t&#160;</td><td class="memItemRight" valign="bottom"><b>tamano</b> = 0</td></tr>
+size_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#aa6d1368586c5ab95f1ad0fc39723bf72">tamano</a> = 0</td></tr>
+<tr class="memdesc:aa6d1368586c5ab95f1ad0fc39723bf72"><td class="mdescLeft">&#160;</td><td class="mdescRight">Variables privadas Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla. <br /></td></tr>
 <tr class="separator:aa6d1368586c5ab95f1ad0fc39723bf72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
@@ -749,11 +749,7 @@ template&lt;typename T&gt; </div>
 <dl class="section post"><dt>Postcondición</dt><dd>this <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> aCopiar</dd></dl>
 <dl class="section complexity">
 <dt>Complejidad Temporal</dt>
-<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(<dl class="section complexity">
-<dt>Complejidad Temporal</dt>
-<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>( <img class="formulaInl" alt="$\sum_{i=0}^{S}96^{i}$" src="form_23.png"/>)</dd>
-</dl>
-)</dd>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>( <img class="formulaInl" alt="$\sum_{i=0}^{S}96^{i}*copy(significado)$" src="form_24.png"/>)</dd>
 </dl>
 
 </div>

@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['raiz',['raiz',['../classstring__map.html#a26da8481a5a55413d82244e98ba3b923',1,'string_map']]],
   ['registro',['Registro',['../classRegistro.html',1,'Registro'],['../classRegistro.html#af3717314d0e658a463ffd8ac5b073441',1,'Registro::Registro()']]],
   ['registros_5fbegin',['registros_begin',['../classTabla.html#aafc1aedd4c2c222387591c3b772d56a9',1,'Tabla']]],
   ['registros_5fend',['registros_end',['../classTabla.html#ac736bbd3065cc25c36ef258fcddaea50',1,'Tabla']]],

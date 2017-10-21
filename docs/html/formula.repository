@@ -22,3 +22,4 @@
 \form#21:$asd$
 \form#22:$\sum_{i=0}^{9}96^{i}$
 \form#23:$\sum_{i=0}^{S}96^{i}$
+\form#24:$\sum_{i=0}^{S}96^{i}*copy(significado)$
