@@ -23,9 +23,9 @@ void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
       bool esNat = t.tipoCampo(c).esNat();
       if (_indices.at(nombre).count(c)){
         if(esNat){
-          _indices[nombre][c]._diccInt[r.dato(c).valorNat()].push_front(ultimo);
+          _indices[nombre][c]._diccInt[r.dato(c).valorNat()].push_back(ultimo);
         } else {
-          _indices[nombre][c]._diccString[r.dato(c).valorStr()].push_front(ultimo);
+          _indices[nombre][c]._diccString[r.dato(c).valorStr()].push_back(ultimo);
         }
       }
     }
@@ -69,6 +69,7 @@ bool BaseDeDatos::_mismos_tipos(const Registro &r, const Tabla &t) const {
 }
 
 bool BaseDeDatos::_no_repite(const Registro &r, const Tabla &t) const {
+  // for (auto cc : t._camposConClaves)
   list<Registro> filtrados(t.registros().begin(), t.registros().end());
   for (auto clave : t.claves()) { // O(c)
     _filtrar_registros(clave, r.dato(clave), filtrados);
@@ -165,21 +166,21 @@ void BaseDeDatos::crearIndice(const string &nombre, const string &campo){
   bool esNat = t.tipoCampo(campo).esNat(); // O(1)
   Indice indiceNuevo;
   for (auto r = t.registros_begin(); r != t.registros_end(); ++r ) {
-    list<const_iterador_registros> registro = {r};
+    vector<const_iterador_registros> registro = {r};
     Dato d = r->dato(campo);
     bool esNat = d.esNat();
     if (esNat){
       if (indiceNuevo._diccInt.count(d.valorNat())){
-        indiceNuevo._diccInt.at(d.valorNat()).push_front(r);
+        indiceNuevo._diccInt.at(d.valorNat()).push_back(r);
       } else {
-        map<int,list<const_iterador_registros> >::value_type nReg = make_pair(d.valorNat(),registro);
+        map<int,vector<const_iterador_registros> >::value_type nReg = make_pair(d.valorNat(),registro);
         indiceNuevo._diccInt.insert(nReg);
       }
     } else {
       if (indiceNuevo._diccString.count(d.valorStr())){
-        indiceNuevo._diccString.at(d.valorStr()).push_front(r);
+        indiceNuevo._diccString.at(d.valorStr()).push_back(r);
       } else {
-        string_map<list<const_iterador_registros> >::value_type nReg = make_pair(d.valorStr(),registro);
+        string_map<vector<const_iterador_registros> >::value_type nReg = make_pair(d.valorStr(),registro);
         indiceNuevo._diccString.insert(nReg);
       }
     }

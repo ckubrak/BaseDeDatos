@@ -12,8 +12,8 @@
 using namespace std;
 class Indice{
  public:
-  typedef string_map< list<Tabla::const_iterador_registros> > diccStr;
-  typedef map<int,list<Tabla::const_iterador_registros> > diccInt;
+  typedef string_map< vector<Tabla::const_iterador_registros> > diccStr;
+  typedef map<int,vector<Tabla::const_iterador_registros> > diccInt;
   bool esNat() const{
     return _esNat;
   }
