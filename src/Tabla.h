@@ -133,6 +133,7 @@ public:
   const_iterador_registros registros_end() const;
 
  private:
+  friend class BaseDeDatos;
   ///////////////////////////////////////////////////////////////////////////////////////////////////
   /** \name Representación
    * rep: tabla \TO bool\n

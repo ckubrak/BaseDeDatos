@@ -7,7 +7,7 @@ using namespace std;
 Registro::Registro(const vector<string>& campos, const vector<Dato>& datos) : 
     _campos(campos.begin(), campos.end()) {
         for (int i = 0; i < campos.size(); i++) {
-            _datos.fast_insert(make_pair(campos[i], datos[i]));
+            _datos.insert(make_pair(campos[i], datos[i]));
         }
 };
 
@@ -36,6 +36,9 @@ bool operator==(const Registro& r1, const Registro& r2) {
 }
 
 ostream &operator<<(ostream &os, const Registro &r) {
-  os << r._datos;
+  for (auto i : r._datos){
+    os << i.first <<" "<<i.second;
+  }
+  // os << r._datos;
   return os;
 }

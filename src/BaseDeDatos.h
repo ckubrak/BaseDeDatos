@@ -142,7 +142,7 @@ public:
    * \pre tabla \IN tablas(\P{this})
    * \post \P{res} = criterioValido(c, nombre, \P{this})
    * 
-   * \complexity{\O(T + cr * C)}
+   * \complexity{\O(cr)}
    */
   bool criterioValido(const Criterio &c, const string &nombre) const;
 
@@ -207,8 +207,9 @@ private:
     /** @{ */
     /* linear_set<string> _nombres_tablas; */
   string_map<Tabla> _tablas;
-  string_map<linear_set<Indice> > _indices;
+  string_map<string_map<Indice> > _indices;
     /* linear_map<string, Tabla> _tablas; */
+    /* linear_map<Criterio, int> _uso_criterios; */
     linear_map<Criterio, int> _uso_criterios;
     /** @} */
 

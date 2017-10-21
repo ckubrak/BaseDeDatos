@@ -6,6 +6,7 @@
 #include "Dato.h"
 #include "linear_set.h"
 #include "linear_map.h"
+#include "string_map.h"
 
 using namespace std;
 
@@ -39,7 +40,7 @@ public:
      * \pre campo \in campos(\P{this})
      * \post \P{res} = valor(campo, \P{this})
      * 
-     * \complexity{\O(long(campos(\P{this})) * cmp(campo))}
+     * \complexity{\O(1)}
      */
     const Dato& dato(const string& campo) const;
 
@@ -72,7 +73,8 @@ private:
 
     /** @{ */
     linear_set<string> _campos;
-    linear_map<string, Dato> _datos;
+    string_map<Dato> _datos;
+    /* linear_map<string, Dato> _datos; */
     /** @} */
 
     friend ostream &operator<<(ostream &, const Registro &);
