@@ -141,7 +141,7 @@ public:
 	 *\pre def?(key,this)
      *\post \P{res} \IGOBS obtener(key, this)
      *
-     *  \complexity{\O(S)} asd
+     *  \complexity{\O(S)}
      */
     const string_map<T>::mapped_type &at(const key_type &key) const;
     /**
