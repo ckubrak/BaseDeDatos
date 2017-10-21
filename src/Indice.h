@@ -6,13 +6,14 @@
 #include "const_iterador_registros.h"
 #include <map>
 #include <set>
+#include <list>
 
 
 using namespace std;
 class Indice{
  public:
-  typedef string_map< linear_set<Tabla::const_iterador_registros> > diccStr;
-  typedef map<int,linear_set<Tabla::const_iterador_registros> > diccInt;
+  typedef string_map< list<Tabla::const_iterador_registros> > diccStr;
+  typedef map<int,list<Tabla::const_iterador_registros> > diccInt;
   bool esNat() const{
     return _esNat;
   }

@@ -15,35 +15,20 @@ void BaseDeDatos::crearTabla(const string &nombre,
 
 void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
   Tabla &t = _tablas.at(nombre);
-  if (_indices.count(nombre)){
-    string_map<Indice> indices = _indices.at(nombre);
-    for (auto i = indices.begin(); i != indices.end(); ++i ) {
-      std::cout<<"Hola";
-    }
-      // if (i.esNat()){
-      // i._diccInt.[r.dato]
-      //   }
-      // }
-      //   if (i.esNat()){
-      //     int nuevo = r.dato(i.campo()).valorNat();
-      //     i._diccInt.(make_pair(nuevo, r));
-      //   }
-      // }
-      //i._diccInt.insert()
-      //}
-      //}
-      //Modificar indices
-      // bool esNat = _indices[nombre].tipo();
-      // set<Registro> registros;
-      // if (esNat){
-      //   registros = _dicc_int[]
-      // }
-      // for (auto ri : registros){
-      // }
-      // t.agregarRegistro(r);
-      // } else {
-  }
+  const_iterador_registros ultimo = t.registros_end();
   t.agregarRegistro(r);
+  if (_indices.count(nombre)){
+    for (auto c : t.campos()){
+      bool esNat = t.tipoCampo(c).esNat();
+      if (_indices.at(nombre).count(c)){
+        if(esNat){
+          _indices[nombre][c]._diccInt[r.dato(c).valorNat()].push_front(ultimo);
+        } else {
+          _indices[nombre][c]._diccString[r.dato(c).valorStr()].push_front(ultimo);
+        }
+      }
+    }
+  }
 }
 
 const linear_set<string> &BaseDeDatos::tablas() const {
@@ -68,7 +53,9 @@ int BaseDeDatos::uso_criterio(const BaseDeDatos::Criterio &criterio) const {
 bool BaseDeDatos::registroValido(const Registro &r,
                                  const string &nombre) const {
   const Tabla &t = _tablas.at(nombre); // O(1)
-  // campos() es O(1)
+  // t.campos() y r.campos son O(1)
+  // _mismos_tipos es O(C)
+  // _no_repite es O(c*n)
   return (t.campos() == r.campos() and _mismos_tipos(r, t) and
           _no_repite(r, t));
 }
@@ -85,7 +72,7 @@ bool BaseDeDatos::_mismos_tipos(const Registro &r, const Tabla &t) const {
 
 bool BaseDeDatos::_no_repite(const Registro &r, const Tabla &t) const {
   list<Registro> filtrados(t.registros().begin(), t.registros().end());
-  for (auto clave : t.claves()) {
+  for (auto clave : t.claves()) { // O(c)
     _filtrar_registros(clave, r.dato(clave), filtrados);
   }
   return filtrados.empty();
@@ -102,7 +89,7 @@ list<Registro> &BaseDeDatos::_filtrar_registros(const string &campo,
                                                 list<Registro> &registros,
                                                 bool igualdad) const {
   auto iter = registros.begin();
-  while ( iter != registros.end()) {
+  while ( iter != registros.end()) { // O(n)
     auto now = iter;
     iter++;
     if ((not igualdad) xor now->dato(campo) != valor) {
@@ -180,21 +167,21 @@ void BaseDeDatos::crearIndice(const string &nombre, const string &campo){
   bool esNat = t.tipoCampo(campo).esNat(); // O(1)
   Indice indiceNuevo;
   for (auto r = t.registros_begin(); r != t.registros_end(); ++r ) {
-    linear_set<const_iterador_registros> registro = {r};
+    list<const_iterador_registros> registro = {r};
     Dato d = r->dato(campo);
     bool esNat = d.esNat();
     if (esNat){
       if (indiceNuevo._diccInt.count(d.valorNat())){
-        indiceNuevo._diccInt.at(d.valorNat()).fast_insert(r);
+        indiceNuevo._diccInt.at(d.valorNat()).push_front(r);
       } else {
-        map<int,linear_set<const_iterador_registros> >::value_type nReg = make_pair(d.valorNat(),registro);
+        map<int,list<const_iterador_registros> >::value_type nReg = make_pair(d.valorNat(),registro);
         indiceNuevo._diccInt.insert(nReg);
       }
     } else {
       if (indiceNuevo._diccString.count(d.valorStr())){
-        indiceNuevo._diccString.at(d.valorStr()).fast_insert(r);
+        indiceNuevo._diccString.at(d.valorStr()).push_front(r);
       } else {
-        string_map<linear_set <const_iterador_registros> >::value_type nReg = make_pair(d.valorStr(),registro);
+        string_map<list<const_iterador_registros> >::value_type nReg = make_pair(d.valorStr(),registro);
         indiceNuevo._diccString.insert(nReg);
       }
     }
