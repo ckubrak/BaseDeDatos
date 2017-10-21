@@ -1,0 +1,29 @@
+digraph "Tabla"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Tabla",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _registros" ];
+  Node2 [label="linear_set\< Registro \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classlinear__set.html"];
+  Node3 -> Node2 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _elems" ];
+  Node3 [label="linear_map\< Registro,\l bool \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classlinear__map.html"];
+  Node4 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _campos\n_claves" ];
+  Node4 [label="linear_set\< string \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classlinear__set.html"];
+  Node5 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _elems" ];
+  Node5 [label="linear_map\< string,\l bool \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classlinear__map.html"];
+  Node6 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _tipos" ];
+  Node6 [label="string_map\< Dato \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classstring__map.html"];
+  Node7 -> Node6 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" raiz" ];
+  Node7 [label="string_map\< T \>::Nodo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structstring__map_1_1Nodo.html"];
+  Node8 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" cs" ];
+  Node8 [label="string_map\< T \>::claveSignificado",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classstring__map_1_1claveSignificado.html"];
+  Node7 -> Node8 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" miNodo" ];
+  Node7 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" padre\nhijos" ];
+  Node9 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" clave" ];
+  Node9 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node10 -> Node7 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" significado" ];
+  Node10 [label="string_map\< T \>::contenedor\lSignificado",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classstring__map_1_1contenedorSignificado.html"];
+  Node11 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _camposConClaves" ];
+  Node11 [label="string_map\< bool \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classstring__map.html"];
+  Node7 -> Node11 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" raiz" ];
+}
