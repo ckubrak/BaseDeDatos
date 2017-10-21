@@ -47,7 +47,7 @@ public:
     string_map(){};
     /** @brief Destruye mapa
     *
-    *\complexity{\O(//TODO)}
+    *\complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)}
     */
     ~string_map();
     /**
@@ -340,7 +340,7 @@ private:
    * \pre true 
    * \post this \IGOBS aCopiar
    *
-   * \complexity{\O(//TODO)}
+   * \complexity{\O(\complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)})}
    */
 
     void copiar(const string_map<T> &aCopiar);
