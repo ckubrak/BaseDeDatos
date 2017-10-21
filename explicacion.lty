@@ -1,5 +1,17 @@
-\subtitle. Acerca de contenedorSignificado y claveSignificado \subtitle.
+\subtitle.Decisiones de implementación del string_map\subtitle.
 \line.
+
+\section. Acerca de nodos y tamaño \section.
+Implementamos el \code.string_map\code. como un trie, un diccionario especializado para strings, guardando las claves en nodos (\code.Nodo\code.) los cuales podemos recorrer según el largo de los string guardados, dándonos una complejidad óptima para nuestra implementación. 
+Le dimos una variable tamaño para poder ver la cantidad de claves en tiempo constante, además de un puntero al nodo \code.raiz\code., cuya clave es un string vacío.
+La estructura \code.Nodo\code. tiene:
+Una \code.clave\code., palabra con la que identifico al Nodo.
+Puntero a \code.significado\code., el cual apunta a null en caso de ser un nodo no definido.
+Uno a su \code.padre\code., que en el caso de la raíz es un puntero a \code.null\code..
+Uno a un \code.pair<clave, significado>\code..
+Otro a un array de 96 posiciones, que corresponden a cada uno de sus \code.hijos\code.. Nótese que son 96 caracteres posibles por clave, y los hijos tienen la clave del padre concatenada al caracter que les corresponda.
+
+\section. Acerca de contenedorSignificado y claveSignificado \section.
 \p.Nos parece de especial interés hacer incapié en los tipos \code.contenedorSignificado\code. y \code.claveSignificado\code., ambas clases contenidas en el tipo \code.string_map\code.. Es esto así porque presentan un caso de redundancia de información que puede que llame la atención a la hora de leer nuestra implementación; y creemos oportuno aclarar el porqué de esta decisión.
 
 \p.De entrada, el tipo \code.contenedorSignificado\code. existe por la imposibilidad de declarar, sin un constructor vacío, instancias de ciertos tipos; como ocurre con el tipo \code.Dato\code.. Se decidió, para saltear este inconveniente, que el tipo habría de ser un puntero que se mantuviera indeclarado hasta la hora que fuera requerido; que en el caso de los nodos habla del momento en el que son 'definidos', entendiéndose esto como el proceso de adquisición de un significado.
