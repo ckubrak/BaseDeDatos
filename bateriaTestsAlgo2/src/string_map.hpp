@@ -55,7 +55,7 @@ struct string_map<T>::Nodo {
         for (int i = 0; i < 96; i++) {
             hijos[i] = nullptr;
         }
-        cs = new claveSignificado(this); //TODO ver si no combiene mover esto al definir()
+        cs = new claveSignificado(this);
     };
 
     //Destructor de nodo
@@ -129,7 +129,6 @@ public:
                 }
                 nodo = actual;
                 return *this;
-                //return iterator(minimaClave(nodo->hijos[i]));
             }
             i++;
         }
@@ -241,7 +240,6 @@ public:
                 }
                 nodo = actual;
                 return *this;
-                //return iterator(minimaClave(nodo->hijos[i]));
             }
             i++;
         }
@@ -304,7 +302,8 @@ private:
     const_iterator(Nodo *n) : nodo(n) {}
 };
 
-// ========= Métodos públicos de String_Map =========
+// ========= Métodos de String_Map =========
+
 template<typename T>
 string_map<T>::~string_map() {
     borrarTodo(raiz);
@@ -429,7 +428,7 @@ bool string_map<T>::revisarIgualdad(const string_map<T> &otro) const {
         } else if (c1.nodo->estaDef() != c2.nodo->estaDef()) {
             return false;
         } else if (c1.nodo->estaDef()) {
-            if (c1.nodo->significado->valor != c2.nodo->significado->valor) return false;
+            if (!(c1.nodo->significado->valor == c2.nodo->significado->valor)) return false;
         }
         ++c1;
         ++c2;
@@ -498,12 +497,12 @@ void string_map<T>::borrarTodo(Nodo *desde) {
     for (int a = 0; a < 96; a++) {
         if (desde->hijos[a] != nullptr) borrarTodo(desde->hijos[a]);
     }
+    if(desde->estaDef()) tamano--;
     delete desde;
 }
 
 template<typename T>
 void string_map<T>::clear() {
-    tamano = 0;
     borrarTodo(raiz);
     raiz = new Nodo("", nullptr);
 }
