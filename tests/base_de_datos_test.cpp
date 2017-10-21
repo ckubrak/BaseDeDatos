@@ -462,6 +462,7 @@ TEST(indices, basico){
 //                        res.registros().begin(),
 //                        res.registros().end()));
   
+//<<<<<<< HEAD
 //   // Otro orden
 //   res = db.busqueda({Rdif("LU_A", 90), Rdif("LU_N", 1)}, 
 //                     "libretas");
@@ -486,6 +487,32 @@ TEST(indices, basico){
 //                        alumnos.registros().end(),
 //                        res.registros().begin(),
 //                        res.registros().end()));
+//=======
+  // Otro orden
+  /*res = db.busqueda({Rdif("LU_A", 90), Rdif("LU_N", 1)}, 
+                    "libretas");
+  EXPECT_EQ(res.registros().size(), 5);
+  EXPECT_TRUE(incluye(libretas.registros().begin(), 
+                       libretas.registros().end(),
+                       res.registros().begin(),
+                       res.registros().end()));
+
+  res = db.busqueda({Rdif("Editor", "Vim"), Rdif("OS", "Linux")},
+                    "alumnos");
+  EXPECT_EQ(res.registros().size(), 2);
+  EXPECT_TRUE(incluye(alumnos.registros().begin(),
+                       alumnos.registros().end(),
+                       res.registros().begin(),
+                       res.registros().end()));
+
+  res = db.busqueda({Rdif("OS", "Win"), Rdif("Editor", "Vim")},
+                    "alumnos");
+  EXPECT_EQ(res.registros().size(), 0);
+  EXPECT_TRUE(incluye(alumnos.registros().begin(), 
+                       alumnos.registros().end(),
+                       res.registros().begin(),
+                       res.registros().end()));
+>>>>>>> 67a3315461a8f49e57bc55a6f6aeabdfc600afeb */
   
 //   res = db.busqueda({Rdif("OS", "macOS"), Rdif("Editor", "Vim")}, 
 //                     "alumnos");
@@ -652,6 +679,7 @@ TEST(indices, basico){
 //   EXPECT_EQ(db.top_criterios(), 
 //             linear_set<BaseDeDatos::Criterio>({{Rig("OS", "A")}}));
   
+<<<<<<< HEAD
 //   db.busqueda({Rig("LU_A", 1)}, "libretas");
 //   EXPECT_EQ(db.uso_criterio({Rig("LU_A", 1)}), 2);
 //   EXPECT_EQ(db.top_criterios(),
@@ -847,6 +875,203 @@ TEST(indices, basico){
 //                                     {Dato(1), Dato(1), Dato("A")}));
 //   t_join_a.agregarRegistro(Registro({"X", "Y", "Z"}, 
 //                                     {Dato(2), Dato(2), Dato("C")}));
+=======
+  db.busqueda({Rig("LU_A", 1)}, "libretas");
+  EXPECT_EQ(db.uso_criterio({Rig("LU_A", 1)}), 2);
+  EXPECT_EQ(db.top_criterios(),
+            linear_set<BaseDeDatos::Criterio>({{Rig("OS", "A")},
+                                       {Rig("LU_A", 1)}}));
+  db.busqueda({Rig("LU_A", 1)}, "libretas");
+  EXPECT_EQ(db.uso_criterio({Rig("LU_A", 1)}), 3);
+  EXPECT_EQ(db.top_criterios(),
+            linear_set<BaseDeDatos::Criterio>({{Rig("LU_A", 1)}}));
+}
+
+TEST_F(DBAlumnos, uso_un_criterio_perm) {
+  BaseDeDatos::Criterio c = {Rig("OS", "A"), Rig("Editor", "Vim")};
+  BaseDeDatos::Criterio c_perm = {Rig("Editor", "Vim"), Rig("OS", "A")};
+  BaseDeDatos::Criterio c_sim = {Rig("OS", "A")};
+  db.busqueda(c, "alumnos");
+  EXPECT_EQ(db.uso_criterio(c), 1);
+  EXPECT_EQ(db.uso_criterio(c_sim), 0);
+  EXPECT_EQ(db.top_criterios(), 
+            linear_set<BaseDeDatos::Criterio>({c}));
+
+  db.busqueda(c_perm, "alumnos");
+  EXPECT_EQ(db.uso_criterio(c), 2);
+  EXPECT_EQ(db.uso_criterio(c_sim), 0);
+  EXPECT_EQ(db.top_criterios(), 
+            linear_set<BaseDeDatos::Criterio>({c}));
+
+  db.busqueda(c_sim, "alumnos");
+  EXPECT_EQ(db.uso_criterio(c_sim), 1);
+  EXPECT_EQ(db.top_criterios(), 
+            linear_set<BaseDeDatos::Criterio>({c}));
+}
+
+TEST_F(DBAlumnos, crit_otro_bool) {
+  BaseDeDatos::Criterio c = {Rig("OS", "A")};
+  BaseDeDatos::Criterio c_inv = {Rdif("OS", "A")};
+
+  EXPECT_EQ(db.uso_criterio(c), 0);
+  EXPECT_EQ(db.uso_criterio(c_inv), 0);
+
+  db.busqueda(c, "alumnos");
+  EXPECT_EQ(db.uso_criterio(c), 1);
+  EXPECT_EQ(db.uso_criterio(c_inv), 0);
+
+  db.busqueda(c_inv, "alumnos");
+  EXPECT_EQ(db.uso_criterio(c), 1);
+  EXPECT_EQ(db.uso_criterio(c_inv), 1);
+}
+
+TEST_F(DBAlumnos, crit_doble_otro_bool) {
+  BaseDeDatos::Criterio c = {Rig("OS", "A"), Rig("Editor", "Vim")};
+  BaseDeDatos::Criterio c_inv = {Rdif("OS", "A"), Rig("Editor", "Vim")};
+
+  EXPECT_EQ(db.uso_criterio(c), 0);
+  EXPECT_EQ(db.uso_criterio(c_inv), 0);
+
+  db.busqueda(c, "alumnos");
+  EXPECT_EQ(db.uso_criterio(c), 1);
+  EXPECT_EQ(db.uso_criterio(c_inv), 0);
+
+  db.busqueda(c_inv, "alumnos");
+  EXPECT_EQ(db.uso_criterio(c), 1);
+  EXPECT_EQ(db.uso_criterio(c_inv), 1);
+}
+
+// ## Join
+// * Join vacío
+// * Join sin repetidos
+// * Join repetidos un lado
+// * Join repetidos dos lados
+// * Join campos repetidos
+
+#ifdef POST_SOLUCION
+/*TEST_F(DBAlumnos, join_vacio) {
+ auto begin = db.join("alumnos", "ex_alumnos", "LU");
+ auto end = db.join_end(); 
+ EXPECT_EQ(begin, end);
+}
+
+TEST_F(DBAlumnos, join_sin_repetidos) {
+  auto begin = db.join("libretas", "alumnos", "LU");
+  auto end = db.join_end();
+  linear_set<string> nuevos_campos({"LU_N", "LU_A", "LU", "Nombre", "Editor", "OS"});
+
+  int count = 0;
+  for (auto it = begin; it != end; it++) {
+    EXPECT_EQ(it->campos(), nuevos_campos);
+    count++;
+  }
+
+  EXPECT_EQ(count, db.dameTabla("libretas").registros().size());
+
+  linear_set<Registro> join(begin, end);
+  EXPECT_EQ(join, join_libretas_alumnos.registros());
+}
+
+TEST_F(DBAlumnos, join_repetidos_uno) {
+  auto begin = db.join("libretas", "materias", "LU");
+  auto end = db.join_end();
+
+  linear_set<string> nuevos_campos({"LU_N", "LU_A", "LU", "Materia"});
+  for (auto it = begin; it != end; it++) {
+    EXPECT_EQ(it->campos(), nuevos_campos);
+  }
+
+  linear_set<Registro> join(begin, end);
+  EXPECT_EQ(join, join_libretas_materias.registros());
+}
+
+TEST_F(DBAlumnos, join_repetidos_ambos) {
+  BaseDeDatos db2;
+  db2.crearTabla("T1", {"X", "Y"}, {"X", "Y"}, {tipoNat, tipoNat});
+  db2.crearTabla("T2", {"Y", "Z"}, {"Y", "Z"}, {tipoNat, tipoStr});
+   //
+   //T1           T2
+   //| X | Y |    | Y | Z |
+   //| 1 | 1 |    | 1 | A |
+   //| 2 | 2 |    | 1 | B |
+   //| 3 | 2 |    | 2 | C |
+   //| 4 | 0 |
+   //
+   //T1 ~ T2
+   //| X | Y | Z |
+   //| 1 | 1 | A |
+   //| 1 | 1 | B |
+   //| 2 | 2 | C |
+   //| 3 | 2 | C |
+   //
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(1), Dato(1)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(2), Dato(2)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(3), Dato(2)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(4), Dato(0)}), "T1");
+  db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(1), Dato("A")}), "T2");
+  db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(1), Dato("B")}), "T2");
+  db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(2), Dato("C")}), "T2");
+
+  Tabla t_join = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
+                       {tipoNat, tipoNat, tipoStr});
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(1), Dato(1), Dato("A")}));
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(1), Dato(1), Dato("B")}));
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(2), Dato(2), Dato("C")}));
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(3), Dato(2), Dato("C")}));
+
+  auto begin = db2.join("T1", "T2", "Y");
+  auto end = db2.join_end();
+
+  linear_set<string> nuevos_campos({"X", "Y", "Z"});
+  for (auto it = begin; it != end; it++) {
+    cout << *it << endl;
+    EXPECT_EQ(it->campos(), nuevos_campos);
+  }
+
+  linear_set<Registro> join(begin, end);
+  EXPECT_EQ(join, t_join.registros());
+}
+
+TEST_F(DBAlumnos, join_campos_repetidos) {
+  BaseDeDatos db2;
+  db2.crearTabla("T1", {"X", "Y"}, {"X", "Y"}, {tipoNat, tipoNat});
+  db2.crearTabla("T2", {"X", "Y", "Z"}, {"X", "Y", "Z"}, 
+                 {tipoNat, tipoNat, tipoStr});
+   //
+   //T1          T2
+   //| X | Y |  | X | Y | Z |
+   //| 1 | 1 |  | 1 | 1 | A |
+   //| 2 | 2 |  | 3 | 2 | C |
+   //
+   //T1 ~ T2 (Y)
+   //| X | Y | Z |
+   //| 1 | 1 | A |
+   //| 2 | 2 | C |
+   //
+   //T2 ~ T1 (Y)
+   //| X | Y | Z |
+   //| 1 | 1 | A |
+   //| 3 | 2 | C |
+   //
+   //
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(1), Dato(1)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(2), Dato(2)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                               {Dato(1), Dato(1), Dato("A")}), "T2");
+  db2.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                               {Dato(3), Dato(2), Dato("C")}), "T2");
+
+  Tabla t_join_a = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
+                       {tipoNat, tipoNat, tipoStr});
+  t_join_a.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                    {Dato(1), Dato(1), Dato("A")}));
+  t_join_a.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                    {Dato(2), Dato(2), Dato("C")}));
+>>>>>>> 67a3315461a8f49e57bc55a6f6aeabdfc600afeb
   
 //   Tabla t_join_b = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
 //                        {tipoNat, tipoNat, tipoStr});
@@ -864,7 +1089,14 @@ TEST(indices, basico){
 //   begin = db2.join("T2", "T1", "Y");
 //   end = db2.join_end();
 
+<<<<<<< HEAD
 //   linear_set<Registro> join_b(begin, end);
 //   EXPECT_EQ(join_b, t_join_b.registros());
 // }
 // #endif // POST_SOLUCION
+=======
+  linear_set<Registro> join_b(begin, end);
+  EXPECT_EQ(join_b, t_join_b.registros());
+}*/
+#endif // POST_SOLUCION
+//>>>>>>> 67a3315461a8f49e57bc55a6f6aeabdfc600afeb
