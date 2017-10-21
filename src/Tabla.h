@@ -163,6 +163,7 @@ public:
   /** @{ */
   linear_set<string> _claves;
   linear_set<string> _campos;
+  string_map<bool> _camposConClaves;
   string_map<Dato> _tipos;
   linear_set<Registro> _registros;
     /** }@ */

@@ -11,7 +11,8 @@ void BaseDeDatos::crearTabla(const string &nombre,
                              const vector<Dato> &tipos) {
   string_map<Tabla>::value_type nuevaTabla= make_pair(nombre,Tabla(claves, campos, tipos));
   _tablas.insert(nuevaTabla);
-}
+  _nombres_tablas.fast_insert(nombre);
+  };
 
 void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
   Tabla &t = _tablas.at(nombre);
@@ -32,10 +33,7 @@ void BaseDeDatos::agregarRegistro(const Registro &r, const string &nombre) {
 }
 
 const linear_set<string> &BaseDeDatos::tablas() const {
-  linear_set<Tabla> result;
-  for (auto t : _tablas){
-    result.fast_insert(t.second);
-  }
+  return _nombres_tablas;
 }
 
 const Tabla &BaseDeDatos::dameTabla(const string &nombre) const {

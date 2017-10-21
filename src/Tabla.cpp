@@ -9,8 +9,17 @@ Tabla::Tabla(const linear_set<string> &claves,
     : _claves(claves) {
         for (int i = 0; i < campos.size(); i++) {
           string_map<Dato>::value_type nuevoTipo = make_pair(campos[i],tipos[i]);
-            _tipos.insert(nuevoTipo);
-            _campos.fast_insert(campos[i]);
+          _tipos.insert(nuevoTipo);
+          _campos.fast_insert(campos[i]);
+        }
+        for (auto campo : campos){
+          if (claves.count(campo)){
+            string_map<bool>::value_type nuevo = make_pair(campo,true);
+            _camposConClaves.insert(nuevo);
+          } else {
+            string_map<bool>::value_type nuevo = make_pair(campo,false);
+            _camposConClaves.insert(nuevo);
+          }
         }
 }
 
@@ -20,7 +29,7 @@ Tabla::const_iterador_registros Tabla::agregarRegistro(const Registro& r) {
 }
 
 const linear_set<string>& Tabla::campos() const {
-    return _campos;
+  return _campos;
 }
 
 const linear_set<string>& Tabla::claves() const {

@@ -205,7 +205,7 @@ private:
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
     /** @{ */
-    /* linear_set<string> _nombres_tablas; */
+    linear_set<string> _nombres_tablas;
   string_map<Tabla> _tablas;
   string_map<string_map<Indice> > _indices;
     /* linear_map<string, Tabla> _tablas; */
