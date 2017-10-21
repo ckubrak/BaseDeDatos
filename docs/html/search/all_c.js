@@ -4,5 +4,6 @@ var searchData=
   ['registros_5fbegin',['registros_begin',['../classTabla.html#aafc1aedd4c2c222387591c3b772d56a9',1,'Tabla']]],
   ['registros_5fend',['registros_end',['../classTabla.html#ac736bbd3065cc25c36ef258fcddaea50',1,'Tabla']]],
   ['registrovalido',['registroValido',['../classBaseDeDatos.html#a451ef7b34a2ff9d395da10745266b703',1,'BaseDeDatos']]],
-  ['restriccion',['Restriccion',['../classRestriccion.html',1,'Restriccion'],['../classRestriccion.html#a6a2bb9363d1083319784caec16d9c47f',1,'Restriccion::Restriccion()']]]
+  ['restriccion',['Restriccion',['../classRestriccion.html',1,'Restriccion'],['../classRestriccion.html#a6a2bb9363d1083319784caec16d9c47f',1,'Restriccion::Restriccion()']]],
+  ['revisarigualdad',['revisarIgualdad',['../classstring__map.html#a425afd1135cdb0109c5b44f5d0161479',1,'string_map']]]
 ];

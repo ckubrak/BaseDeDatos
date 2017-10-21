@@ -169,7 +169,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const
 <tr class="memdesc:a26b3ded1c1736abff4580e994fab843e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Acceso a una clave sin modificar mapa.  <a href="#a26b3ded1c1736abff4580e994fab843e">Más...</a><br /></td></tr>
 <tr class="separator:a26b3ded1c1736abff4580e994fab843e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5e0460b9c8c6f7c6e5f76e0112446842"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#a5e0460b9c8c6f7c6e5f76e0112446842">clear</a> ()</td></tr>
-<tr class="memdesc:a5e0460b9c8c6f7c6e5f76e0112446842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limpia el mapa, lo deja solo con la raiz.  <a href="#a5e0460b9c8c6f7c6e5f76e0112446842">Más...</a><br /></td></tr>
+<tr class="memdesc:a5e0460b9c8c6f7c6e5f76e0112446842"><td class="mdescLeft">&#160;</td><td class="mdescRight">Limpia el mapa dejandolo solo con la raiz.  <a href="#a5e0460b9c8c6f7c6e5f76e0112446842">Más...</a><br /></td></tr>
 <tr class="separator:a5e0460b9c8c6f7c6e5f76e0112446842"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aced2bd9493475515f3dc765a379484bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::<a class="el" href="classstring__map_1_1iterator.html">iterator</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#aced2bd9493475515f3dc765a379484bd">begin</a> ()</td></tr>
 <tr class="memdesc:aced2bd9493475515f3dc765a379484bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">Iterador al primer par &lt;clave,significado&gt; en orden lexicografico.  <a href="#aced2bd9493475515f3dc765a379484bd">Más...</a><br /></td></tr>
@@ -202,55 +202,71 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>operator!=</b> (const
 <tr class="memdesc:aad96e9f05f2a7f4196331e0fcba3bae7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca y borra la clave desde el iterador pasado por parámetro devolviendo un iterador al siguiente.  <a href="#aad96e9f05f2a7f4196331e0fcba3bae7">Más...</a><br /></td></tr>
 <tr class="separator:aad96e9f05f2a7f4196331e0fcba3bae7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="member-group"></a>
-Representación</h2></td></tr>
-<tr><td class="ititle" colspan="2"><p><a class="anchor" id="amgrp804caec2222e5f28d512690182d357cf"></a> rep: <a class="el" href="classstring__map.html">string_map</a> <img class="formulaInl" alt="$\to$" src="form_7.png"/> bool<br />
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Métodos privados</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Metodos privados</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>}@ </p>
+</div></td></tr>
+<tr class="memitem:a8e12bfe4444321c6147f3b7b20c68c05"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#a8e12bfe4444321c6147f3b7b20c68c05">charToInt</a> (char ch) const </td></tr>
+<tr class="memdesc:a8e12bfe4444321c6147f3b7b20c68c05"><td class="mdescLeft">&#160;</td><td class="mdescRight">Dado una letra, devuelve el int que le corresponde.  <a href="#a8e12bfe4444321c6147f3b7b20c68c05">Más...</a><br /></td></tr>
+<tr class="separator:a8e12bfe4444321c6147f3b7b20c68c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0d19588b3448ed088725fb3163fc00b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#af0d19588b3448ed088725fb3163fc00b">buscarNodo</a> (const key_type &amp;key) const </td></tr>
+<tr class="memdesc:af0d19588b3448ed088725fb3163fc00b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Busca un nodo a partir de una clave.  <a href="#af0d19588b3448ed088725fb3163fc00b">Más...</a><br /></td></tr>
+<tr class="separator:af0d19588b3448ed088725fb3163fc00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aca26db2736ab8426cea28b96b6079994"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#aca26db2736ab8426cea28b96b6079994">minimaClave</a> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *nodo) const </td></tr>
+<tr class="memdesc:aca26db2736ab8426cea28b96b6079994"><td class="mdescLeft">&#160;</td><td class="mdescRight">Itera por los hijos de un nodo hasta encontrar el nodo definido con la menor clave.  <a href="#aca26db2736ab8426cea28b96b6079994">Más...</a><br /></td></tr>
+<tr class="separator:aca26db2736ab8426cea28b96b6079994"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a425afd1135cdb0109c5b44f5d0161479"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#a425afd1135cdb0109c5b44f5d0161479">revisarIgualdad</a> (const <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt; &amp;b) const </td></tr>
+<tr class="memdesc:a425afd1135cdb0109c5b44f5d0161479"><td class="mdescLeft">&#160;</td><td class="mdescRight">Revisa nodo por nodo si dos string_maps son iguales.  <a href="#a425afd1135cdb0109c5b44f5d0161479">Más...</a><br /></td></tr>
+<tr class="separator:a425afd1135cdb0109c5b44f5d0161479"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec7806190feff7f4ff14679c92ae8cea"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#aec7806190feff7f4ff14679c92ae8cea">borrarTodo</a> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *desde)</td></tr>
+<tr class="memdesc:aec7806190feff7f4ff14679c92ae8cea"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borra las ramas que salen de un nodo, ademas del nodo parametro.  <a href="#aec7806190feff7f4ff14679c92ae8cea">Más...</a><br /></td></tr>
+<tr class="separator:aec7806190feff7f4ff14679c92ae8cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4b4ffdd6ad5ade098c3667ab3c80746b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#a4b4ffdd6ad5ade098c3667ab3c80746b">copiar</a> (const <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt; &amp;aCopiar)</td></tr>
+<tr class="memdesc:a4b4ffdd6ad5ade098c3667ab3c80746b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Copia el string map parametro nodo a nodo.  <a href="#a4b4ffdd6ad5ade098c3667ab3c80746b">Más...</a><br /></td></tr>
+<tr class="separator:a4b4ffdd6ad5ade098c3667ab3c80746b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2bc06097a8b42763d4556450db59c4da"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#a2bc06097a8b42763d4556450db59c4da">borrarRecursivo</a> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *aBorrar)</td></tr>
+<tr class="memdesc:a2bc06097a8b42763d4556450db59c4da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Borra todos los nodos padres hasta llegar a uno que tenga otros hijos o este definido.  <a href="#a2bc06097a8b42763d4556450db59c4da">Más...</a><br /></td></tr>
+<tr class="separator:a2bc06097a8b42763d4556450db59c4da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6a88a22faefe94a12ad9f78c047203d"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classstring__map.html#ac6a88a22faefe94a12ad9f78c047203d">cantHijos</a> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *nodo)</td></tr>
+<tr class="memdesc:ac6a88a22faefe94a12ad9f78c047203d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cuenta la cantidad de hijos directos de un nodo.  <a href="#ac6a88a22faefe94a12ad9f78c047203d">Más...</a><br /></td></tr>
+<tr class="separator:ac6a88a22faefe94a12ad9f78c047203d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Atributos privados</h2></td></tr>
+<tr><td colspan="2"><div class="groupHeader">Representación</div></td></tr>
+<tr><td colspan="2"><div class="groupText"><p>rep: <a class="el" href="classstring__map.html">string_map</a> <img class="formulaInl" alt="$\to$" src="form_7.png"/> bool<br />
  rep(e) <img class="formulaInl" alt="$\equiv$" src="form_8.png"/></p><ul>
 <li>La cantidad de nodos cuyo significado no es NULL es igual a tamaño</li>
 <li>raiz != NULL</li>
 <li>raiz-&gt;clave <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> &lt;&gt;</li>
 <li>( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> n que pertenece al arbol) (n.clave <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> &lt;&gt; <img class="formulaInl" alt="$\Rightarrow$" src="form_9.png"/> n.padre <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> NULL) <img class="formulaInl" alt="$\land$" src="form_1.png"/> ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> 0&lt;=i&lt;=95) n.hijos[i] != NULL <img class="formulaInl" alt="$\Rightarrow$" src="form_9.png"/> (n.hijos[i]-&gt;clave <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> n.clave O intToChar(i))</li>
-<li>( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> n que pertenece al arbol) ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> 0&lt;=i&lt;=95) n[i] <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> NULL <img class="formulaInl" alt="$\Rightarrow$" src="form_9.png"/> n.sig != NULL Aclaracion: suponemos que existe el TAD Char. La funcion intToChar recibe un int y devuelve un char correspondiente (con i= 0 retorna el carácter numero 32 de ASCII, hasta el 95 que retorna el carácter 127). Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a>. Consideramos que esto escapaba a la consigna del trabajo Práctico. Nota: Puede pasar que significado y cs no esten sincronizados. Abs: <a class="el" href="classstring__map.html">string_map</a> <img class="formulaInl" alt="$\to$" src="form_7.png"/> Dicc(string,alfa) {Rep(e)}<br />
- ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> e:estr(alfa)) Abs(e) <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> d: Dicc(string,alfa) |<br />
- ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> s: string) def?(s,d) <img class="formulaInl" alt="$\equiv$" src="form_8.png"/> ((Existe un unico <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> n) n pertenece al string map <img class="formulaInl" alt="$\land$" src="form_1.png"/> n.clave <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> s <img class="formulaInl" alt="$\land$" src="form_1.png"/> n-&gt;significado != NULL <img class="formulaInl" alt="$\land$" src="form_1.png"/> ((n-&gt;significado).valor) <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> obtener(s,d) </li>
+<li>( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> n que pertenece al arbol) ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> 0&lt;=i&lt;=95) n[i] <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> NULL <img class="formulaInl" alt="$\Rightarrow$" src="form_9.png"/> n.sig != NULL<br />
+</li>
 </ul>
-</td></tr>
+<p>Aclaracion: suponemos que existe el TAD Char. La funcion intToChar recibe un int y devuelve un char correspondiente (con i= 0 retorna el carácter numero 32 de ASCII, hasta el 95 que retorna el carácter 127).</p>
+<p>Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD Nodo.Consideramos que esto escapaba a la consigna del Trabajo Práctico.<br />
+</p>
+<p>Nota: Puede pasar que significado y cs no esten sincronizados.<br />
+</p>
+<p>Abs: <a class="el" href="classstring__map.html">string_map</a> <img class="formulaInl" alt="$\to$" src="form_7.png"/> Dicc(string,alfa) {Rep(e)}<br />
+ ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> e:estr(alfa)) Abs(e) <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> d: Dicc(string,alfa) |<br />
+ ( <img class="formulaInl" alt="$\forall$" src="form_5.png"/> s: string) def?(s,d) <img class="formulaInl" alt="$\equiv$" src="form_8.png"/> ((Existe un unico <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> n) n pertenece al string map <img class="formulaInl" alt="$\land$" src="form_1.png"/> n.clave <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> s <img class="formulaInl" alt="$\land$" src="form_1.png"/> n-&gt;significado != NULL <img class="formulaInl" alt="$\land$" src="form_1.png"/> ((n-&gt;significado).valor) <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> obtener(s,d) </p>
+</div></td></tr>
 <tr class="memitem:a26da8481a5a55413d82244e98ba3b923"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a26da8481a5a55413d82244e98ba3b923"></a>
 <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>raiz</b> = new <a class="el" href="structstring__map_1_1Nodo.html">Nodo</a>(&quot;&quot;, nullptr)</td></tr>
 <tr class="separator:a26da8481a5a55413d82244e98ba3b923"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6d1368586c5ab95f1ad0fc39723bf72"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6d1368586c5ab95f1ad0fc39723bf72"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>tamano</b> = 0</td></tr>
 <tr class="separator:aa6d1368586c5ab95f1ad0fc39723bf72"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8e12bfe4444321c6147f3b7b20c68c05"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e12bfe4444321c6147f3b7b20c68c05"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>charToInt</b> (char ch) const </td></tr>
-<tr class="separator:a8e12bfe4444321c6147f3b7b20c68c05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af0d19588b3448ed088725fb3163fc00b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af0d19588b3448ed088725fb3163fc00b"></a>
-<a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>buscarNodo</b> (const key_type &amp;key) const </td></tr>
-<tr class="separator:af0d19588b3448ed088725fb3163fc00b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aca26db2736ab8426cea28b96b6079994"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aca26db2736ab8426cea28b96b6079994"></a>
-<a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>minimaClave</b> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *nodo) const </td></tr>
-<tr class="separator:aca26db2736ab8426cea28b96b6079994"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a425afd1135cdb0109c5b44f5d0161479"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a425afd1135cdb0109c5b44f5d0161479"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>revisarIgualdad</b> (const <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt; &amp;b) const </td></tr>
-<tr class="separator:a425afd1135cdb0109c5b44f5d0161479"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aec7806190feff7f4ff14679c92ae8cea"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec7806190feff7f4ff14679c92ae8cea"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>borrarTodo</b> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *desde)</td></tr>
-<tr class="separator:aec7806190feff7f4ff14679c92ae8cea"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4b4ffdd6ad5ade098c3667ab3c80746b"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a4b4ffdd6ad5ade098c3667ab3c80746b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>copiar</b> (const <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt; &amp;aCopiar)</td></tr>
-<tr class="separator:a4b4ffdd6ad5ade098c3667ab3c80746b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2bc06097a8b42763d4556450db59c4da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2bc06097a8b42763d4556450db59c4da"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>borrarRecursivo</b> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *aBorrar)</td></tr>
-<tr class="separator:a2bc06097a8b42763d4556450db59c4da"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6a88a22faefe94a12ad9f78c047203d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac6a88a22faefe94a12ad9f78c047203d"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><b>cantHijos</b> (<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *nodo)</td></tr>
-<tr class="separator:ac6a88a22faefe94a12ad9f78c047203d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Descripción detallada</h2>
 <div class="textblock"><h3>template&lt;typename T&gt;<br />
 class string_map&lt; T &gt;</h3>
 
-<p>Implementacion de map&lt;string,T&gt; sobre Trie Asume de T:</p><ul>
+<p>Se ha adjuntado un pdf que explica la eleccion de la estructura y hace algunas aclaraciones. <br />
+ Se explica con el TAD Dicc(string,alfa) <br />
+Implementacion de map&lt;string,T&gt; sobre Trie Asume de T:</p><ul>
 <li>tiene constructor por copia</li>
 <li>tiene operador ==</li>
 <li>solo permite utilizar el operator[] si T tiene constructor por defecto </li>
@@ -307,7 +323,7 @@ template&lt;typename T &gt; </div>
 <p>Destruye mapa. </p>
 <dl class="section complexity">
 <dt>Complejidad Temporal</dt>
-<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(sn * S)</dd>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(//TODO)</dd>
 </dl>
 
 </div>
@@ -426,6 +442,166 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a2bc06097a8b42763d4556450db59c4da"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::borrarRecursivo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td>
+          <td class="paramname"><em>aBorrar</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Borra todos los nodos padres hasta llegar a uno que tenga otros hijos o este definido. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">aBorrar</td><td>nodo del cual empiezo a subir </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>true </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>subo por la rama borrando todos los nodos hasta encontrar un nodo que no quiera borrar</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(largo de la clave de aBorrar)</dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aec7806190feff7f4ff14679c92ae8cea"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::borrarTodo </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td>
+          <td class="paramname"><em>desde</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Borra las ramas que salen de un nodo, ademas del nodo parametro. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">desde</td><td>es el nodo desde el cual empiezo a borrar </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>el padre de desde debe ser definido o tener otros hijos, para no tener una rama que termina en un nodo no definido </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>el tamaño del arbol pasa a ser el tamaño anterior menos el tamaño de la rama a borrar</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(Cantidad de Nodos)</dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="af0d19588b3448ed088725fb3163fc00b"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> * <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::buscarNodo </td>
+          <td>(</td>
+          <td class="paramtype">const key_type &amp;&#160;</td>
+          <td class="paramname"><em>key</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Busca un nodo a partir de una clave. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">key</td><td>es la clave que quiero buscar </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>true </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>la clave del nodo devuelto es igual a la pasada por parámetro</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(S)</dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="ac6a88a22faefe94a12ad9f78c047203d"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::cantHijos </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td>
+          <td class="paramname"><em>nodo</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cuenta la cantidad de hijos directos de un nodo. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodo</td><td>es el nodo del cual quiero contar los hijos </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>true </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>devuelve cuantos hijos directos tiene el nodo parámetro, va a estar entre 0 y 96</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(1)</dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a3bfb3c2ea8483f2fa6e5828f006bb4e8"></a>
 <div class="memitem">
 <div class="memproto">
@@ -472,6 +648,46 @@ template&lt;typename T &gt; </div>
 
 </div>
 </div>
+<a class="anchor" id="a8e12bfe4444321c6147f3b7b20c68c05"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::charToInt </td>
+          <td>(</td>
+          <td class="paramtype">char&#160;</td>
+          <td class="paramname"><em>ch</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Dado una letra, devuelve el int que le corresponde. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ch</td><td>es char del cual quiero el int </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>true </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>devuelve un int que representa al char pasado por parametro. La a retorna cero, la b uno y asi sucesivamente.</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(1)</dd>
+</dl>
+
+</div>
+</div>
 <a class="anchor" id="a5e0460b9c8c6f7c6e5f76e0112446842"></a>
 <div class="memitem">
 <div class="memproto">
@@ -487,12 +703,52 @@ template&lt;typename T &gt; </div>
       </table>
 </div><div class="memdoc">
 
-<p>Limpia el mapa, lo deja solo con la raiz. </p>
+<p>Limpia el mapa dejandolo solo con la raiz. </p>
 <dl class="section pre"><dt>Precondición</dt><dd>true </dd></dl>
 <dl class="section post"><dt>Postcondición</dt><dd>this <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> vacio</dd></dl>
 <dl class="section complexity">
 <dt>Complejidad Temporal</dt>
 <dd>//TODO</dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a4b4ffdd6ad5ade098c3667ab3c80746b"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::copiar </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>aCopiar</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Copia el string map parametro nodo a nodo. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">aCopiar</td><td>es el string map a copiar en this </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>true </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>this <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> aCopiar</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(//TODO)</dd>
 </dl>
 
 </div>
@@ -601,7 +857,7 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section pre"><dt>Precondición</dt><dd>this = this0 </dd></dl>
-<dl class="section post"><dt>Postcondición</dt><dd><b class="paramname">res</b> <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> &amp;beta (def?(key,this0)) <img class="formulaInl" alt="$\land$" src="form_1.png"/> if (def?(key,this0)) then (this <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> borrar(key,this0)) else this <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> this0) //TODO arreglar ese if then else</dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd><b class="paramname">res</b> <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> beta(def?(key,this0)) <img class="formulaInl" alt="$\land$" src="form_1.png"/> if (def?(key,this0)) then (this <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> borrar(key,this0)) else this <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> this0)</dd></dl>
 <dl class="section complexity">
 <dt>Complejidad Temporal</dt>
 <dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(S)</dd>
@@ -729,7 +985,47 @@ template&lt;typename T &gt; </div>
   </dd>
 </dl>
 <dl class="section pre"><dt>Precondición</dt><dd>this = this0 </dd></dl>
-<dl class="section post"><dt>Postcondición</dt><dd>def?(pi1(t), this) <img class="formulaInl" alt="$\land$" src="form_1.png"/> pi2(res) <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> (NO(def?(pi1(t),this0))) y el pi1(res) es un iterador que apunta a la tupla parametro</dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>def?(pi 1(t), this) <img class="formulaInl" alt="$\land$" src="form_1.png"/> pi2(res) <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> (NO(def?(pi1(t),this0))) y el pi1(res) es un iterador que apunta a la tupla parametro</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(S)</dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="aca26db2736ab8426cea28b96b6079994"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::<a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> * <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::minimaClave </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structstring__map_1_1Nodo.html">Nodo</a> *&#160;</td>
+          <td class="paramname"><em>nodo</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Itera por los hijos de un nodo hasta encontrar el nodo definido con la menor clave. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">nodo</td><td>es el nodo del cual empiezo a buscar </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>tamaño del <a class="el" href="classstring__map.html">string_map</a> mayor a uno </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>la clave del nodo devuelto es la menor de todas las claves definidas de la rama</dd></dl>
 <dl class="section complexity">
 <dt>Complejidad Temporal</dt>
 <dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(S)</dd>
@@ -845,6 +1141,46 @@ template&lt;typename T&gt; </div>
 <dl class="section complexity">
 <dt>Complejidad Temporal</dt>
 <dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(S)</dd>
+</dl>
+
+</div>
+</div>
+<a class="anchor" id="a425afd1135cdb0109c5b44f5d0161479"></a>
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt;::revisarIgualdad </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classstring__map.html">string_map</a>&lt; T &gt; &amp;&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Revisa nodo por nodo si dos string_maps son iguales. </p>
+<dl class="params"><dt>Parámetros</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">otro</td><td>es el string map con el que estoy comparando </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section pre"><dt>Precondición</dt><dd>true </dd></dl>
+<dl class="section post"><dt>Postcondición</dt><dd>res <img class="formulaInl" alt="$=_{\rm obs}$" src="form_15.png"/> true <img class="formulaInl" alt="$\equiv$" src="form_8.png"/> todos los nodos de ambos string maps son iguales tanto en clave como en significado</dd></dl>
+<dl class="section complexity">
+<dt>Complejidad Temporal</dt>
+<dd><img class="formulaInl" alt="$O$" src="form_0.png"/>(Cantidad de Nodos)</dd>
 </dl>
 
 </div>
