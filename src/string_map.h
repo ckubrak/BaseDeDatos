@@ -141,7 +141,7 @@ public:
 	 *\pre def?(key,this)
      *\post \P{res} \IGOBS obtener(key, this)
      *
-     *  \complexity{\O(S)}
+     *  \complexity{\O(S)} asd
      */
     const string_map<T>::mapped_type &at(const key_type &key) const;
     /**
@@ -150,7 +150,7 @@ public:
      *\pre  true
      *\post this \IGOBS vacio
      *
-     *  \complexity{//TODO}
+     *  \complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)}
      */
     void clear();
     /** @brief Iterador al primer par <clave,significado> en orden lexicografico
