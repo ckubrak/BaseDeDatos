@@ -216,15 +216,13 @@ BaseDeDatos::join_iterator BaseDeDatos::join(const string& tabla1, const string&
     if (d.esNat()){
       if(i._diccInt.count(d.valorNat())){
         pos = i._diccInt[d.valorNat()].begin();
-        elem2 = *(i._diccInt[d.valorNat()].begin());
-        pos = i._diccInt[d.valorNat()].begin();
+        elem2 = *(pos);
         break;
           }
     }else{
       if(i._diccString.count(d.valorStr())){
         pos = i._diccString[d.valorStr()].begin();
-        elem2 = *(i._diccString[d.valorStr()].begin());
-        pos = i._diccString[d.valorStr()].begin();
+        elem2 = *(pos);
         break;
       }
     }
