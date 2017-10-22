@@ -702,26 +702,26 @@ TEST(indices, basico){
 
   Registro gerva2 =
     Registro(campos_alumnos,
-             {datoNat(124), datoNat(45), datoStr("Gerva"), datoStr("10001")});
+             {datoNat(124), datoNat(46), datoStr("Gervaa"), datoStr("10001")});
   EXPECT_TRUE(db.registroValido(gerva2, "alumnos"));
   db.agregarRegistro(gerva2, "alumnos");
   db.agregarRegistro(gerva2, "alumnos");
 
-  db.crearIndice("alumnos","LU");
-  EXPECT_EQ(db.indices().size(),1);
-  EXPECT_EQ(db.indices("alumnos").size(),1);
   string alumnos = "alumnos";
-  string lu = "LU";
-  EXPECT_EQ(db.indices(alumnos).at(lu).esNat(),true);
-  EXPECT_EQ(db.indices(alumnos).at(lu).diccionarioInt().size(),2);
+  string nombre = "Nombre";
+  db.crearIndice("alumnos",nombre);
+  EXPECT_EQ(db.indices().size(),1);
+  EXPECT_EQ(db.indices("alumnos").size(),1);
+  EXPECT_EQ(db.indices(alumnos).at(nombre).esNat(),false);
+  EXPECT_EQ(db.indices(alumnos).at(nombre).diccionarioString().size(),2);
 
 
   db.crearIndice("alumnos","LU");
-  EXPECT_EQ(db.indices().size(),1);
-  EXPECT_EQ(db.indices("alumnos").size(),1);
-  db.crearIndice("alumnos","Ano");
   EXPECT_EQ(db.indices().size(),1);
   EXPECT_EQ(db.indices("alumnos").size(),2);
+  db.crearIndice("alumnos","Ano");
+  EXPECT_EQ(db.indices().size(),1);
+  EXPECT_EQ(db.indices("alumnos").size(),3);
 
 
   db.crearTabla("alumnoso", claves_alumnos, campos_alumnos, tipos_alumnos);
