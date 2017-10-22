@@ -30,13 +30,12 @@ using namespace std;
 class BaseDeDatos {
 
 public:
-  friend class join_iterator;
   /** @brief Criterio de búsqueda para una base de datos */
   typedef linear_set<Restriccion> Criterio;
   typedef Tabla::const_iterador_registros const_iterador_registros; 
 
   // Forward declarations
-  /* class join_iterator; */
+  class join_iterator;
 
   /**
    * @brief Inicializa una base de datos sin tablas.
@@ -276,5 +275,7 @@ private:
     /** @} */
 };
 /* #include "join_iterator.h" */
+
+#include "join_iterator.h"
 
 #endif
