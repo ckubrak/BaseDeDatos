@@ -203,29 +203,67 @@ void BaseDeDatos::crearIndice(const string &nombre, const string &campo){
   }
 }
 
+// BaseDeDatos::join_iterator BaseDeDatos::join(const string& tabla1, const string& tabla2, const string& campo){
+//   typedef list<const_iterador_registros> listaReg;
+//   Indice i = _indices[tabla2][campo];
+//   Tabla t1 = dameTabla(tabla1);
+//   Tabla t2 = dameTabla(tabla1);
+//   const_iterador_registros elem1(t1.registros_begin());
+//   const_iterador_registros* join1 = &elem1;
+//   const_iterador_registros elem2(t1.registros_begin()); // Le ponemos basura para despues reescribirlo
+//   listaReg::iterator pos;
+//   for (auto r : t1.registros()){
+//     Dato d = r.dato(campo);
+//     if (d.esNat()){
+//       if(i._diccInt.count(d.valorNat())){
+//         pos = i._diccInt[d.valorNat()].begin();
+//         elem2 = *(pos);
+//         break;
+//           }
+//     }else{
+//       if(i._diccString.count(d.valorStr())){
+//         pos = i._diccString[d.valorStr()].begin();
+//         elem2 = *(pos);
+//         break;
+//       }
+//     }
+//   }
+//   listaReg::iterator* posicion = &pos;
+//   const_iterador_registros* join2 = &elem2;
+//   return join_iterator(join1,join2,posicion);
+// }
 BaseDeDatos::join_iterator BaseDeDatos::join(const string& tabla1, const string& tabla2, const string& campo){
   typedef list<const_iterador_registros> listaReg;
   Indice i = _indices[tabla2][campo];
   Tabla t1 = dameTabla(tabla1);
   Tabla t2 = dameTabla(tabla1);
-  const_iterador_registros elem1(t1.registros_begin());
   const_iterador_registros elem2(t1.registros_begin()); // Le ponemos basura para despues reescribirlo
   listaReg::iterator pos;
-  for (auto r : t1.registros()){
-    Dato d = r.dato(campo);
+  for (auto r = t1.registros_begin(); r != t1.registros_end(); ++r ) {
+    Dato d = r->dato(campo);
     if (d.esNat()){
       if(i._diccInt.count(d.valorNat())){
         pos = i._diccInt[d.valorNat()].begin();
         elem2 = *(pos);
-        break;
+        const_iterador_registros* join1 = &r;
+        const_iterador_registros* join2 = &elem2;
+        listaReg::iterator* join3 = &pos;
+        return join_iterator(join1,join2,join3);
           }
     }else{
       if(i._diccString.count(d.valorStr())){
         pos = i._diccString[d.valorStr()].begin();
         elem2 = *(pos);
-        break;
+        const_iterador_registros* join1 = &r;
+        const_iterador_registros* join2 = &elem2;
+        listaReg::iterator* join3 = &pos;
+        return join_iterator(join1,join2,join3);
       }
     }
   }
-  return join_iterator(elem1,elem2,pos);
+  return join_end();
+}
+
+BaseDeDatos::join_iterator BaseDeDatos::join_end() const{
+  return join_iterator(NULL,NULL,NULL);
 }

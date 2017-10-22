@@ -738,12 +738,12 @@ TEST(indices, basico){
 // * Join campos repetidos
 
 #ifdef POST_SOLUCION
-// TEST_F(DBAlumnos, join_vacio) {
-//  db.crearIndice("alumnos", "LU");
-//  auto begin = db.join("alumnos", "ex_alumnos", "LU");
-//  auto end = db.join_end(); 
-//  EXPECT_EQ(begin, end);
-// }
+TEST_F(DBAlumnos, join_vacio) {
+ db.crearIndice("alumnos", "LU");
+ auto begin = db.join("alumnos", "ex_alumnos", "LU");
+ auto end = db.join_end(); 
+ EXPECT_EQ(begin, end);
+}
 
 // TEST_F(DBAlumnos, join_sin_repetidos) {
 //   db.crearIndice("alumnos", "LU");

@@ -173,7 +173,7 @@ public:
 
   join_iterator join(const string& tabla1, const string& tabla2,
                      const string& campo);
-  /* join_iterator join_end(); */
+  join_iterator join_end() const;
 
   /* join_iterator join_iterator::operator++(); */
 
@@ -218,6 +218,7 @@ private:
     /* linear_map<string, Tabla> _tablas; */
     /* linear_map<Criterio, int> _uso_criterios; */
     linear_map<Criterio, int> _uso_criterios;
+
     /** @} */
 
     /** @{ */
