@@ -103,7 +103,7 @@ public:
    * \pre nombre \IN tablas(\P{this})
    * \post \P{res} = dameTabla(nombre, \P{this})
    *
-   * \complexity{O(T)}
+   * \complexity{O(1)}
    */
   const Tabla &dameTabla(const string &nombre) const;
 
@@ -128,7 +128,7 @@ public:
    * \pre nombre \IN tablas(\P{this})
    * \post \P{res} = puedoInsertar?(r, dameTabla(nombre, \P{this}))
    *
-   * \complexity{\O(T + C^2 + (c * C + c * n * (C + L)))}
+   * \complexity{\O(C + (c.n.l))}
    */
   bool registroValido(const Registro &r, const string &nombre) const;
 
@@ -171,13 +171,21 @@ public:
 
   void crearIndice(const string &nombre, const string &campo);
 
-  /* join_iterator join(const string& tabla1, const string& tabla2, */
-  /*                    const string& campo); */
+  join_iterator join(const string& tabla1, const string& tabla2,
+                     const string& campo);
   /* join_iterator join_end(); */
 
   /* join_iterator join_iterator::operator++(); */
 
   /* Registro join_iterator::operator*(); */
+
+  string_map<string_map<Indice> > indices(){
+    return _indices;
+  }
+
+  string_map<Indice> indices(string nombre){
+    return _indices.at(nombre);
+  }
 
 private:
 	  ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -231,7 +239,7 @@ private:
      * \post \P{res} = \FORALL (r' : Registro) r \IN registros(t) \IMPLIES
      *  \EXISTS (c : campo) c \IN claves(t) \LAND valor(c, r') != valor(c, r)
      *
-     * \complexity{O(c * C + c * n * (C + L))}
+     * \complexity{O(c.n.l)}
      */
     bool _no_repite(const Registro &r, const Tabla &t) const;
 
@@ -274,7 +282,6 @@ private:
     pair<vector<string>, vector<Dato> > _tipos_tabla(const Tabla &t);
     /** @} */
 };
-/* #include "join_iterator.h" */
 
 #include "join_iterator.h"
 
