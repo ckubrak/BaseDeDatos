@@ -1,0 +1,227 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.7"/>
+<title>TP2 AED2 - 2C-2017: Fichero Fuente src/string_map.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/search.js"></script>
+<script type="text/javascript">
+  $(document).ready(function() { searchBox.OnSelectItem(0); });
+</script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td style="padding-left: 0.5em;">
+   <div id="projectname">TP2 AED2 - 2C-2017
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.7 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+</script>
+  <div id="navrow1" class="tabs">
+    <ul class="tablist">
+      <li><a href="index.html"><span>Página&#160;principal</span></a></li>
+      <li><a href="pages.html"><span>Páginas&#160;relacionadas</span></a></li>
+      <li><a href="annotated.html"><span>Clases</span></a></li>
+      <li class="current"><a href="files.html"><span>Archivos</span></a></li>
+      <li>
+        <div id="MSearchBox" class="MSearchBoxInactive">
+        <span class="left">
+          <img id="MSearchSelect" src="search/mag_sel.png"
+               onmouseover="return searchBox.OnSearchSelectShow()"
+               onmouseout="return searchBox.OnSearchSelectHide()"
+               alt=""/>
+          <input type="text" id="MSearchField" value="Buscar" accesskey="S"
+               onfocus="searchBox.OnSearchFieldFocus(true)" 
+               onblur="searchBox.OnSearchFieldFocus(false)" 
+               onkeyup="searchBox.OnSearchFieldChange(event)"/>
+          </span><span class="right">
+            <a id="MSearchClose" href="javascript:searchBox.CloseResultsWindow()"><img id="MSearchCloseImg" border="0" src="search/close.png" alt=""/></a>
+          </span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <div id="navrow2" class="tabs2">
+    <ul class="tablist">
+      <li><a href="files.html"><span>Lista&#160;de&#160;archivos</span></a></li>
+    </ul>
+  </div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>Todo</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Clases</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Funciones</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>&apos;typedefs&apos;</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Amigas</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Páginas</a></div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_68267d1309a1af8e8297ef4c3efbcdba.html">src</a></li>  </ul>
+</div>
+</div><!-- top -->
+<div class="header">
+  <div class="headertitle">
+<div class="title">string_map.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#ifndef STRING_MAP_STRING_MAP_H</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160;<span class="preprocessor">#define STRING_MAP_STRING_MAP_H</span></div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;</div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;cassert&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160;<span class="preprocessor">#include &lt;string&gt;</span></div>
+<div class="line"><a name="l00006"></a><span class="lineno">    6</span>&#160;<span class="preprocessor">#include &lt;vector&gt;</span></div>
+<div class="line"><a name="l00007"></a><span class="lineno">    7</span>&#160;</div>
+<div class="line"><a name="l00008"></a><span class="lineno">    8</span>&#160;<span class="keyword">using</span> std::string;</div>
+<div class="line"><a name="l00009"></a><span class="lineno">    9</span>&#160;<span class="keyword">using</span> std::vector;</div>
+<div class="line"><a name="l00010"></a><span class="lineno">   10</span>&#160;<span class="keyword">using</span> std::pair;</div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160;</div>
+<div class="line"><a name="l00012"></a><span class="lineno">   12</span>&#160;<span class="comment">// Nota de Doxygen</span></div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160;<span class="comment">//falta una descripcion de la clase y el &quot;se explica con&quot;. mirar Tabla.h//TODO</span></div>
+<div class="line"><a name="l00015"></a><span class="lineno">   15</span>&#160;</div>
+<div class="line"><a name="l00026"></a><span class="lineno">   26</span>&#160;<span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a name="l00027"></a><span class="lineno"><a class="line" href="classstring__map.html">   27</a></span>&#160;<span class="keyword">class </span><a class="code" href="classstring__map.html">string_map</a> {</div>
+<div class="line"><a name="l00028"></a><span class="lineno">   28</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;    <span class="comment">// Redeficinión de tipos usados por la clase</span></div>
+<div class="line"><a name="l00030"></a><span class="lineno">   30</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">string</span> key_type;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;    <span class="keyword">typedef</span> T mapped_type;</div>
+<div class="line"><a name="l00032"></a><span class="lineno">   32</span>&#160;    <span class="keyword">typedef</span> std::pair&lt;const key_type, mapped_type&gt; value_type;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;    <span class="keyword">typedef</span> <span class="keywordtype">size_t</span> size_type;</div>
+<div class="line"><a name="l00034"></a><span class="lineno">   34</span>&#160;<span class="keyword">public</span>:</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;    <span class="comment">//Subclases y estructuras públicas</span></div>
+<div class="line"><a name="l00036"></a><span class="lineno">   36</span>&#160;    <span class="keyword">class </span><a class="code" href="classstring__map_1_1iterator.html">iterator</a>;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;    <span class="keyword">class </span><a class="code" href="classstring__map_1_1const__iterator.html">const_iterator</a>;</div>
+<div class="line"><a name="l00038"></a><span class="lineno">   38</span>&#160;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;    <span class="comment">//Métodos públicos de la clase</span></div>
+<div class="line"><a name="l00047"></a><span class="lineno"><a class="line" href="classstring__map.html#acd7803d493b09db56e2e9022e526def7">   47</a></span>&#160;<span class="comment"></span>    <a class="code" href="classstring__map.html#acd7803d493b09db56e2e9022e526def7">string_map</a>(){};</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;    <a class="code" href="classstring__map.html#a37b201370c0a6a3c2aa488dedbc0a9d7">~string_map</a>();</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    <a class="code" href="classstring__map.html#acd7803d493b09db56e2e9022e526def7">string_map</a>(<span class="keyword">const</span> <a class="code" href="classstring__map.html">string_map</a> &amp;aCopiar);</div>
+<div class="line"><a name="l00066"></a><span class="lineno"><a class="line" href="classstring__map.html#a8c3cbb3cd6ed7affff58c609a0f109db">   66</a></span>&#160;    <a class="code" href="classstring__map.html">string_map</a> &amp;<a class="code" href="classstring__map.html#a8c3cbb3cd6ed7affff58c609a0f109db">operator=</a>(<span class="keyword">const</span> <a class="code" href="classstring__map.html">string_map</a> &amp;otro){</div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;        <a class="code" href="classstring__map.html#a4b4ffdd6ad5ade098c3667ab3c80746b">copiar</a>(otro);</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    }</div>
+<div class="line"><a name="l00077"></a><span class="lineno"><a class="line" href="classstring__map.html#a424a95ef628cc97aeedae51f98ee2345">   77</a></span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classstring__map.html#a424a95ef628cc97aeedae51f98ee2345">operator==</a>(<span class="keyword">const</span> <a class="code" href="classstring__map.html">string_map</a> &amp;otro)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;        <span class="keywordflow">return</span> <a class="code" href="classstring__map.html#a425afd1135cdb0109c5b44f5d0161479">revisarIgualdad</a>(otro);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;    }</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;    <span class="keywordtype">bool</span> operator!=(<span class="keyword">const</span> <a class="code" href="classstring__map.html">string_map</a> &amp;otro)<span class="keyword"> const </span>{</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;        <span class="keywordflow">return</span> !<a class="code" href="classstring__map.html#a425afd1135cdb0109c5b44f5d0161479">revisarIgualdad</a>(otro);</div>
+<div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;    }</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;    size_type <a class="code" href="classstring__map.html#a7eb4798cb06e5fb6eecc51a7de9d9a16">count</a>(<span class="keyword">const</span> key_type &amp;key) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="classstring__map.html#af6a00aaeaf63ed9798c403e714a4be0c">size</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classstring__map.html#a9a83f6f168f104c5d6c05c3fb989ad1f">empty</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00119"></a><span class="lineno"><a class="line" href="classstring__map.html#aa018c2602a9a5af3255a443c79ea2183">  119</a></span>&#160;    <a class="code" href="classTabla.html">mapped_type</a> &amp;<a class="code" href="classstring__map.html#aa018c2602a9a5af3255a443c79ea2183">operator[]</a>(<span class="keyword">const</span> key_type &amp;key) {</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;        Nodo *nodo = <a class="code" href="classstring__map.html#af0d19588b3448ed088725fb3163fc00b">buscarNodo</a>(key);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;        <span class="keywordflow">if</span> (nodo-&gt;significado==<span class="keyword">nullptr</span>) {</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;            <a class="code" href="classstring__map.html#aa6d1368586c5ab95f1ad0fc39723bf72">tamano</a>++;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;            nodo-&gt;significado = <span class="keyword">new</span> contenedorSignificado();</div>
+<div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;        }</div>
+<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;        <span class="keywordflow">return</span> nodo-&gt;significado-&gt;valor;</div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;    }</div>
+<div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;    string_map&lt;T&gt;::mapped_type &amp;at(<span class="keyword">const</span> key_type &amp;key);</div>
+<div class="line"><a name="l00146"></a><span class="lineno">  146</span>&#160;    <span class="keyword">const</span> string_map&lt;T&gt;::mapped_type &amp;at(<span class="keyword">const</span> key_type &amp;key) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classstring__map.html#a5e0460b9c8c6f7c6e5f76e0112446842">clear</a>();</div>
+<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;    <a class="code" href="classstring__map_1_1iterator.html">string_map&lt;T&gt;::iterator</a> <a class="code" href="classstring__map.html#aced2bd9493475515f3dc765a379484bd">begin</a>();</div>
+<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;    <span class="comment">/*@brief iterador al fin de la coleccion</span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="comment">     *</span></div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="comment">     * \pre  true</span></div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="comment">     * \post @brief Devuelve un iterador al siguiente a la ultima clave</span></div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="comment">     *  \complexity{\O(1)}</span></div>
+<div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="comment">     */</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;    <a class="code" href="classstring__map_1_1iterator.html">string_map&lt;T&gt;::iterator</a> end();</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;    <a class="code" href="classstring__map_1_1const__iterator.html">string_map&lt;T&gt;::const_iterator</a> <a class="code" href="classstring__map.html#aced2bd9493475515f3dc765a379484bd">begin</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00185"></a><span class="lineno">  185</span>&#160;    <a class="code" href="classstring__map_1_1const__iterator.html">string_map&lt;T&gt;::const_iterator</a> end() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;    <a class="code" href="classstring__map_1_1const__iterator.html">string_map&lt;T&gt;::const_iterator</a> <a class="code" href="classstring__map.html#a3bfb3c2ea8483f2fa6e5828f006bb4e8">cbegin</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00202"></a><span class="lineno">  202</span>&#160;    <a class="code" href="classstring__map_1_1const__iterator.html">string_map&lt;T&gt;::const_iterator</a> <a class="code" href="classstring__map.html#a189727335bb6c45b5a88eab480c82446">cend</a>() <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;    <a class="code" href="classstring__map_1_1iterator.html">string_map&lt;T&gt;::iterator</a> <a class="code" href="classstring__map.html#abbe345fcf0ece43b416ea0e4699d95ed">find</a>(<span class="keyword">const</span> key_type &amp;key);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;    <a class="code" href="classstring__map_1_1const__iterator.html">string_map&lt;T&gt;::const_iterator</a> <a class="code" href="classstring__map.html#abbe345fcf0ece43b416ea0e4699d95ed">find</a>(<span class="keyword">const</span> key_type &amp;key) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;    pair&lt;string_map&lt;T&gt;::iterator, <span class="keywordtype">bool</span>&gt; <a class="code" href="classstring__map.html#a2fff1076bccd20802f03f72a92275b33">insert</a>(<span class="keyword">const</span> value_type &amp;value);</div>
+<div class="line"><a name="l00238"></a><span class="lineno">  238</span>&#160;    string_map&lt;T&gt;::size_type <a class="code" href="classstring__map.html#a978744cf6b1e5bccda86fd58e8cf5875">erase</a>(<span class="keyword">const</span> key_type &amp;key);</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;    <a class="code" href="classstring__map_1_1iterator.html">string_map&lt;T&gt;::iterator</a> <a class="code" href="classstring__map.html#a978744cf6b1e5bccda86fd58e8cf5875">erase</a>(iterator pos);</div>
+<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;    </div>
+<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;<span class="keyword">private</span>:</div>
+<div class="line"><a name="l00250"></a><span class="lineno">  250</span>&#160;</div>
+<div class="line"><a name="l00273"></a><span class="lineno">  273</span>&#160;    <span class="comment">//Subclases y estructuras privadas</span></div>
+<div class="line"><a name="l00274"></a><span class="lineno">  274</span>&#160;    <span class="keyword">struct </span>Nodo;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;    <span class="keyword">class </span>contenedorSignificado;</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;    <span class="keyword">class </span>claveSignificado;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;    <span class="comment">//Variables privadas de la clase</span></div>
+<div class="line"><a name="l00282"></a><span class="lineno"><a class="line" href="classstring__map.html#a26da8481a5a55413d82244e98ba3b923">  282</a></span>&#160;    Nodo *<a class="code" href="classstring__map.html#a26da8481a5a55413d82244e98ba3b923">raiz</a> = <span class="keyword">new</span> Nodo(<span class="stringliteral">&quot;&quot;</span>, <span class="keyword">nullptr</span>);</div>
+<div class="line"><a name="l00286"></a><span class="lineno"><a class="line" href="classstring__map.html#aa6d1368586c5ab95f1ad0fc39723bf72">  286</a></span>&#160;    <span class="keywordtype">size_t</span> <a class="code" href="classstring__map.html#aa6d1368586c5ab95f1ad0fc39723bf72">tamano</a> = 0;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;</div>
+<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;    <span class="comment">//Métodos privados de la clase</span></div>
+<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;<span class="comment"></span>    <span class="keywordtype">int</span> <a class="code" href="classstring__map.html#a8e12bfe4444321c6147f3b7b20c68c05">charToInt</a>(<span class="keywordtype">char</span> ch) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;    <a class="code" href="structstring__map_1_1Nodo.html">string_map&lt;T&gt;::Nodo</a> *<a class="code" href="classstring__map.html#af0d19588b3448ed088725fb3163fc00b">buscarNodo</a>(<span class="keyword">const</span> key_type &amp;key) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;    <a class="code" href="structstring__map_1_1Nodo.html">string_map&lt;T&gt;::Nodo</a> *<a class="code" href="classstring__map.html#aca26db2736ab8426cea28b96b6079994">minimaClave</a>(Nodo *nodo) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;    <span class="keywordtype">bool</span> <a class="code" href="classstring__map.html#a425afd1135cdb0109c5b44f5d0161479">revisarIgualdad</a>(<span class="keyword">const</span> <a class="code" href="classstring__map.html">string_map&lt;T&gt;</a> &amp;b) <span class="keyword">const</span>;</div>
+<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classstring__map.html#aec7806190feff7f4ff14679c92ae8cea">borrarTodo</a>(Nodo *desde);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classstring__map.html#a4b4ffdd6ad5ade098c3667ab3c80746b">copiar</a>(<span class="keyword">const</span> <a class="code" href="classstring__map.html">string_map&lt;T&gt;</a> &amp;aCopiar);</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;    <span class="keywordtype">void</span> <a class="code" href="classstring__map.html#a2bc06097a8b42763d4556450db59c4da">borrarRecursivo</a>(Nodo *aBorrar);</div>
+<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;    <span class="keywordtype">int</span> <a class="code" href="classstring__map.html#ac6a88a22faefe94a12ad9f78c047203d">cantHijos</a>(Nodo *nodo);</div>
+<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160; </div>
+<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;};</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;<span class="preprocessor">#include &quot;string_map.hpp&quot;</span></div>
+<div class="line"><a name="l00376"></a><span class="lineno">  376</span>&#160;</div>
+<div class="line"><a name="l00377"></a><span class="lineno">  377</span>&#160;<span class="preprocessor">#endif //STRING_MAP_STRING_MAP_H</span></div>
+<div class="ttc" id="classstring__map_1_1iterator_html"><div class="ttname"><a href="classstring__map_1_1iterator.html">string_map::iterator</a></div><div class="ttdef"><b>Definition:</b> string_map.hpp:85</div></div>
+<div class="ttc" id="classstring__map_html_acd7803d493b09db56e2e9022e526def7"><div class="ttname"><a href="classstring__map.html#acd7803d493b09db56e2e9022e526def7">string_map::string_map</a></div><div class="ttdeci">string_map()</div><div class="ttdoc">Construye un string_map vacio. </div><div class="ttdef"><b>Definition:</b> string_map.h:47</div></div>
+<div class="ttc" id="classstring__map_html_aa6d1368586c5ab95f1ad0fc39723bf72"><div class="ttname"><a href="classstring__map.html#aa6d1368586c5ab95f1ad0fc39723bf72">string_map::tamano</a></div><div class="ttdeci">size_t tamano</div><div class="ttdoc">Variables privadas Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se...</div><div class="ttdef"><b>Definition:</b> string_map.h:286</div></div>
+<div class="ttc" id="classTabla_html"><div class="ttname"><a href="classTabla.html">Tabla</a></div><div class="ttdoc">Representa una tabla de una base de datos. </div><div class="ttdef"><b>Definition:</b> Tabla.h:28</div></div>
+<div class="ttc" id="classstring__map_html_af6a00aaeaf63ed9798c403e714a4be0c"><div class="ttname"><a href="classstring__map.html#af6a00aaeaf63ed9798c403e714a4be0c">string_map::size</a></div><div class="ttdeci">size_t size() const </div><div class="ttdoc">Size devuelve el tamaño del string_map. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:349</div></div>
+<div class="ttc" id="classstring__map_html_aa018c2602a9a5af3255a443c79ea2183"><div class="ttname"><a href="classstring__map.html#aa018c2602a9a5af3255a443c79ea2183">string_map::operator[]</a></div><div class="ttdeci">mapped_type &amp; operator[](const key_type &amp;key)</div><div class="ttdoc">Acceso/definición de pares clave/valor. </div><div class="ttdef"><b>Definition:</b> string_map.h:119</div></div>
+<div class="ttc" id="classstring__map_html_a5e0460b9c8c6f7c6e5f76e0112446842"><div class="ttname"><a href="classstring__map.html#a5e0460b9c8c6f7c6e5f76e0112446842">string_map::clear</a></div><div class="ttdeci">void clear()</div><div class="ttdoc">Limpia el mapa dejandolo solo con la raiz. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:505</div></div>
+<div class="ttc" id="classstring__map_html_ac6a88a22faefe94a12ad9f78c047203d"><div class="ttname"><a href="classstring__map.html#ac6a88a22faefe94a12ad9f78c047203d">string_map::cantHijos</a></div><div class="ttdeci">int cantHijos(Nodo *nodo)</div><div class="ttdoc">Cuenta la cantidad de hijos directos de un nodo. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:440</div></div>
+<div class="ttc" id="classstring__map_html"><div class="ttname"><a href="classstring__map.html">string_map</a></div><div class="ttdef"><b>Definition:</b> string_map.h:27</div></div>
+<div class="ttc" id="classstring__map_html_a425afd1135cdb0109c5b44f5d0161479"><div class="ttname"><a href="classstring__map.html#a425afd1135cdb0109c5b44f5d0161479">string_map::revisarIgualdad</a></div><div class="ttdeci">bool revisarIgualdad(const string_map&lt; T &gt; &amp;b) const </div><div class="ttdoc">Revisa nodo por nodo si dos string_maps son iguales. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:421</div></div>
+<div class="ttc" id="classstring__map_html_aced2bd9493475515f3dc765a379484bd"><div class="ttname"><a href="classstring__map.html#aced2bd9493475515f3dc765a379484bd">string_map::begin</a></div><div class="ttdeci">string_map&lt; T &gt;::iterator begin()</div><div class="ttdoc">Iterador al primer par <clave,significado> en orden lexicografico. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:533</div></div>
+<div class="ttc" id="classstring__map_html_a37b201370c0a6a3c2aa488dedbc0a9d7"><div class="ttname"><a href="classstring__map.html#a37b201370c0a6a3c2aa488dedbc0a9d7">string_map::~string_map</a></div><div class="ttdeci">~string_map()</div><div class="ttdoc">Destruye mapa. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:308</div></div>
+<div class="ttc" id="classstring__map_html_a2fff1076bccd20802f03f72a92275b33"><div class="ttname"><a href="classstring__map.html#a2fff1076bccd20802f03f72a92275b33">string_map::insert</a></div><div class="ttdeci">pair&lt; string_map&lt; T &gt;::iterator, bool &gt; insert(const value_type &amp;value)</div><div class="ttdoc">Define el string de la tupla parametro como clave y T como significado. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:323</div></div>
+<div class="ttc" id="classstring__map_html_af0d19588b3448ed088725fb3163fc00b"><div class="ttname"><a href="classstring__map.html#af0d19588b3448ed088725fb3163fc00b">string_map::buscarNodo</a></div><div class="ttdeci">string_map&lt; T &gt;::Nodo * buscarNodo(const key_type &amp;key) const </div><div class="ttdoc">Busca un nodo a partir de una clave. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:359</div></div>
+<div class="ttc" id="classstring__map_html_a3bfb3c2ea8483f2fa6e5828f006bb4e8"><div class="ttname"><a href="classstring__map.html#a3bfb3c2ea8483f2fa6e5828f006bb4e8">string_map::cbegin</a></div><div class="ttdeci">string_map&lt; T &gt;::const_iterator cbegin() const </div><div class="ttdef"><b>Definition:</b> string_map.hpp:553</div></div>
+<div class="ttc" id="classstring__map_html_a9a83f6f168f104c5d6c05c3fb989ad1f"><div class="ttname"><a href="classstring__map.html#a9a83f6f168f104c5d6c05c3fb989ad1f">string_map::empty</a></div><div class="ttdeci">bool empty() const </div><div class="ttdoc">Empty revisa si el string_map está vacio. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:354</div></div>
+<div class="ttc" id="classstring__map_html_aec7806190feff7f4ff14679c92ae8cea"><div class="ttname"><a href="classstring__map.html#aec7806190feff7f4ff14679c92ae8cea">string_map::borrarTodo</a></div><div class="ttdeci">void borrarTodo(Nodo *desde)</div><div class="ttdoc">Borra las ramas que salen de un nodo, ademas del nodo parametro. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:496</div></div>
+<div class="ttc" id="classstring__map_html_a8e12bfe4444321c6147f3b7b20c68c05"><div class="ttname"><a href="classstring__map.html#a8e12bfe4444321c6147f3b7b20c68c05">string_map::charToInt</a></div><div class="ttdeci">int charToInt(char ch) const </div><div class="ttdoc">Dado una letra, devuelve el int que le corresponde. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:318</div></div>
+<div class="ttc" id="classstring__map_1_1const__iterator_html"><div class="ttname"><a href="classstring__map_1_1const__iterator.html">string_map::const_iterator</a></div><div class="ttdef"><b>Definition:</b> string_map.hpp:196</div></div>
+<div class="ttc" id="classstring__map_html_a424a95ef628cc97aeedae51f98ee2345"><div class="ttname"><a href="classstring__map.html#a424a95ef628cc97aeedae51f98ee2345">string_map::operator==</a></div><div class="ttdeci">bool operator==(const string_map &amp;otro) const </div><div class="ttdoc">Operador de comparación. </div><div class="ttdef"><b>Definition:</b> string_map.h:77</div></div>
+<div class="ttc" id="classstring__map_html_a7eb4798cb06e5fb6eecc51a7de9d9a16"><div class="ttname"><a href="classstring__map.html#a7eb4798cb06e5fb6eecc51a7de9d9a16">string_map::count</a></div><div class="ttdeci">size_type count(const key_type &amp;key) const </div><div class="ttdoc">Cantidad de apariciones de la clave (0 o 1). </div><div class="ttdef"><b>Definition:</b> string_map.hpp:331</div></div>
+<div class="ttc" id="structstring__map_1_1Nodo_html"><div class="ttname"><a href="structstring__map_1_1Nodo.html">string_map::Nodo</a></div><div class="ttdef"><b>Definition:</b> string_map.hpp:44</div></div>
+<div class="ttc" id="classstring__map_html_a2bc06097a8b42763d4556450db59c4da"><div class="ttname"><a href="classstring__map.html#a2bc06097a8b42763d4556450db59c4da">string_map::borrarRecursivo</a></div><div class="ttdeci">void borrarRecursivo(Nodo *aBorrar)</div><div class="ttdoc">Borra todos los nodos padres hasta llegar a uno que tenga otros hijos o este definido. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:451</div></div>
+<div class="ttc" id="classstring__map_html_a978744cf6b1e5bccda86fd58e8cf5875"><div class="ttname"><a href="classstring__map.html#a978744cf6b1e5bccda86fd58e8cf5875">string_map::erase</a></div><div class="ttdeci">string_map&lt; T &gt;::size_type erase(const key_type &amp;key)</div><div class="ttdoc">Busca y borra la clave pasada por parametro, devuelve si borro o no. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:465</div></div>
+<div class="ttc" id="classstring__map_html_a8c3cbb3cd6ed7affff58c609a0f109db"><div class="ttname"><a href="classstring__map.html#a8c3cbb3cd6ed7affff58c609a0f109db">string_map::operator=</a></div><div class="ttdeci">string_map &amp; operator=(const string_map &amp;otro)</div><div class="ttdoc">Operador de asignacion. </div><div class="ttdef"><b>Definition:</b> string_map.h:66</div></div>
+<div class="ttc" id="classstring__map_html_a189727335bb6c45b5a88eab480c82446"><div class="ttname"><a href="classstring__map.html#a189727335bb6c45b5a88eab480c82446">string_map::cend</a></div><div class="ttdeci">string_map&lt; T &gt;::const_iterator cend() const </div><div class="ttdef"><b>Definition:</b> string_map.hpp:558</div></div>
+<div class="ttc" id="classstring__map_html_a4b4ffdd6ad5ade098c3667ab3c80746b"><div class="ttname"><a href="classstring__map.html#a4b4ffdd6ad5ade098c3667ab3c80746b">string_map::copiar</a></div><div class="ttdeci">void copiar(const string_map&lt; T &gt; &amp;aCopiar)</div><div class="ttdoc">Copia el string map parametro nodo a nodo. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:511</div></div>
+<div class="ttc" id="classstring__map_html_a26da8481a5a55413d82244e98ba3b923"><div class="ttname"><a href="classstring__map.html#a26da8481a5a55413d82244e98ba3b923">string_map::raiz</a></div><div class="ttdeci">Nodo * raiz</div><div class="ttdoc">Variables privadas Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se...</div><div class="ttdef"><b>Definition:</b> string_map.h:282</div></div>
+<div class="ttc" id="classstring__map_html_abbe345fcf0ece43b416ea0e4699d95ed"><div class="ttname"><a href="classstring__map.html#abbe345fcf0ece43b416ea0e4699d95ed">string_map::find</a></div><div class="ttdeci">string_map&lt; T &gt;::iterator find(const key_type &amp;key)</div><div class="ttdoc">Busca una clave, devolviendo un iterador a esta. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:523</div></div>
+<div class="ttc" id="classstring__map_html_aca26db2736ab8426cea28b96b6079994"><div class="ttname"><a href="classstring__map.html#aca26db2736ab8426cea28b96b6079994">string_map::minimaClave</a></div><div class="ttdeci">string_map&lt; T &gt;::Nodo * minimaClave(Nodo *nodo) const </div><div class="ttdoc">Itera por los hijos de un nodo hasta encontrar el nodo definido con la menor clave. </div><div class="ttdef"><b>Definition:</b> string_map.hpp:381</div></div>
+</div><!-- fragment --></div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Generado por &#160;<a href="http://www.doxygen.org/index.html">
+<img class="footer" src="doxygen.png" alt="doxygen"/>
+</a> 1.8.7
+</small></address>
+</body>
+</html>

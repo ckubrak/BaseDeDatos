@@ -1,0 +1,19 @@
+digraph "Indice"
+{
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="Indice",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled" fontcolor="black"];
+  Node2 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _campo" ,fontname="Helvetica"];
+  Node2 [label="string",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled"];
+  Node3 -> Node1 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" _diccString" ,fontname="Helvetica"];
+  Node3 [label="string_map\< vector\l\< Tabla::const_iterador\l_registros \> \>",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classstring__map.html"];
+  Node4 -> Node3 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" raiz" ,fontname="Helvetica"];
+  Node4 [label="string_map\< T \>::Nodo",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$structstring__map_1_1Nodo.html"];
+  Node5 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" cs" ,fontname="Helvetica"];
+  Node5 [label="string_map\< T \>::claveSignificado",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classstring__map_1_1claveSignificado.html"];
+  Node4 -> Node5 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" miNodo" ,fontname="Helvetica"];
+  Node4 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" padre\nhijos" ,fontname="Helvetica"];
+  Node2 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" clave" ,fontname="Helvetica"];
+  Node6 -> Node4 [dir="back",color="darkorchid3",fontsize="10",style="dashed",label=" significado" ,fontname="Helvetica"];
+  Node6 [label="string_map\< T \>::contenedor\lSignificado",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$classstring__map_1_1contenedorSignificado.html"];
+}
