@@ -131,18 +131,18 @@ public:
    * \complexity{\O(C + (c.n.l))}
    */
   bool registroValido(const Registro &r, const string &nombre) const;
-
   /**
-   * @brief Evalúa si un criterio puede aplicarse en la tabla parámetro.
+   * @brief Crea un indice en la base de datos
+   * @param nombre de la tabla
+   * @param campo es el nombre del campo del indice
    *
-   * @param c Criterio a utilizar.
-   * @param nombre Nombre de la tabla.
+   * \pre this = db \LAND nombre pertenece a las tablas \LAND campo pertenece a los campos de nombre
+   * \post this = crearIndice(nombre, campo, db)
    *
-   * \pre tabla \IN tablas(\P{this})
-   * \post \P{res} = criterioValido(c, nombre, \P{this})
-   * 
-   * \complexity{\O(cr)}
+   * \complexity{\O(m * [L + log(m)])}
    */
+
+
   bool criterioValido(const Criterio &c, const string &nombre) const;
 
   /**
@@ -188,7 +188,7 @@ public:
   }
 
 private:
-	  ///////////////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////////////////
     /** \name Representación
      * rep: basededatos \TO bool\n
      * rep(bd) \EQUIV 
@@ -196,9 +196,11 @@ private:
      *  * \FORALL (c : Criterio) c \IN claves(_uso_criterios) \IMPLIES 
      *     * (
      *       * \EXISTS (n : string) n \IN _nombres_tablas 
-     *       * \LAND criterioValido(c, n, db)
+     *       * \LAND criterioValido(c, n, bd)
      *     * ) \LAND
-     *     * obtener(c, _uso_criterios) > 0
+     *     * obtener(c, _uso_criterios) > 0 \LAND
+     *     * (\FORALL indicc: dicc(indice)) indicc \IN _indices \IMPLIES ((\FORALL i:indice) i \IN indicc \IMPLIES (\EXISTS t:tabla) (t \IN _tablas \LAND campo(i) \IN campos(t)) \IMPLIES (\FORALL cc : campos(t)) (cc \IGOBS campo(i)) \IMPLIES (tipo(cc) \IGOBS esNat(i)) )
+
      *
      * abs: basededatos \TO BaseDeDatos\n
      * abs(bd) \EQUIV bd' \|
@@ -207,16 +209,16 @@ private:
      *    * obtener(nt, _tablas) = dameTabla(nt, bd') \LAND
      *  * (\FORALL c : criterio) 
      *    * (usoCriterio(c, bd') == 0 \LAND \LNOT def?(c, _uso_criterios)) \LOR
-     *    * (usoCriterio(c, db') == obtener(c, _uso_criterios))
+     *    * (usoCriterio(c, bd') == obtener(c, _uso_criterios)) \LAND
+     *    (\FORALL indicc: dicc(indice)) indicc \IN _indices\IMPLIES ((\FORALL i:indice) i \IN indicc \IMPLIES (\EXISTS t:tabla) (t \IN _tablas \LAND tieneIndice(t,campo(i),bd'))
      */
-    //////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
     /** @{ */
     linear_set<string> _nombres_tablas;
   string_map<Tabla> _tablas;
   string_map<string_map<Indice> > _indices;
-    /* linear_map<string, Tabla> _tablas; */
-    /* linear_map<Criterio, int> _uso_criterios; */
     linear_map<Criterio, int> _uso_criterios;
 
     /** @} */
@@ -224,28 +226,36 @@ private:
     /** @{ */
     /**
      * @brief Revisa si los campos del registro y la tabla tienen el mismo tipo.
+     * @param r es el registro a revisar
+     * @param t es la tabla en la que reviso
      *
      * \pre campos(r) == campos(t)
      * \post \P{res} == \FORALL (c : campo) c \IN campos(r) \IMPLIES
      * Nat?(valor(c, r)) == tipoCampo(c, t)
      *
-     * \complexity{O(C)}
+     * \complexity{\O(C)}
      */
-    bool _mismos_tipos(const Registro &r, const Tabla &t) const;
 
+    bool _mismos_tipos(const Registro &r, const Tabla &t) const;
     /**
-     * @brief Revisa si el registro no repite claves en la tabla.
+     * @brief Revisa que no haya ningun registro en la tabla que tenga los mismos valores en campos clave que el registro parametro
+     * @param r es el registro con el que comparo
+     * @param t es la tabla en la que reviso
      *
      * \pre compatible(r, t)
      * \post \P{res} = \FORALL (r' : Registro) r \IN registros(t) \IMPLIES
      *  \EXISTS (c : campo) c \IN claves(t) \LAND valor(c, r') != valor(c, r)
      *
-     * \complexity{O(c.n.l)}
+     * \complexity{\O(c*n*l)}
      */
-    bool _no_repite(const Registro &r, const Tabla &t) const;
 
+    bool _no_repite(const Registro &r, const Tabla &t) const;
     /**
      * @brief Filtra la lista de registros parametro según el criterio.
+     * @param campo es el campo en base al cual quiero filtrar
+     * @param valor es el Dato por el que voy a filtrar
+     * @param registros es la lista de registros de la que quiero filtrar
+     * @param igualdad dice si quiero que esté o no el dato, decide cómo filtro
      *
      * El resultado tiene aliasing con el parámetro registros.
      *
@@ -253,33 +263,40 @@ private:
      *      campos(r) \LAND tipo?(valor(campo, r)) = tipo?(valor)
      * \post \P{res} = filtrarRegistrosSegunRestriccion(
      *       nueva(campo, valor, igualdad), registros)
+     * \complexity{\O(m)}
      */
+
     list<Registro> &_filtrar_registros(const string &campo, const Dato &valor,
                                       list<Registro> &registros,
                                       bool igualdad) const;
-
     /**
      * @brief Filtra la lista de registros parametro según el criterio.
-     *
+     * @param campo es el campo en base al cual quiero filtrar
+     * @param valor es el Dato por el que voy a filtrar
+     * @param registros es la lista de registros de la que quiero filtrar
      * El resultado tiene aliasing con el parámetro registros.
      *
      * \pre \FORALL (r : Registro) r \IN registros \IMPLIES campo \IN
      *      campos(r) \LAND tipo?(valor(campo, r)) = tipo?(valor)
      * \post \P{res} = filtrarRegistrosSegunRestriccion(
      *       nueva(campo, valor, true), registros)
+     * \complexity{\O(m)}
      */
     list<Registro> &_filtrar_registros(const string &campo, const Dato &valor,
                                        list<Registro> &registros) const;
 
     /**
      * @brief Obtiene los campos y tipos de una tabla.
-     *
+     * @param t es la tabla de la que quiero los campos y los tipos
      * \pre true
      * \post (\FORALL (c : Campo) está?(c, \P1(\P{res})) \IFF c \IN campos(t))
      *       \LAND #(campos(t)) = long(\P1(\P{res}))
      *       \LAND \FORALL (i : Nat) 0 \LEQ i < #(campos(t)) \IMPLIES
      *       tipo?(\P2(\P{res})[i]) = tipoCampo(\P1(\P{res})[i], t)
+     * \complexity{\O(C)}
      */
+	
+
     pair<vector<string>, vector<Dato> > _tipos_tabla(const Tabla &t);
     /** @} */
 };

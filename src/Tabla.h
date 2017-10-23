@@ -134,20 +134,23 @@ public:
 
  private:
   friend class BaseDeDatos;
-  ///////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////
   /** \name Representación
    * rep: tabla \TO bool\n
    * rep(t) \EQUIV 
    *  * \LNOT \EMPTYSET?(_claves) \LAND
    *  * _claves \SUBSETEQ _campos \LAND
    *  * _campos = claves(_tipos) \LAND
+   *  * _campos = claves(_camposConClaves) \LAND
    *  * \FORALL (r : registro) r \IN _registros \IMPLIES (
    *    * campos(r) = _campos
    *    * \FORALL (c : campo) c \IN _campos \IMPLIES 
-   *        Nat?(valor(c, r)) = Nat?(obtener(c, _tipos))
+   *    *    _camposConClaves[c] \IGOBS (c€_claves) \LAND
+   *    *    Nat?(valor(c, r)) = Nat?(_tipos[c])
    *    * no se repiten claves \EQUIV 
    *      \FORALL (r' : registro) r \IN (_registros - {r}) \IMPLIES 
    *      \LNOT hayCoincidencia(r, _claves, _registros)
+   *
    *  * ) 
    *
    * abs: tabla \TO Tabla\n
@@ -155,10 +158,11 @@ public:
    *  * campos(t') = _campos \LAND
    *  * claves(t') = _claves \LAND
    *  * \FORALL (c : string) c \in _campos \IMPLIES tipoCampo(c, r') =
-   *    Nat?(obtener(c, _tipos)) \LAND
+   *    Nat?(_tipos[c]) \LAND
    *  * registros(t') = _registros
    */
   //////////////////////////////////////////////////////////////////////////////////////////////////////
+
 
   /** @{ */
   linear_set<string> _claves;
