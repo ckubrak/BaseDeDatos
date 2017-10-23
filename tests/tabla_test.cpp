@@ -21,8 +21,8 @@ linear_set<Registro> to_set(Tabla::const_iterador_registros begin,
 class TablaTests : public ::testing::Test {
 
 protected:
-    TablaTests() : t({ "LU", "Ano" },
-                     {"LU", "Ano", "Nombre", "Carrera"},
+    TablaTests() : t({ "LU", "LU_A" },
+                     {"LU", "LU_A", "Nombre", "Carrera"},
                      { datoNat(0), datoNat(0), datoStr(""), datoStr("")}),
                    t2({"Cod"},
                       {"Cod", "Carrera"},
@@ -34,7 +34,9 @@ protected:
 };
 
 TEST(tabla_test, crear) {
-  Tabla t({"LU", "Ano"}, { "LU", "Ano", "Nombre", "Carrera" }, {datoNat(0), datoNat(0), datoStr(""), datoStr("")});
+    Tabla t({"LU", "LU_A"},
+            { "LU", "LU_A", "Nombre", "Carrera" },
+            {datoNat(0), datoNat(0), datoStr(""), datoStr("")});
     Tabla t2({"Cod"},
              { "Cod", "Carrera" },
              {datoNat(0), datoStr("")});
@@ -42,12 +44,12 @@ TEST(tabla_test, crear) {
 
 TEST_F(TablaTests, campos) {
     EXPECT_EQ(t.campos(), 
-              linear_set<string>({"LU", "Ano", "Nombre", "Carrera"}));
+              linear_set<string>({"LU", "LU_A", "Nombre", "Carrera"}));
     EXPECT_EQ(t2.campos(), linear_set<string>({"Cod", "Carrera"}));
 };
 
 TEST_F(TablaTests, claves) {
-    EXPECT_EQ(t.claves(), linear_set<string>({"LU", "Ano"}));
+    EXPECT_EQ(t.claves(), linear_set<string>({"LU", "LU_A"}));
     EXPECT_EQ(t2.claves(), linear_set<string>({"Cod"}));
 }
 
@@ -62,7 +64,7 @@ TEST_F(TablaTests, registros) {
     Tabla t3({}, {}, {});
     EXPECT_EQ(t3.cant_registros(), 0);
 
-    vector<string> campos = {"LU", "Ano", "Nombre", "Carrera"};
+    vector<string> campos = {"LU", "LU_A", "Nombre", "Carrera"};
     Registro r1(campos, vector<Dato>({datoNat(181), datoNat(2017), datoStr("March"), datoStr("Comp")}));
     Registro r2(campos, {datoNat(182), datoNat(2015), datoStr("Ariana"), datoStr("Mate")});
     Registro r3(campos, {datoNat(12), datoNat(2005), datoStr("Juan"), datoStr("Biol")});

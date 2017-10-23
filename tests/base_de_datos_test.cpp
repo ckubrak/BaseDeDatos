@@ -681,55 +681,7 @@ TEST_F(DBAlumnos, crit_doble_otro_bool) {
   EXPECT_EQ(db.uso_criterio(c), 1);
   EXPECT_EQ(db.uso_criterio(c_inv), 1);
 }
-TEST(indices, basico){
-  BaseDeDatos db;
 
-  vector<string> campos_alumnos({"LU", "Ano", "Nombre", "DNI"});
-  vector<Dato> tipos_alumnos = {tipoNat, tipoNat, tipoStr, tipoStr};
-  linear_set<string> claves_alumnos = {"LU", "Ano"};
-
-  db.crearTabla("alumnos", claves_alumnos, campos_alumnos, tipos_alumnos);
-
-  EXPECT_EQ(db.dameTabla("alumnos"),
-            Tabla(claves_alumnos, campos_alumnos, tipos_alumnos));
-
-  Registro gerva =
-    Registro(campos_alumnos,
-             {datoNat(123), datoNat(45), datoStr("Gerva"), datoStr("10001")});
-
-  EXPECT_TRUE(db.registroValido(gerva, "alumnos"));
-  db.agregarRegistro(gerva, "alumnos");
-
-  Registro gerva2 =
-    Registro(campos_alumnos,
-             {datoNat(124), datoNat(46), datoStr("Gervaa"), datoStr("10001")});
-  EXPECT_TRUE(db.registroValido(gerva2, "alumnos"));
-  db.agregarRegistro(gerva2, "alumnos");
-  db.agregarRegistro(gerva2, "alumnos");
-
-  string alumnos = "alumnos";
-  string nombre = "Nombre";
-  db.crearIndice("alumnos",nombre);
-  EXPECT_EQ(db.indices().size(),1);
-  EXPECT_EQ(db.indices("alumnos").size(),1);
-  EXPECT_EQ(db.indices(alumnos).at(nombre).esNat(),false);
-  EXPECT_EQ(db.indices(alumnos).at(nombre).diccionarioString().size(),2);
-
-
-  db.crearIndice("alumnos","LU");
-  EXPECT_EQ(db.indices().size(),1);
-  EXPECT_EQ(db.indices("alumnos").size(),2);
-  db.crearIndice("alumnos","Ano");
-  EXPECT_EQ(db.indices().size(),1);
-  EXPECT_EQ(db.indices("alumnos").size(),3);
-
-
-  db.crearTabla("alumnoso", claves_alumnos, campos_alumnos, tipos_alumnos);
-  db.agregarRegistro(gerva, "alumnoso");
-  db.crearIndice("alumnoso","Nombre");
-  EXPECT_EQ(db.indices().size(),2);
-  EXPECT_EQ(db.indices("alumnoso").size(),1);
-}
 // ## Join
 // * Join vacío
 // * Join sin repetidos
@@ -745,146 +697,146 @@ TEST_F(DBAlumnos, join_vacio) {
  EXPECT_EQ(begin, end);
 }
 
-// TEST_F(DBAlumnos, join_sin_repetidos) {
-//   db.crearIndice("alumnos", "LU");
-//   auto begin = db.join("libretas", "alumnos", "LU");
-//   auto end = db.join_end();
-//   linear_set<string> nuevos_campos({"LU_N", "LU_A", "LU", "Nombre", "Editor", "OS"});
+TEST_F(DBAlumnos, join_sin_repetidos) {
+  db.crearIndice("alumnos", "LU");
+  auto begin = db.join("libretas", "alumnos", "LU");
+  auto end = db.join_end();
+  linear_set<string> nuevos_campos({"LU_N", "LU_A", "LU", "Nombre", "Editor", "OS"});
 
-//   int count = 0;
-//   for (auto it = begin; it != end; it++) {
-//     EXPECT_EQ((*it).campos(), nuevos_campos);
-//     count++;
-//   }
+  int count = 0;
+  for (auto it = begin; it != end; it++) {
+    EXPECT_EQ((*it).campos(), nuevos_campos);
+    count++;
+  }
 
-//   EXPECT_EQ(count, db.dameTabla("libretas").registros().size());
+  EXPECT_EQ(count, db.dameTabla("libretas").registros().size());
 
-//   linear_set<Registro> join(begin, end);
-//   EXPECT_EQ(join, join_libretas_alumnos.registros());
-// }
+  linear_set<Registro> join(begin, end);
+  EXPECT_EQ(join, join_libretas_alumnos.registros());
+}
 
-// TEST_F(DBAlumnos, join_repetidos_uno) {
-//   db.crearIndice("libretas", "LU");
-//   auto begin = db.join("libretas", "materias", "LU");
-//   auto end = db.join_end();
+TEST_F(DBAlumnos, join_repetidos_uno) {
+  db.crearIndice("libretas", "LU");
+  auto begin = db.join("libretas", "materias", "LU");
+  auto end = db.join_end();
 
-//   linear_set<string> nuevos_campos({"LU_N", "LU_A", "LU", "Materia"});
-//   for (auto it = begin; it != end; it++) {
-//     EXPECT_EQ((*it).campos(), nuevos_campos);
-//   }
+  linear_set<string> nuevos_campos({"LU_N", "LU_A", "LU", "Materia"});
+  for (auto it = begin; it != end; it++) {
+    EXPECT_EQ((*it).campos(), nuevos_campos);
+  }
 
-//   linear_set<Registro> join(begin, end);
-//   EXPECT_EQ(join, join_libretas_materias.registros());
-// }
+  linear_set<Registro> join(begin, end);
+  EXPECT_EQ(join, join_libretas_materias.registros());
+}
 
-// TEST_F(DBAlumnos, join_repetidos_ambos) {
-//   BaseDeDatos db2;
-//   db2.crearTabla("T1", {"X", "Y"}, {"X", "Y"}, {tipoNat, tipoNat});
-//   db2.crearTabla("T2", {"Y", "Z"}, {"Y", "Z"}, {tipoNat, tipoStr});
-//   /*
-//    * T1           T2
-//    * | X | Y |    | Y | Z |
-//    * | 1 | 1 |    | 1 | A |
-//    * | 2 | 2 |    | 1 | B |
-//    * | 3 | 2 |    | 2 | C |
-//    * | 4 | 0 |
-//    *
-//    * T1 ~ T2
-//    * | X | Y | Z |
-//    * | 1 | 1 | A |
-//    * | 1 | 1 | B |
-//    * | 2 | 2 | C |
-//    * | 3 | 2 | C |
-//    */
-//   db2.agregarRegistro(Registro({"X", "Y"}, {Dato(1), Dato(1)}), "T1");
-//   db2.agregarRegistro(Registro({"X", "Y"}, {Dato(2), Dato(2)}), "T1");
-//   db2.agregarRegistro(Registro({"X", "Y"}, {Dato(3), Dato(2)}), "T1");
-//   db2.agregarRegistro(Registro({"X", "Y"}, {Dato(4), Dato(0)}), "T1");
-//   db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(1), Dato("A")}), "T2");
-//   db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(1), Dato("B")}), "T2");
-//   db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(2), Dato("C")}), "T2");
+TEST_F(DBAlumnos, join_repetidos_ambos) {
+  BaseDeDatos db2;
+  db2.crearTabla("T1", {"X", "Y"}, {"X", "Y"}, {tipoNat, tipoNat});
+  db2.crearTabla("T2", {"Y", "Z"}, {"Y", "Z"}, {tipoNat, tipoStr});
+  /*
+   * T1           T2
+   * | X | Y |    | Y | Z |
+   * | 1 | 1 |    | 1 | A |
+   * | 2 | 2 |    | 1 | B |
+   * | 3 | 2 |    | 2 | C |
+   * | 4 | 0 |
+   *
+   * T1 ~ T2
+   * | X | Y | Z |
+   * | 1 | 1 | A |
+   * | 1 | 1 | B |
+   * | 2 | 2 | C |
+   * | 3 | 2 | C |
+   */
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(1), Dato(1)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(2), Dato(2)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(3), Dato(2)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(4), Dato(0)}), "T1");
+  db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(1), Dato("A")}), "T2");
+  db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(1), Dato("B")}), "T2");
+  db2.agregarRegistro(Registro({"Y", "Z"}, {Dato(2), Dato("C")}), "T2");
 
-//   Tabla t_join = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
-//                        {tipoNat, tipoNat, tipoStr});
-//   t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                   {Dato(1), Dato(1), Dato("A")}));
-//   t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                   {Dato(1), Dato(1), Dato("B")}));
-//   t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                   {Dato(2), Dato(2), Dato("C")}));
-//   t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                   {Dato(3), Dato(2), Dato("C")}));
+  Tabla t_join = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
+                       {tipoNat, tipoNat, tipoStr});
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(1), Dato(1), Dato("A")}));
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(1), Dato(1), Dato("B")}));
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(2), Dato(2), Dato("C")}));
+  t_join.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                  {Dato(3), Dato(2), Dato("C")}));
 
-//   db2.crearIndice("T1", "Y");
-//   db2.crearIndice("T2", "Y");
-//   auto begin = db2.join("T1", "T2", "Y");
-//   auto end = db2.join_end();
+  db2.crearIndice("T1", "Y");
+  db2.crearIndice("T2", "Y");
+  auto begin = db2.join("T1", "T2", "Y");
+  auto end = db2.join_end();
 
-//   linear_set<string> nuevos_campos({"X", "Y", "Z"});
-//   for (auto it = begin; it != end; it++) {
-//     EXPECT_EQ((*it).campos(), nuevos_campos);
-//   }
+  linear_set<string> nuevos_campos({"X", "Y", "Z"});
+  for (auto it = begin; it != end; it++) {
+    EXPECT_EQ((*it).campos(), nuevos_campos);
+  }
 
-//   linear_set<Registro> join(begin, end);
-//   EXPECT_EQ(join, t_join.registros());
-// }
+  linear_set<Registro> join(begin, end);
+  EXPECT_EQ(join, t_join.registros());
+}
 
-// TEST_F(DBAlumnos, join_campos_repetidos) {
-//   BaseDeDatos db2;
-//   db2.crearTabla("T1", {"X", "Y"}, {"X", "Y"}, {tipoNat, tipoNat});
-//   db2.crearTabla("T2", {"X", "Y", "Z"}, {"X", "Y", "Z"}, 
-//                  {tipoNat, tipoNat, tipoStr});
-//   /*
-//    * T1          T2
-//    * | X | Y |  | X | Y | Z | 
-//    * | 1 | 1 |  | 1 | 1 | A |
-//    * | 2 | 2 |  | 3 | 2 | C | 
-//    *
-//    * T1 ~ T2 (Y)
-//    * | X | Y | Z |
-//    * | 1 | 1 | A |
-//    * | 2 | 2 | C |
-//    * 
-//    * T2 ~ T1 (Y)
-//    * | X | Y | Z |
-//    * | 1 | 1 | A |
-//    * | 3 | 2 | C |
-//    * 
-//    */
-//   db2.agregarRegistro(Registro({"X", "Y"}, {Dato(1), Dato(1)}), "T1");
-//   db2.agregarRegistro(Registro({"X", "Y"}, {Dato(2), Dato(2)}), "T1");
-//   db2.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                {Dato(1), Dato(1), Dato("A")}), "T2");
-//   db2.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                {Dato(3), Dato(2), Dato("C")}), "T2");
+TEST_F(DBAlumnos, join_campos_repetidos) {
+  BaseDeDatos db2;
+  db2.crearTabla("T1", {"X", "Y"}, {"X", "Y"}, {tipoNat, tipoNat});
+  db2.crearTabla("T2", {"X", "Y", "Z"}, {"X", "Y", "Z"}, 
+                 {tipoNat, tipoNat, tipoStr});
+  /*
+   * T1          T2
+   * | X | Y |  | X | Y | Z | 
+   * | 1 | 1 |  | 1 | 1 | A |
+   * | 2 | 2 |  | 3 | 2 | C | 
+   *
+   * T1 ~ T2 (Y)
+   * | X | Y | Z |
+   * | 1 | 1 | A |
+   * | 2 | 2 | C |
+   * 
+   * T2 ~ T1 (Y)
+   * | X | Y | Z |
+   * | 1 | 1 | A |
+   * | 3 | 2 | C |
+   * 
+   */
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(1), Dato(1)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y"}, {Dato(2), Dato(2)}), "T1");
+  db2.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                               {Dato(1), Dato(1), Dato("A")}), "T2");
+  db2.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                               {Dato(3), Dato(2), Dato("C")}), "T2");
 
-//   Tabla t_join_a = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
-//                        {tipoNat, tipoNat, tipoStr});
-//   t_join_a.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                     {Dato(1), Dato(1), Dato("A")}));
-//   t_join_a.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                     {Dato(2), Dato(2), Dato("C")}));
+  Tabla t_join_a = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
+                       {tipoNat, tipoNat, tipoStr});
+  t_join_a.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                    {Dato(1), Dato(1), Dato("A")}));
+  t_join_a.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                    {Dato(2), Dato(2), Dato("C")}));
   
-//   Tabla t_join_b = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
-//                        {tipoNat, tipoNat, tipoStr});
-//   t_join_b.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                     {Dato(1), Dato(1), Dato("A")}));
-//   t_join_b.agregarRegistro(Registro({"X", "Y", "Z"}, 
-//                                     {Dato(3), Dato(2), Dato("C")}));
+  Tabla t_join_b = Tabla({"X", "Y", "Z"}, {"X", "Y", "Z"}, 
+                       {tipoNat, tipoNat, tipoStr});
+  t_join_b.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                    {Dato(1), Dato(1), Dato("A")}));
+  t_join_b.agregarRegistro(Registro({"X", "Y", "Z"}, 
+                                    {Dato(3), Dato(2), Dato("C")}));
 
-//   db2.crearIndice("T1", "X");
-//   db2.crearIndice("T2", "Z");
-//   db2.crearIndice("T2", "Y");
-//   auto begin = db2.join("T1", "T2", "Y");
-//   auto end = db2.join_end();
+  db2.crearIndice("T1", "X");
+  db2.crearIndice("T2", "Z");
+  db2.crearIndice("T2", "Y");
+  auto begin = db2.join("T1", "T2", "Y");
+  auto end = db2.join_end();
 
-//   linear_set<Registro> join(begin, end);
-//   EXPECT_EQ(join, t_join_a.registros());
+  linear_set<Registro> join(begin, end);
+  EXPECT_EQ(join, t_join_a.registros());
   
-//   begin = db2.join("T2", "T1", "Y");
-//   end = db2.join_end();
+  begin = db2.join("T2", "T1", "Y");
+  end = db2.join_end();
 
-//   linear_set<Registro> join_b(begin, end);
-//   EXPECT_EQ(join_b, t_join_b.registros());
-// }
+  linear_set<Registro> join_b(begin, end);
+  EXPECT_EQ(join_b, t_join_b.registros());
+}
 #endif // POST_SOLUCION

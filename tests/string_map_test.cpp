@@ -225,29 +225,4 @@ TEST(string_map_test, no_default) {
   EXPECT_NE(dato_map.find("March"), dato_map.end());
   EXPECT_NE(dato_map.find("EvilMarch"), dato_map.end());
 }
-
-
-//test propio
-TEST(string_map_test, iteradores){
-
-string_map<int> m;
-const string g = "gato";
-std::pair<const string,int> par(g,1);
-m.insert(par);
-
-const string g2 = "gapo";
-std::pair<const string,int> par2(g2,1);
-m.insert(par2);
-
-
-const string g3 = "gapora";
-std::pair<const string,int> par3(g3,1);
-m.insert(par3);
-
-string_map<int>::iterator it = m.begin();
-it++;
-EXPECT_EQ((*it).first, "gapora");
-
-
-}
 #endif // POST_SOLUCION
