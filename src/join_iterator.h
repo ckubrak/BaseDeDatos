@@ -3,19 +3,22 @@
 
 #include "BaseDeDatos.h"
 #include <list>
-class BaseDeDatos::join_iterator{
- public:
-  typedef Tabla::const_iterador_registros const_iterador_registros;
-  typedef list<Tabla::const_iterador_registros> listaReg;
-  //Amigos de la clase
-  friend class BaseDeDatos;
 
-  bool operator==(const join_iterator& otro) const{
-    return (_elem1 == otro._elem1 && _elem2 == otro._elem2 && _pos == otro._pos);
-  }
-  bool operator!=(const join_iterator& otro) const{
-    return not(*this == otro);
-  }
+class BaseDeDatos::join_iterator {
+public:
+    typedef Tabla::const_iterador_registros const_iterador_registros;
+    typedef list<Tabla::const_iterador_registros> listaReg;
+
+    //Amigos de la clase
+    friend class BaseDeDatos;
+
+    bool operator==(const join_iterator &otro) const {
+        return (_elem1 == otro._elem1 && _elem2 == otro._elem2 && _pos == otro._pos);
+    }
+
+    bool operator!=(const join_iterator &otro) const {
+        return not(*this == otro);
+    }
 
 
     join_iterator operator++() {
@@ -50,13 +53,14 @@ class BaseDeDatos::join_iterator{
             return join_end() //si salgo del for y no retorne el siguiente elemento, entonces estoy en end.
         }
     }
- 
- private:
- join_iterator(const const_iterador_registros* it1, const const_iterador_registros* it2, const listaReg::const_iterator* pos): 
-  _elem1(it1),_elem2(it2),_pos(pos) {}
-  const_iterador_registros* _elem1;
-  const_iterador_registros* _elem2;
-  listaReg::const_iterator* _pos;
+
+private:
+    join_iterator(const const_iterador_registros *it1, const const_iterador_registros *it2,
+                  const listaReg::const_iterator *pos) : _elem1(it1), _elem2(it2), _pos(pos) {}
+
+    const_iterador_registros *_elem1;
+    const_iterador_registros *_elem2;
+    listaReg::const_iterator *_pos;
 };
 
 #endif
