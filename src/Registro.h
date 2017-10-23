@@ -66,8 +66,7 @@ private:
      * abs: registro \TO Registro\n
      * abs(r) \EQUIV r' \|
      *  * campos(r') = _campos \LAND
-     *  * \FORALL (c : string) c \in _campos \IMPLIES valor(c, r') = valor(c,
-     *    _datos) 
+     * \FORALL (c : string) c \in _campos \IMPLIES valor (c, r’) = _datos[c]
      */
     //////////////////////////////////////////////////////////////////////////////////////////////////////
 
