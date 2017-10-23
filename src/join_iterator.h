@@ -12,7 +12,8 @@ public:
     friend class BaseDeDatos;
     //elem1 = elem
     bool operator==(const join_iterator& otro) const{
-        return esEnd == otro.esEnd && _tab == otro._tab
+        if(esEnd && esEnd == otro.esEnd) return true;
+        return _tab == otro._tab
                && _lista==otro._lista && _elem1==otro._elem1
                && _elem2 == otro._elem2 && pos == otro.pos && _campo == otro._campo
                && _indice == otro._indice;
