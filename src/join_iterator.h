@@ -18,39 +18,38 @@ class BaseDeDatos::join_iterator{
   }
 
 
+    join_iterator operator++() {
+        if (true) {
+            listaReg::const_iterator *nuevoPos = &(*(_pos++));
+            const const_iterador_registros *nuevoElem2 = &(*(*(nuevoPos)));
 
-  join_iterator& operator++(){
-  if (true){
-    listaReg::const_iterator* nuevoPos = &(*(_pos++));
-    const_iterador_registros* nuevoElem2 = &(*(*(nuevoPos)));
-
-    return join_iterator(_elem1,nuevoElem2,nuevoPos);
-  } else {
-    for (auto r = *(_elem1++); r != t1.registros_end(); ++r ) {
-      Dato d = r->dato(campo);
-      if (d.esNat()){
-        if(i._diccInt.count(d.valorNat())){
-          pos = i._diccInt[d.valorNat()].begin();
-          elem2 = *(pos);
-          const_iterador_registros* join1 = &r;
-          const_iterador_registros* join2 = &elem2;
-          listaReg::iterator* join3 = &pos;
-          return join_iterator(join1,join2,join3);
+            return join_iterator(_elem1, nuevoElem2, nuevoPos);
+        } else {
+            for (auto r = *(_elem1++); r != t1.registros_end(); ++r) {
+                Dato d = r->dato(campo);
+                if (d.esNat()) {
+                    if (i._diccInt.count(d.valorNat())) {
+                        pos = i._diccInt[d.valorNat()].begin();
+                        elem2 = *(pos);
+                        const_iterador_registros *join1 = &r;
+                        const_iterador_registros *join2 = &elem2;
+                        listaReg::iterator *join3 = &pos;
+                        return join_iterator(join1, join2, join3);
+                    }
+                } else {
+                    if (i._diccString.count(d.valorStr())) {
+                        pos = i._diccString[d.valorStr()].begin();
+                        elem2 = *(pos);
+                        const_iterador_registros *join1 = &r;
+                        const_iterador_registros *join2 = &elem2;
+                        listaReg::iterator *join3 = &pos;
+                        return join_iterator(join1, join2, join3);
+                    }
+                }
+            }
+            return join_end() //si salgo del for y no retorne el siguiente elemento, entonces estoy en end.
         }
-      }else{
-        if(i._diccString.count(d.valorStr())){
-          pos = i._diccString[d.valorStr()].begin();
-          elem2 = *(pos);
-          const_iterador_registros* join1 = &r;
-          const_iterador_registros* join2 = &elem2;
-          listaReg::iterator* join3 = &pos;
-          return join_iterator(join1,join2,join3);
-        }
-			}
-		}
-    return join_end() //si salgo del for y no retorne el siguiente elemento, entonces estoy en end.
-      }
-  }
+    }
  
  private:
  join_iterator(const const_iterador_registros* it1, const const_iterador_registros* it2, const listaReg::const_iterator* pos): 
