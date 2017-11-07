@@ -11,9 +11,11 @@ using std::pair;
 
 // Nota de Doxygen
 
-//falta una descripcion de la clase y el "se explica con". mirar Tabla.h//TODO
+// @corregir además completen el doxygen de string_map::iterator y string_map::const_iterator
 
 /**
+ * Se ha adjuntado un pdf que explica la eleccion de la estructura y hace algunas aclaraciones. \n 
+ * Se explica con el TAD Dicc(string,alfa) \n
  * Implementacion de map<string,T> sobre Trie
  * Asume de T:
  * - tiene constructor por copia
@@ -45,7 +47,7 @@ public:
     string_map(){};
     /** @brief Destruye mapa
     *
-    *\complexity{\O(sn * S)}
+    *\complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)}
     */
     ~string_map();
     /**
@@ -105,26 +107,27 @@ public:
      *\complexity{\O(1)}
      */
     bool empty() const;
-    /**
-    * @brief Acceso/definición de pares clave/valor
-    * @param key clave a acceder, si no existe, se crea
-    *
-    *\pre  true
-    *\post {def?(key,this) \LAND   \P{res} \IGOBS obtener(key, this)
-    *
-    *\complexity{\O(S)}
-    */
+
+    /** @brief Acceso / definición de pares clave/valor
+     *  @param key clave a acceder, si no existe, se crea
+     *  @returns una referencia a la definicion.
+     *
+     *  \complexity{
+     *    * \O(S) si la clave esta definida 
+     *    * \O(S) + copy(T) sino
+     *  }
+     */
     mapped_type &operator[](const key_type &key) {
         Nodo *nodo = buscarNodo(key);
-        if (nodo->significado==nullptr) {
+        if (nodo->significado == nullptr) {
             tamano++;
-            nodo->significado = new contenedorSignificado();
+            nodo->significado = new T();
         }
-        return nodo->significado->valor;
+        return *nodo->significado;
     }
     /** @brief Acceso a una clave sin modificar mapa
      *  @param key clave a acceder que debe existir previamente
-	 *  @returns una referencia a la definicion
+     *  @returns una referencia a la definicion.
      *
      * \pre  \def?(key,this)
      * \post \P{res} \IGOBS obtener(key, this)
@@ -143,12 +146,12 @@ public:
      */
     const string_map<T>::mapped_type &at(const key_type &key) const;
     /**
-     * @brief Limpia el mapa, lo deja solo con la raiz.
+     * @brief Limpia el mapa dejandolo solo con la raiz.
      *
      *\pre  true
      *\post this \IGOBS vacio
      *
-     *  \complexity{//TODO}
+     *\complexity{\O(\f$\sum_{i=0}^{S}96^{i}\f$)}
      */
     void clear();
     /** @brief Iterador al primer par <clave,significado> en orden lexicografico
@@ -220,7 +223,7 @@ public:
      * @brief Define el string de la tupla parametro como clave y T como significado
      * @param value es tupla (string,T) , string siendo la clave y T el significado
      *\pre  this = this0
-     *\post def?(pi1(t), this) \LAND  pi2(res) \IGOBS \beta(NO(def?(pi1(t),this0))) y el pi1(res) es un iterador que apunta a la tupla parametro
+     *\post def?(pi 1(t), this) \LAND  pi2(res) \IGOBS \beta(NO(def?(pi1(t),this0))) y el pi1(res) es un iterador que apunta a la tupla parametro
      *
      *  \complexity{\O(S)}
      */
@@ -229,7 +232,7 @@ public:
      * @brief Busca y borra la clave pasada por parametro, devuelve si borro o no
      * @param key string es la clave a borrar
      *\pre  this = this0
-     *\post \P{res} \IGOBS &beta (def?(key,this0)) \LAND  if (def?(key,this0)) then (this \IGOBS borrar(key,this0)) else this \IGOBS this0) //TODO arreglar ese if then else
+     *\post \P{res} \IGOBS beta(def?(key,this0)) \LAND  if (def?(key,this0)) then (this \IGOBS borrar(key,this0)) else this \IGOBS this0) 
      *
      *  \complexity{\O(S)}
      */
@@ -243,9 +246,9 @@ public:
      *  \complexity{\O(S)}
      */
     string_map<T>::iterator erase(iterator pos);
-    //TODO
-
+    
 private:
+
    /** \name Representación
     * rep: string_map \TO bool\n
     * rep(e) \EQUIV
@@ -253,33 +256,121 @@ private:
     *  * raiz != NULL
     *  * raiz->clave \IGOBS <>
     *  * (\FORALL Nodo n que pertenece al arbol) (n.clave \IGOBS <> \IMPLIES n.padre \IGOBS NULL) \LAND (\FORALL 0<=i<=95) n.hijos[i] != NULL \IMPLIES (n.hijos[i]->clave \IGOBS n.clave O intToChar(i))
-    *  * (\FORALL Nodo n que pertenece al arbol) (\FORALL 0<=i<=95) n[i] \IGOBS NULL \IMPLIES n.sig != NULL
+    *  * (\FORALL Nodo n que pertenece al arbol) (\FORALL 0<=i<=95) n[i] \IGOBS NULL \IMPLIES n.sig != NULL\n
+    *
+    *
     Aclaracion: suponemos que existe el TAD Char. La funcion intToChar recibe un int y devuelve un char correspondiente (con i= 0 retorna el carácter numero 32 de ASCII, hasta el 95 que retorna el carácter 127).
-    Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD Nodo. Consideramos que esto escapaba a la consigna del trabajo Práctico.
-    Nota: Puede pasar que significado y cs no esten sincronizados.
+    *
+    Decidimos describir algunas partes del Invariante de Representación en lenguaje natural ya que para poder utilizar Existenciales o Para Todos sobre los nodos ibamos a requerir funciones del lenguaje de especificación. El problema con esto es que, para poder utilizarlas con los nodos, tambien ibamos a requerir una funcion de Abstracción, un invariante de Representación y una especificacion de nuestro TAD Nodo. Consideramos que esto escapaba a la consigna del Trabajo Práctico.\n
+    *
+    *
+    Nota: Puede pasar que significado y cs no esten sincronizados.\n
+    *
+    *
     Abs: string_map \TO Dicc(string,alfa)        {Rep(e)}\n
     * (\FORALL e:estr(alfa)) Abs(e)\IGOBS d: Dicc(string,alfa) |\n (\FORALL s: string) def?(s,d) \EQUIV ((Existe un unico Nodo n) n pertenece al string map \LAND n.clave \IGOBS s \LAND n->significado != NULL \LAND ((n->significado).valor) \IGOBS obtener(s,d)
-    *
-    **/
+    */
 
     //Subclases y estructuras privadas
     struct Nodo;
     class contenedorSignificado;
     class claveSignificado;
 
+	/** @brief Variables privadas
+		Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla.
+	*/
     //Variables privadas de la clase
     Nodo *raiz = new Nodo("", nullptr);
+	/** @brief Variables privadas
+		Variable privada. Intentamos ocultarla de Doxygen, pero no pudimos hacer que no se muestre sin esconder todo lo de arriba. Favor de ignorarla.
+	*/
     size_t tamano = 0;
 
+/** \name Metodos privados
+*/
+   
+
     //Métodos privados de la clase
+    /**
+   * @brief Dado una letra, devuelve el int que le corresponde. 
+   * @param ch es char del cual quiero el int
+   * \pre true
+   * \post devuelve un int que representa al char pasado por parametro. La a retorna cero, la b uno y asi sucesivamente.
+   *
+   * \complexity{\O(1)}
+   */
+
     int charToInt(char ch) const;
-    string_map<T>::Nodo *buscarNodo(const key_type &key) const; //O(S)
+	/**
+   * @brief Busca un nodo a partir de una clave
+   * @param key es la clave que quiero buscar
+   * \pre true
+   * \post la clave del nodo devuelto es igual a la pasada por parámetro
+   *
+   * \complexity{\O(S)}
+   */
+
+    string_map<T>::Nodo *buscarNodo(const key_type &key) const;
+	/**
+   * @brief Itera por los hijos de un nodo hasta encontrar el nodo definido con la menor clave
+   * @param nodo es el nodo del cual empiezo a buscar
+   * \pre tamaño del string_map mayor a uno
+   * \post la clave del nodo devuelto es la menor de todas las claves definidas de la rama
+   *
+   * \complexity{\O(S)}
+   */
+
     string_map<T>::Nodo *minimaClave(Nodo *nodo) const;
+	/**
+   * @brief Revisa nodo por nodo si dos string_maps son iguales
+   * @param otro es el string map con el que estoy comparando
+   * \pre true 
+   * \post res \IGOBS true \EQUIV todos los nodos de ambos string maps son iguales tanto en clave como en significado
+   *
+   * \complexity{\O(Cantidad de Nodos)}
+   */
+
     bool revisarIgualdad(const string_map<T> &b) const;
+	/**
+   * @brief Borra las ramas que salen de un nodo, ademas del nodo parametro
+   * @param desde es el nodo desde el cual empiezo a borrar
+   * \pre el padre de desde debe ser definido o tener otros hijos, para no tener una rama que termina en un nodo no definido
+   * \post el tamaño del arbol pasa a ser el tamaño anterior menos el tamaño de la rama a borrar
+   *
+   * \complexity{\O(Cantidad de Nodos)}
+   */
     void borrarTodo(Nodo *desde);
+/**
+   * @brief Copia el string map parametro nodo a nodo
+   * @param aCopiar es el string map a copiar en this
+   * \pre true 
+   * \post this \IGOBS aCopiar
+   *
+   *\complexity{\O(\f$\sum_{i=0}^{S}96^{i}*copy(significado)\f$)}
+   */
+
     void copiar(const string_map<T> &aCopiar);
+/**
+   * @brief Borra todos los nodos padres hasta llegar a uno que tenga otros hijos o este definido
+   * @param aBorrar nodo del cual empiezo a subir
+   * \pre true 
+   * \post subo por la rama borrando todos los nodos hasta encontrar un nodo que no quiera borrar
+   *
+   * \complexity{\O(largo de la clave de aBorrar)}
+   */
+
     void borrarRecursivo(Nodo *aBorrar);
+/**
+   * @brief Cuenta la cantidad de hijos directos de un nodo
+   * @param nodo es el nodo del cual quiero contar los hijos
+   * \pre true 
+   * \post devuelve cuantos hijos directos tiene el nodo parámetro, va a estar entre 0 y 96
+   *
+   * \complexity{\O(1)}
+   */
+
     int cantHijos(Nodo *nodo);
+ 
 };
 
 #include "string_map.hpp"

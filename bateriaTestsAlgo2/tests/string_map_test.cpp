@@ -247,3 +247,13 @@ TEST(string_map_test, no_default) {
     EXPECT_NE(dato_map.find("EvilMarch"), dato_map.end());
 }
 
+TEST(string_map_test, cbegin){
+    string_map<Dato> dato_map;
+    dato_map.insert(make_pair("a", datoStr("a")));
+    dato_map.insert(make_pair("b", datoStr("b")));
+    dato_map.insert(make_pair("c", datoStr("c")));
+    string_map<Dato>::const_iterator it = dato_map.cbegin();
+    string_map<Dato>::iterator it_begin = dato_map.begin();
+    EXPECT_EQ("a" == (*it_begin).first, true);
+    EXPECT_EQ("a" == (*it).first, true);
+}
